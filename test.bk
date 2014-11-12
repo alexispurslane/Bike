@@ -1,6 +1,9 @@
-def pass_with_one (method) {
-  apply method 1
+class Animal {
+  let sound = 'Some random animal noise'
+  let name = 'strange animal'
+  def make_sound {
+    print name
+    print ' says: '
+    println sound
+  }
 }
-println pass_with_one (lambda (x) {
-  x + 1
-})

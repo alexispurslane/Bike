@@ -1,14 +1,21 @@
 class AwesomeClass < AwesomeObject
   # Classes are objects in Awesome so they inherit from AwesomeObject.
   attr_reader :runtime_methods
-  def initialize
+  def initialize(superclass=nil)
     @runtime_methods = {}
     @runtime_class = Constants["Class"]
+    @runtime_superclass = superclass
   end
   # Lookup a method
   def lookup(method_name)
     method = @runtime_methods[method_name]
-    raise "Method not found: #{method_name}" if method.nil?
+    unless method
+      if @runtime_superclass
+        return @runtime_superclass.lookup(method_name)
+      else
+        raise "Method not found: #{method_name}"
+      end
+    end
     method
   end
   # Helper method to define a method on this class from Ruby.

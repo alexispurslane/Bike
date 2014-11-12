@@ -9,21 +9,16 @@ class Lexer
     while i < code.size
       chunk = code[i..-1]
 
-      if operator = chunk[/\A(or|and|not|is|isnt|<=|>=)/, 1]
+      if operator = chunk[/\A(isnt|or|and|not|is|<=|>=)/, 1]
         tokens << [operator, operator]
         i += operator.size
-      elsif identifier = chunk[/\A([a-z]\w*)/, 1]
+      elsif identifier = chunk[/\A([a-zA-Z]\w*)/, 1]
         if KEYWORDS.include?(identifier)
           tokens << [identifier.upcase.to_sym, identifier]
         else
           tokens << [:IDENTIFIER, identifier]
         end
         i += identifier.size
-      
-      elsif constant = chunk[/\A([A-Z]\w*)/, 1]
-        tokens << [:CONSTANT, constant]
-        i += constant.size
-        
       elsif number = chunk[/\A([0-9]+)/, 1]
         tokens << [:NUMBER, number.to_i]
         i += number.size

@@ -2,9 +2,9 @@ Constants = {}
 Constants["Class"] = AwesomeClass.new # Defining the `Class` class.
 Constants["Class"].runtime_class = Constants["Class"] # Setting `Class.class = Class`.
 Constants["Object"] = AwesomeClass.new # Defining the `Object` class
-Constants["Number"] = AwesomeClass.new # Defining the `Number` class
-Constants["Array"] = AwesomeClass.new # Defining the `Array` class
-Constants["String"] = AwesomeClass.new
+Constants["Number"] = AwesomeClass.new(Constants["Object"]) # Defining the `Number` class
+Constants["Array"] = AwesomeClass.new(Constants["Object"]) # Defining the `Array` class
+Constants["String"] = AwesomeClass.new(Constants["Array"])
 
 root_self = Constants["Object"].new
 RootContext = Context.new(root_self)
@@ -113,23 +113,40 @@ def define_or(type)
     end
   end
 end
-["Number", "String", "FalseClass", "TrueClass", "Class", "NilClass"].each do |k, _|
-  define_is(k)
-  define_isnt(k)
-  define_and(k)
-  define_or(k)
-  Constants[k].def :not do|receiver, arguments|
-    if !receiver.ruby_value
-      Constants["true"]
-    else
-      Constants["false"]
-    end
+#["Number", "String", "FalseClass", "TrueClass", "Class", "NilClass"].each do |k, _|
+#  define_is(k)
+#  define_isnt(k)
+#  define_and(k)
+#  define_or(k)
+#  Constants[k].def :not do|receiver, arguments|
+#    if !receiver.ruby_value
+#      Constants["true"]
+#    else
+#      Constants["false"]
+#    end
+#  end
+#end
+k = "Object"
+define_is(k)
+define_isnt(k)
+define_and(k)
+define_or(k)
+Constants[k].def :not do|receiver, arguments|
+  if !receiver.ruby_value
+    Constants["true"]
+  else
+    Constants["false"]
   end
 end
 
+
+
 Constants["Array"].def :get do |receiver, arguments|
-  receiver.ruby_value[arguments[0].ruby_value-1] || Constants["nil"]
+  Constants["Array"].new_with_value(receiver.ruby_value[arguments[0].ruby_value-1]) || Constants["nil"]
 end
 Constants["Array"].def :set do |receiver, arguments|
   receiver.ruby_value[arguments[0].ruby_value-1] = arguments[1] || Constants["nil"]
+end
+Constants["String"].def :set do |receiver, arguments|
+  raise "Attempt to set on immutable string object!"
 end

@@ -9,6 +9,7 @@ token WHILE
 token DEF
 token LAMBDA
 token CLASS
+token WITH
 token APPLY
 token LET
 token VAR
@@ -233,7 +234,8 @@ rule
   # Class definition is similar to method definition.
   # Class names are also constants because they start with a capital letter.
   Class:
-    CLASS CONSTANT Block          { result = ClassNode.new(val[1], val[2]) }
+    CLASS IDENTIFIER Block                        { result = ClassNode.new(val[1], "Object", val[2]) }
+  | CLASS IDENTIFIER WITH IDENTIFIER Block        { result = ClassNode.new(val[1], val[3], val[4]) }
   ;
   
   # Finally, `if` is similar to `class` but receives a *condition*.

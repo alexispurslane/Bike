@@ -187,7 +187,8 @@ class ClassNode
     awesome_class = Constants[name] # Check if class is already defined
     
     unless awesome_class # Class doesn't exist yet
-      awesome_class = AwesomeClass.new
+      sup = Constants[superclass]
+      awesome_class = AwesomeClass.new(sup)
       Constants[name] = awesome_class # Define the class in the runtime
     end
     

@@ -85,7 +85,7 @@ class LambdaNode < Struct.new(:params, :body); end
 
 # Class definitions are stored into the following node. Once again, the `name` of the class and
 # its `body`, a tree of nodes.
-class ClassNode < Struct.new(:name, :body); end
+class ClassNode < Struct.new(:name, :superclass, :body); end
 
 # `if` control structures are stored in a node of their own. The `condition` and `body` will also
 # be nodes that need to be evaluated at some point.
