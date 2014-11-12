@@ -45,7 +45,8 @@ class Lexer
 
       elsif chunk.match(/\A /)
         i += 1
-      
+      elsif comment = chunk.match(/\A#.*$/)
+        i += comment.size
       else
         value = chunk[0,1]
         tokens << [value, value]

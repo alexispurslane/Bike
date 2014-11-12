@@ -24,7 +24,7 @@ else
       end
       puts "]"
     else
-      puts "<= #{val.inspect}"     # 3. Print
+      puts "<= #{value.ruby_value.inspect}"     # 3. Print
     end
   end                                      # 4. Loop
   
