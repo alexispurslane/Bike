@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby -I.
+require_relative "interpreter"
+require "readline"
+
+interpreter = Interpreter.new
+
+# If a file is given we eval it.
+if file = ARGV.first
+  interpreter.eval File.read(file)
+
+# Start the REPL, read-eval-print-loop, or interactive interpreter
+else
+  n = 1
+  puts "Bike REPL (C) 2014 Christopher Dumas (For TitoniumWorks)"
+  loop do
+    line = Readline::readline("#{n}>> ")    # 1. Read
+    Readline::HISTORY.push(line)
+    n += 1
+    value = interpreter.eval(line)         # 2. Eval
+    if value.ruby_value.is_a?(Array)
+      print "[ "
+      value.ruby_value.each do |e|
+        print "#{e.ruby_value} "
+      end
+      puts "]"
+    else
+      puts "<= #{val.inspect}"     # 3. Print
+    end
+  end                                      # 4. Loop
+  
+end

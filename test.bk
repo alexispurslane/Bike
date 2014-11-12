@@ -1,0 +1,6 @@
+def pass_with_one (method) {
+  apply method 1
+}
+println pass_with_one (lambda (x) {
+  x + 1
+})
