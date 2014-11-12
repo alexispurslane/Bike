@@ -197,7 +197,7 @@ rule
   
   SetLocal:
     LET IDENTIFIER "=" Expression  { result = SetLocalNode.new(val[1], val[3]) }
-  | VAR IDENTIFIER "=" Expression  { result = SetMutLocalNode.new(val[1], val[3]) }
+  | LET VAR IDENTIFIER "=" Expression  { result = SetMutLocalNode.new(val[2], val[4]) }
   | IDENTIFIER "=" Expression      { result = SSetLocalNode.new(val[0], val[2]) }
   ;
 

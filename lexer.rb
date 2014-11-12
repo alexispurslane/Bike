@@ -1,5 +1,5 @@
 class Lexer
-  KEYWORDS = ["var", "def", "class", "if", "let", "else", "true", "false", "nil", "while", "unless", "lambda", "apply"]
+  KEYWORDS = ["var", "def", "class", "if", "let", "else", "true", "false", "nil", "while", "unless", "lambda", "apply", "match"]
   
   def tokenize(code)
     code.chomp!
@@ -45,7 +45,7 @@ class Lexer
 
       elsif chunk.match(/\A /)
         i += 1
-      elsif comment = chunk.match(/\A#.*$/)
+      elsif comment = chunk.match(/\A#*$/)
         i += comment.size
       else
         value = chunk[0,1]
