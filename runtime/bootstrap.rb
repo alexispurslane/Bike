@@ -1,17 +1,17 @@
 Constants = {}
-Constants["Class"] = AwesomeClass.new # Defining the `Class` class.
+Constants["Class"] = BikeClass.new # Defining the `Class` class.
 Constants["Class"].runtime_class = Constants["Class"] # Setting `Class.class = Class`.
-Constants["Object"] = AwesomeClass.new # Defining the `Object` class
-Constants["Number"] = AwesomeClass.new(Constants["Object"]) # Defining the `Number` class
-Constants["Array"] = AwesomeClass.new(Constants["Object"]) # Defining the `Array` class
-Constants["String"] = AwesomeClass.new(Constants["Array"])
+Constants["Object"] = BikeClass.new # Defining the `Object` class
+Constants["Number"] = BikeClass.new(Constants["Object"]) # Defining the `Number` class
+Constants["Array"] = BikeClass.new(Constants["Object"]) # Defining the `Array` class
+Constants["String"] = BikeClass.new(Constants["Array"])
 
 root_self = Constants["Object"].new
 RootContext = Context.new(root_self)
 
-Constants["TrueClass"] = AwesomeClass.new
-Constants["FalseClass"] = AwesomeClass.new
-Constants["NilClass"] = AwesomeClass.new
+Constants["TrueClass"] = BikeClass.new
+Constants["FalseClass"] = BikeClass.new
+Constants["NilClass"] = BikeClass.new
 
 Constants["true"] = Constants["TrueClass"].new_with_value(true)
 Constants["false"] = Constants["FalseClass"].new_with_value(false)

@@ -55,7 +55,7 @@ class ArrayListNode
   def eval(context)
     new_value = []
     value.each do |e|
-      new_value << AwesomeClass.new.new_with_value(e.value)
+      new_value << BikeClass.new.new_with_value(e.value)
     end
     Constants["Array"].new_with_value(new_value)
   end
@@ -169,13 +169,13 @@ end
 # Defining a method, using the `def` keyword, is done by adding a method to the current class.
 class DefNode
   def eval(context)
-    method = AwesomeMethod.new(params, body)
+    method = BikeMethod.new(params, body)
     context.current_class.runtime_methods[name] = method
   end
 end
 class LambdaNode
   def eval(context)
-    AwesomeMethod.new(params, body)
+    BikeMethod.new(params, body)
   end
 end
 
@@ -193,7 +193,7 @@ class ClassNode
     
     unless awesome_class # Class doesn't exist yet
       sup = Constants[superclass]
-      awesome_class = AwesomeClass.new(sup)
+      awesome_class = BikeClass.new(sup)
       Constants[name] = awesome_class # Define the class in the runtime
     end
     

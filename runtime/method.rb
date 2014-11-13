@@ -1,4 +1,4 @@
-class AwesomeMethod
+class BikeMethod
   attr_accessor :ruby_value
   def initialize(params, body)
     @params = params

@@ -1,5 +1,6 @@
 ##TODO for Beta 2:
-  * Packages and better imports
+  * Packages
+  * Imports
   * Mixins
   * Getters and Setters
 
@@ -13,6 +14,8 @@
   * private and public modifiers
   * Maps
   * Sets
+  * `for-in` for arrays
+  * `for-of` for maps
 
 ##TODO for Beta 5:
   * Documentation
@@ -38,8 +41,12 @@
   * Make screencasts
   * Show more people
   * Email the CYOFAPL guy!!!!!!
+##TODO for Beta 9:
+  * Function composition operator
+  * Function currying operator
+  * Multiline strings
 
-##TODO for 1.0:
+#TODO for 1.0:
   * Just keep on doing more funcitons for the Wheels STDLIB!
   * Just keep on doing more funcitons for the Wheels STDLIB!
   * Just keep on doing more funcitons for the Wheels STDLIB!

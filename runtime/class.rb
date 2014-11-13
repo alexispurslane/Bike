@@ -1,5 +1,5 @@
-class AwesomeClass < AwesomeObject
-  # Classes are objects in Awesome so they inherit from AwesomeObject.
+class BikeClass < BikeObject
+  # Classes are objects in Bike so they inherit from BikeObject.
   attr_reader :runtime_methods, :runtime_superclass
   def initialize(superclass=nil)
     @runtime_methods = {}
@@ -24,11 +24,11 @@ class AwesomeClass < AwesomeObject
   end
   # Create a new instance of this class
   def new
-    AwesomeObject.new(self)
+    BikeObject.new(self)
   end
-  # Create an instance of this Awesome class that holds a Ruby value. Like a String,
+  # Create an instance of this Bike class that holds a Ruby value. Like a String,
   # Number or true.
   def new_with_value(value)
-    AwesomeObject.new(self, value)
+    BikeObject.new(self, value)
   end
 end
