@@ -1,6 +1,6 @@
 class AwesomeClass < AwesomeObject
   # Classes are objects in Awesome so they inherit from AwesomeObject.
-  attr_reader :runtime_methods
+  attr_reader :runtime_methods, :runtime_superclass
   def initialize(superclass=nil)
     @runtime_methods = {}
     @runtime_class = Constants["Class"]

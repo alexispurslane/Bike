@@ -1,9 +1,6 @@
-class Animal {
-  let sound = 'Some random animal noise'
-  let name = 'strange animal'
-  def make_sound {
-    print name
-    print ' says: '
-    println sound
-  }
-}
+import Wheels
+
+let a = [1, 2, 3]
+foreach (lambda (e) {
+  println e
+}), a

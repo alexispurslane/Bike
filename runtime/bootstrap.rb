@@ -142,10 +142,13 @@ end
 
 
 Constants["Array"].def :get do |receiver, arguments|
-  Constants["Array"].new_with_value(receiver.ruby_value[arguments[0].ruby_value-1]) || Constants["nil"]
+  (receiver.ruby_value[arguments[0].ruby_value-1]) || Constants["nil"]
 end
 Constants["Array"].def :set do |receiver, arguments|
   receiver.ruby_value[arguments[0].ruby_value-1] = arguments[1] || Constants["nil"]
+end
+Constants["Array"].def :length do |receiver, arguments|
+  Constants["Number"].new_with_value(receiver.ruby_value.count) || Constants["nil"]
 end
 Constants["String"].def :set do |receiver, arguments|
   raise "Attempt to set on immutable string object!"

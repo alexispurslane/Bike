@@ -87,7 +87,12 @@ end
 
 class GetLocalNode
   def eval(context)
-    context.locals[name]
+    context.locals[name] || Constants[name]
+  end
+end
+class ImportNode
+  def eval(context)
+    Interpreter.new.eval File.read(file)
   end
 end
 

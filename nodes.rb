@@ -61,6 +61,7 @@ end
 # arguments, which are other nodes.
 class CallNode < Struct.new(:receiver, :method, :arguments); end
 class ApplyNode < Struct.new(:receiver, :method, :arguments); end
+class ImportNode < Struct.new(:file); end
 
 # Retrieving the value of a constant by its `name` is done by the following node.
 class GetConstantNode < Struct.new(:name); end

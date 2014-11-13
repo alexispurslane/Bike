@@ -6,6 +6,7 @@ token IF
 token UNLESS
 token ELSE
 token WHILE
+token IMPORT
 token DEF
 token LAMBDA
 token CLASS
@@ -83,6 +84,7 @@ rule
   Expression:
     Literal
   | Call
+  | Import
   | Apply
   | Operator
   | GetLocal
@@ -143,6 +145,9 @@ rule
 
   Apply:
     APPLY IDENTIFIER Arguments     { result = ApplyNode.new(nil, val[1], val[2]) }
+  ;
+  Import:
+    IMPORT IDENTIFIER              { result = ImportNode.new("#{val[1]}.bk") }
   ;
 
   Arguments:
@@ -221,6 +226,7 @@ rule
   # a bit of syntactic sugar here to allow skipping the parentheses when there are no parameters.
   Def:
     DEF IDENTIFIER Block          { result = DefNode.new(val[1], [], val[2]) }
+  | DEF IDENTIFIER "=" Expression          { result = DefNode.new(val[1], [], val[3]) }
   | DEF IDENTIFIER
       "(" ParamList ")" Block     { result = DefNode.new(val[1], val[3], val[5]) }
   ;

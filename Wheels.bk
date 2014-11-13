@@ -1,0 +1,6 @@
+def foreach (x, a) {
+  let var i = 1
+  while i < a.length {
+    apply x a.get(i)
+  }
+} 
