@@ -10,7 +10,7 @@ LIST = [
   'wheels', ':exit', ':history',
   ':help', ':lexer', ':clear',
   'let', 'var', 'def', 'lambda',
-  'with', 'apply', 'while', 'else'
+  'with', 'apply', 'while', 'else', 'unless', 'if', 'println', 'print'
 ].sort
 
 comp = proc { |s| LIST.grep( /^#{Regexp.escape(s)}/ ) }
