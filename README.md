@@ -5,7 +5,7 @@
 [Contact author](mailto:christopherdumas@me.com) or @christopherdumas
 
 
-The Bike programming language is a programming language that combines Haskell's currying, function composition, and array comprehension. Scala's packages, classes, and traits, Python's `is` and `isnt` style operators, Scheme's everything is an expression idea, Ruby's everything-is-an-object philosophy, and Go's no paren control structures, with Coffeescript's infix `if` and `unless`. It also has optional no-paren function calls, and immutable arrays are also present. It is immutable in everything by default, but in a way that makes it fairly painless to use. 
+The Bike programming language is a programming language that combines Haskell's currying, function composition, and array comprehension, with Scala's packages, classes, and traits, Python's `is` and `isnt` style operators, Scheme's everything is an expression idea, Ruby's everything-is-an-object philosophy, and Go's no paren control structures, with Coffeescript's infix `if` and `unless`. It also has optional no-paren function calls, and immutable arrays are also present. It is immutable in everything by default, but in a way that makes it fairly painless to use. 
 
 Bike's motto is:
 > Not a lot of syntax, but a lot more sugar.
@@ -41,12 +41,12 @@ Some code samples are in order:
 
 
 ## Roadmap
-In the TODO.md file is our roadmap to 1.0. It will be updated every major version release. Or versioning system is like this: The whole number (the 1 in 1.0) is incremented each major, or breaking version. The decimal point is incremented by five, and normally for big, but not breaking changes, like adding new operators or shorthand syntax. The Beta version (indicated by `+b<number>`) is incremented every time a bug is fixed, or a change is being contemplated but I have not fully committed to it.
+In the TODO.md file is our roadmap to 1.0. It will be updated every major version release. Our versioning system is like this: The whole number (the 1 in 1.0) is incremented each major, or breaking version. The decimal point is incremented by five, and normally for big, but not breaking changes, like adding new operators or shorthand syntax. The Beta version (indicated by `+b<number>`) is incremented every time a bug is fixed, or a change is being contemplated but I have not fully committed to it.
 
 ## Development
 ### Setting up your development environment
 
-    $ ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)" # Brew
+    $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" # get homebrew
     $ sudo mkdir /usr/local/Cellar
     $ sudo chown -R `whoami` /usr/local
     $ brew install ruby gem
