@@ -4,26 +4,61 @@ require "readline"
 
 interpreter = Interpreter.new
 
+trap('INT', 'SIG_IGN')
+LIST = [
+  'import', 'class', 'Wheels',
+  'wheels', ':exit', ':history',
+  ':help', ':lexer', ':clear',
+  'let', 'var', 'def', 'lambda',
+  'with', 'apply', 'while', 'else'
+].sort
+
+comp = proc { |s| LIST.grep( /^#{Regexp.escape(s)}/ ) }
+
+Readline.completion_append_character = " "
+Readline.completion_proc = comp
+
 # If a file is given we eval it.
 if file = ARGV.first
   interpreter.eval File.read(file)
 
-# Start the REPL, read-eval-print-loop, or interactive interpreter
+  # Start the REPL, read-eval-print-loop, or interactive interpreter
 else
   n = 1
-  puts "Bike REPL (C) 2014 Christopher Dumas (For TitoniumWorks)"
+  puts "Welcome to the Bike Programming Language REPL! Type :help for help, and :exit to exit.\nFor more information go to the official website at christopherdumas.github.io/Bike, or visit the github project at github.com/christopherdumas/Bike\nBy Christopher Dumas in 2014"
   loop do
     line = Readline::readline("#{n}>> ")    # 1. Read
     Readline::HISTORY.push(line)
     n += 1
-    value = interpreter.eval(line)         # 2. Eval
-    if value.ruby_value.is_a?(Array)
-      print "["
-      print value.ruby_value.map { |i| i.ruby_value.inspect }.join(", ")
-      puts "]"
+    if line == ":exit"
+      puts "Bye!"
+      exit
+    elsif line == ":help"
+      puts <<-eos
+      :help        - This help
+      :exit        - To exit from the REPL
+      :lexer       - To have your input lexed only, but not interpreted
+      :history     - List history
+      :clear       - Clear Screen
+      eos
+    elsif line == ":history"
+      puts "HISTORY"
+      puts "-------"
+      Readline::HISTORY.to_a.each { |e| puts e }
+    elsif line == ":clear"
+      system "clear" or system "cls"
+    elsif line == ":lexer"
+      value = Lexer.new.tokenize(line)
+      puts "#{value.inspect}"     # 3. Print
     else
-      puts "<= #{value.ruby_value.inspect}"     # 3. Print
-    end
-  end                                      # 4. Loop
-  
+      value = interpreter.eval(line)         # 2. Eval
+      if value.ruby_value.is_a?(Array)
+        print "["
+        print value.ruby_value.map { |i| i.ruby_value.inspect }.join(", ")
+        puts "]"
+      else
+        puts "<= #{value.ruby_value.inspect}"     # 3. Print
+      end
+    end                                      # 4. Loop
+  end 
 end
