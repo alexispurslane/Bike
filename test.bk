@@ -1,6 +1,6 @@
 import Wheels
 
 let a = [1, 2, 3]
-foreach (lambda (e) {
+wheels.foreach (lambda (e) {
   println e
 }), a

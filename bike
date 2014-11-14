@@ -18,10 +18,8 @@ else
     n += 1
     value = interpreter.eval(line)         # 2. Eval
     if value.ruby_value.is_a?(Array)
-      print "[ "
-      value.ruby_value.each do |e|
-        print "#{e.ruby_value} "
-      end
+      print "["
+      print value.ruby_value.map { |i| i.ruby_value.inspect }.join(", ")
       puts "]"
     else
       puts "<= #{value.ruby_value.inspect}"     # 3. Print

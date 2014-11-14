@@ -1,5 +1,5 @@
 class Lexer
-  KEYWORDS = ["var", "def", "class", "if", "let", "else", "true", "false", "nil", "while", "unless", "lambda", "apply", "with", "import"]
+  KEYWORDS = ["var", "def", "class", "if", "let", "else", "true", "false", "nil", "while", "unless", "lambda", "apply", "with", "import", "into"]
   
   def tokenize(code)
     code.chomp!
@@ -22,7 +22,6 @@ class Lexer
       elsif number = chunk[/\A([0-9]+)/, 1]
         tokens << [:NUMBER, number.to_i]
         i += number.size
-        
       elsif string = chunk[/\A"(.*?)"/, 1]
         tokens << [:STRING, string]
         i += string.size + 2

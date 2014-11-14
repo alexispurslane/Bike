@@ -50,6 +50,11 @@ class StringNode
     Constants["String"].new_with_value(value)
   end
 end
+class SymbolNode
+  def eval(context)
+    Constants["Symbol"].new_with_value(value)
+  end
+end
 
 class ArrayListNode
   def eval(context)
@@ -92,7 +97,11 @@ class GetLocalNode
 end
 class ImportNode
   def eval(context)
-    Interpreter.new.eval File.read(file)
+    if into == nil
+      context.locals[file.downcase.sub '.bk', ''] = Interpreter.new.eval File.read(file)
+    else
+      context.locals[into] = Interpreter.new.eval File.read(file)
+    end
   end
 end
 

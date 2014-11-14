@@ -36,6 +36,7 @@ class LiteralNode < Struct.new(:value); end
 class NumberNode < LiteralNode; end
 
 class StringNode < LiteralNode; end
+class SymbolNode < LiteralNode; end
 class ArrayListNode < LiteralNode; end
 
 class TrueNode < LiteralNode
@@ -61,7 +62,7 @@ end
 # arguments, which are other nodes.
 class CallNode < Struct.new(:receiver, :method, :arguments); end
 class ApplyNode < Struct.new(:receiver, :method, :arguments); end
-class ImportNode < Struct.new(:file); end
+class ImportNode < Struct.new(:into, :file); end
 
 # Retrieving the value of a constant by its `name` is done by the following node.
 class GetConstantNode < Struct.new(:name); end

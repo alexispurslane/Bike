@@ -5,6 +5,7 @@ Constants["Object"] = BikeClass.new # Defining the `Object` class
 Constants["Number"] = BikeClass.new(Constants["Object"]) # Defining the `Number` class
 Constants["Array"] = BikeClass.new(Constants["Object"]) # Defining the `Array` class
 Constants["String"] = BikeClass.new(Constants["Array"])
+Constants["Symbol"] = BikeClass.new(Constants["Object"])
 
 root_self = Constants["Object"].new
 RootContext = Context.new(root_self)
@@ -145,7 +146,9 @@ Constants["Array"].def :get do |receiver, arguments|
   (receiver.ruby_value[arguments[0].ruby_value-1]) || Constants["nil"]
 end
 Constants["Array"].def :set do |receiver, arguments|
-  receiver.ruby_value[arguments[0].ruby_value-1] = arguments[1] || Constants["nil"]
+  clone = receiver.ruby_value.clone
+  clone[arguments[0].ruby_value-1] = arguments[1]
+  Constants["Array"].new_with_value(clone)
 end
 Constants["Array"].def :length do |receiver, arguments|
   Constants["Number"].new_with_value(receiver.ruby_value.count) || Constants["nil"]

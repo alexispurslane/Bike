@@ -7,6 +7,7 @@ token UNLESS
 token ELSE
 token WHILE
 token IMPORT
+token INTO
 token DEF
 token LAMBDA
 token CLASS
@@ -17,6 +18,7 @@ token VAR
 token NEWLINE
 token NUMBER
 token STRING
+token SYMBOL
 token TRUE FALSE NIL
 token IDENTIFIER
 token CONSTANT
@@ -119,6 +121,7 @@ rule
   Literal:
     NUMBER                        { result = NumberNode.new(val[0]) }
   | STRING                        { result = StringNode.new(val[0]) }
+  | SYMBOL                        { result = SymbolNode.new(val[0]) }
   | TRUE                          { result = TrueNode.new }
   | FALSE                         { result = FalseNode.new }
   | NIL                           { result = NilNode.new }
@@ -147,7 +150,8 @@ rule
     APPLY IDENTIFIER Arguments     { result = ApplyNode.new(nil, val[1], val[2]) }
   ;
   Import:
-    IMPORT IDENTIFIER              { result = ImportNode.new("#{val[1]}.bk") }
+    IMPORT IDENTIFIER                              { result = ImportNode.new(nil, "#{val[1]}.bk") }
+  | IMPORT IDENTIFIER INTO IDENTIFIER              { result = ImportNode.new(val[3], "#{val[1]}.bk") }
   ;
 
   Arguments:
@@ -218,6 +222,7 @@ rule
   Block:
     "{" Expressions "}"           { result = val[1] }
   | "{" NEWLINE Expressions "}"           { result = val[2] }
+  | "{"  "}"           { result = val[2] }
   | "{" Expressions NEWLINE "}"           { result = val[1] }
   | "{" NEWLINE Expressions NEWLINE "}"           { result = val[2] }
   ;
