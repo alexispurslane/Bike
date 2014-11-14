@@ -3,6 +3,7 @@ require_relative "interpreter"
 require "readline"
 
 interpreter = Interpreter.new
+lexer = false
 
 trap('INT', 'SIG_IGN')
 LIST = [
@@ -48,16 +49,25 @@ else
     elsif line == ":clear"
       system "clear" or system "cls"
     elsif line == ":lexer"
-      value = Lexer.new.tokenize(line)
-      puts "#{value.inspect}"     # 3. Print
-    else
-      value = interpreter.eval(line)         # 2. Eval
-      if value.ruby_value.is_a?(Array)
-        print "["
-        print value.ruby_value.map { |i| i.ruby_value.inspect }.join(", ")
-        puts "]"
+      lexer = !lexer
+      if lexer
+        puts "Entering Lexer mode. To go back to normal mode, type :lexer again."
       else
-        puts "<= #{value.ruby_value.inspect}"     # 3. Print
+        puts "Leaving Lexer mode now."
+      end
+    else
+      if lexer
+        value = Lexer.new.tokenize(line)
+        puts "#{value.inspect}"     # 3. Print
+      else
+        value = interpreter.eval(line)         # 2. Eval
+        if value.ruby_value.is_a?(Array)
+          print "["
+          print value.ruby_value.map { |i| i.ruby_value.inspect }.join(", ")
+          puts "]"
+        else
+          puts "<= #{value.ruby_value.inspect}"     # 3. Print
+        end
       end
     end                                      # 4. Loop
   end 
