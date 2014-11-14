@@ -11,6 +11,7 @@ token INTO
 token DEF
 token LAMBDA
 token CLASS
+token PACKAGE
 token EXTENDS
 token APPLY
 token LET
@@ -92,6 +93,7 @@ rule
   | SetLocal
   | Def
   | Class
+  | Package
   | If
   | While
   | Unless
@@ -243,6 +245,9 @@ rule
   Class:
     CLASS IDENTIFIER Block                        { result = ClassNode.new(val[1], "Object", val[2]) }
   | CLASS IDENTIFIER EXTENDS IDENTIFIER Block        { result = ClassNode.new(val[1], val[3], val[4]) }
+  ;
+  Package:
+    PACKAGE Block                        { result = PackageNode.new(val[1]) }
   ;
   
   # Finally, `if` is similar to `class` but receives a *condition*.

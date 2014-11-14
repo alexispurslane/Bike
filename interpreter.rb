@@ -208,6 +208,16 @@ class ClassNode
     awesome_class
   end
 end
+class PackageNode
+  def eval(context)
+    sup = Constants["Object"]
+    awesome_class = BikeClass.new(sup)
+    class_context = Context.new(awesome_class, awesome_class)
+    body.eval(class_context)
+    
+    awesome_class.call("new", [])
+  end
+end
 
 # Finally, to implement `if` in our language,
 # we turn the condition node into a Ruby value to use Ruby's `if`.
