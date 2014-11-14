@@ -49,6 +49,4 @@
 
 #TODO for 1.0:
  - [ ]  Just keep on doing more funcitons for the Wheels STDLIB!
- - [ ]  Just keep on doing more funcitons for the Wheels STDLIB!
- - [ ]  Just keep on doing more funcitons for the Wheels STDLIB!
 

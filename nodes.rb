@@ -95,4 +95,3 @@ class ClassNode < Struct.new(:name, :superclass, :body); end
 class IfNode  < Struct.new(:condition, :body, :else_body); end
 class UnlessNode  < Struct.new(:condition, :body); end
 class WhileNode  < Struct.new(:condition, :body); end
-class ArrayNode  < Struct.new(:list); end
