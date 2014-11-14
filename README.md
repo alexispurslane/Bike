@@ -66,6 +66,7 @@ Please use CamelCase for classes and grammar rules, snake_case for variables, an
 ### Commits
 Please use descriptive commits, but under 80 characters. Always use emoji.
 
+| Type of Commit | emoji |
 | ------------- | ------------- |
 | Bug fix  | :bug: :collision:  |
 | Major change  | :sparkles:  |
