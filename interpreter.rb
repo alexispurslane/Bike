@@ -1,9 +1,5 @@
 require_relative "parser"
-require_relative "runtime/context"
-require_relative "runtime/object"
-require_relative "runtime/class"
-require_relative "runtime/method"
-require_relative "runtime/bootstrap"
+require_relative "runtime"
 
 
 # First, we create an simple wrapper class to encapsulate the interpretation process.
