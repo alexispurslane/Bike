@@ -11,7 +11,7 @@ token INTO
 token DEF
 token LAMBDA
 token CLASS
-token WITH
+token EXTENDS
 token APPLY
 token LET
 token VAR
@@ -22,7 +22,6 @@ token SYMBOL
 token TRUE FALSE NIL
 token IDENTIFIER
 token CONSTANT
-token INDENT DEDENT
 
 # Here is the Operator Precedence Table. As presented before, it tells the parser in
 # which order to parse expressions containing operators.
@@ -99,7 +98,6 @@ rule
   | Array
   | Lambda
   | '(' Expression ')'    { result = val[1] }
-  | '(' NEWLINE Expression ')'    { result = val[2] }
   | '(' Expression NEWLINE ')'    { result = val[1] }
   | '(' NEWLINE Expression NEWLINE ')'    { result = val[2] }
   ;
@@ -140,10 +138,7 @@ rule
   | Expression "." IDENTIFIER
       Arguments                   { result = CallNode.new(val[0], val[2], val[3]) }
   | Expression "." IDENTIFIER     { result = CallNode.new(val[0], val[2], []) }
-  | Arguments IDENTIFIER Arguments  { result = CallNode.new(nil, val[1], [val[0], val[2]].flatten) }
   | Arguments IDENTIFIER { result = CallNode.new(nil, val[1], [val[0]].flatten) }
-  | Arguments Expression "." IDENTIFIER Arguments  { result = CallNode.new(val[1], val[3], [val[0], val[4]].flatten) }
-  | Arguments Expression "." IDENTIFIER { result = CallNode.new(val[1], val[3], [val[0]].flatten) }
   ;
 
   Apply:
@@ -232,6 +227,7 @@ rule
   Def:
     DEF IDENTIFIER Block          { result = DefNode.new(val[1], [], val[2]) }
   | DEF IDENTIFIER "=" Expression          { result = DefNode.new(val[1], [], val[3]) }
+  | DEF IDENTIFIER "=" Block          { result = DefNode.new(val[1], [], val[3]) }
   | DEF IDENTIFIER
       "(" ParamList ")" Block     { result = DefNode.new(val[1], val[3], val[5]) }
   ;
@@ -246,7 +242,7 @@ rule
   # Class names are also constants because they start with a capital letter.
   Class:
     CLASS IDENTIFIER Block                        { result = ClassNode.new(val[1], "Object", val[2]) }
-  | CLASS IDENTIFIER WITH IDENTIFIER Block        { result = ClassNode.new(val[1], val[3], val[4]) }
+  | CLASS IDENTIFIER EXTENDS IDENTIFIER Block        { result = ClassNode.new(val[1], val[3], val[4]) }
   ;
   
   # Finally, `if` is similar to `class` but receives a *condition*.
