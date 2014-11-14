@@ -1,5 +1,8 @@
+def to_fi(v)
+  v.match('\.').nil? ? Integer(v) : Float(v)
+end
 class Lexer
-  KEYWORDS = ["var", "def", "class", "if", "let", "else", "true", "false", "nil", "while", "unless", "lambda", "apply", "extends", "import", "into"]
+  KEYWORDS = ["var", "def", "class", "if", "let", "else", "true", "false", "nil", "while", "unless", "lambda", "apply", "extends", "import", "into", "package"]
   
   def tokenize(code)
     code.chomp!
@@ -19,8 +22,8 @@ class Lexer
           tokens << [:IDENTIFIER, identifier]
         end
         i += identifier.size
-      elsif number = chunk[/\A([0-9]+)/, 1]
-        tokens << [:NUMBER, number.to_i]
+      elsif number = chunk[/\A([-+]?[0-9]*\.?[0-9]*)/, 1]
+        tokens << [:NUMBER, to_fi(number)]
         i += number.size
       elsif string = chunk[/\A"(.*?)"/, 1]
         tokens << [:STRING, string]
