@@ -2,7 +2,7 @@ def to_fi(v)
   v.match('\.').nil? ? Integer(v) : Float(v)
 end
 class Lexer
-  KEYWORDS = ["var", "def", "class", "if", "let", "else", "true", "false", "nil", "while", "unless", "lambda", "apply", "extends", "import", "into", "package"]
+  KEYWORDS = ["var", "def", "class", "if", "let", "else", "true", "false", "nil", "while", "unless", "lambda", "apply", "extends", "import", "into", "package", "with"]
   
   def tokenize(code)
     code.chomp!

@@ -204,7 +204,7 @@ class ClassNode
     
     unless bike_class # Class doesn't exist yet
       sup = Constants[superclass]
-      bike_class = BikeClass.new(sup)
+      bike_class = BikeClass.new(sup, mixins)
       Constants[name] = bike_class # Define the class in the runtime
     end
     
