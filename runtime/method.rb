@@ -12,6 +12,7 @@ class BikeMethod
     @params.each_with_index do |param, index|
       context.locals[param] = arguments[index]
     end
+    context.locals["self"] = receiver
     @body.eval(context)
   end
 end
