@@ -22,7 +22,7 @@ class Lexer
           tokens << [:IDENTIFIER, identifier]
         end
         i += identifier.size
-      elsif number = chunk[/\A([-+]?[0-9]*\.?[0-9]*)/, 1]
+      elsif number = chunk[/\A([-+]?[0-9]+\.?[0-9]*)/, 1]
         tokens << [:NUMBER, to_fi(number)]
         i += number.size
       elsif string = chunk[/\A"(.*?)"/, 1]

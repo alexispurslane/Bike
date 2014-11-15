@@ -140,7 +140,6 @@ rule
   | Expression "." IDENTIFIER
       Arguments                   { result = CallNode.new(val[0], val[2], val[3]) }
   | Expression "." IDENTIFIER     { result = CallNode.new(val[0], val[2], []) }
-  | Arguments IDENTIFIER { result = CallNode.new(nil, val[1], [val[0]].flatten) }
   ;
 
   Apply:
@@ -248,6 +247,7 @@ rule
   ;
   Package:
     PACKAGE Block                        { result = PackageNode.new(val[1]) }
+  | PACKAGE IDENTIFIER Block             { result = DefNode.new(val[1], [], PackageNode.new(val[2])) }
   ;
   
   # Finally, `if` is similar to `class` but receives a *condition*.

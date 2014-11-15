@@ -73,7 +73,7 @@ class GetConstantNode < Struct.new(:name); end
 class SetConstantNode < Struct.new(:name, :value); end
 
 # Similar to the previous nodes, the next ones are for dealing with local variables.
-class GetLocalNode < Struct.new(:name); end
+class GetLocalNode < Struct.new(:name, :dotIdent); end
 
 class SetLocalNode < Struct.new(:name, :value); end
 class SetMutLocalNode < Struct.new(:name, :value); end
