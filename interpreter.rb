@@ -88,7 +88,13 @@ end
 
 class GetLocalNode
   def eval(context)
-    context.locals[name] || Constants[name]
+    unless dotIdent
+      context.locals[name] || Constants[name]
+    else
+      class_context = Context.new(Constants[dotIdent], Constants[dotIdent])
+      puts Constants[dotIdent]
+      class_context.locals[name]
+    end
   end
 end
 class ImportNode

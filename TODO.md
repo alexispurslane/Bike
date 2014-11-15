@@ -1,6 +1,6 @@
 ##TODO for Beta 2:
- - [ ]  Imports
- - [ ]  Packages
+ - [X]  Imports
+ - [X]  Packages
  - [ ]  Mixins
  - [ ]  Getters and Setters
 
