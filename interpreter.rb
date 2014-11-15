@@ -200,28 +200,29 @@ end
 # where we set the value of `current_class`.
 class ClassNode
   def eval(context)
-    awesome_class = Constants[name] # Check if class is already defined
+    bike_class = Constants[name] # Check if class is already defined
     
-    unless awesome_class # Class doesn't exist yet
+    unless bike_class # Class doesn't exist yet
       sup = Constants[superclass]
-      awesome_class = BikeClass.new(sup)
-      Constants[name] = awesome_class # Define the class in the runtime
+      bike_class = BikeClass.new(sup)
+      Constants[name] = bike_class # Define the class in the runtime
     end
     
-    class_context = Context.new(awesome_class, awesome_class)
+    class_context = Context.new(bike_class, bike_class)
+    class_context.locals["self"] = bike_class
     body.eval(class_context)
     
-    awesome_class
+    bike_class
   end
 end
 class PackageNode
   def eval(context)
     sup = Constants["Object"]
-    awesome_class = BikeClass.new(sup)
-    class_context = Context.new(awesome_class, awesome_class)
+    bike_class = BikeClass.new(sup)
+    class_context = Context.new(bike_class, bike_class)
     body.eval(class_context)
     
-    awesome_class.call("new", [])
+    bike_class.call("new", [])
   end
 end
 
