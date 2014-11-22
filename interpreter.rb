@@ -166,11 +166,7 @@ class CallNode
 end
 class ApplyNode
   def eval(context)
-    if receiver
-      value = receiver.eval(context)
-    else
-      value = context.current_self # Default to `self` if no receiver.
-    end
+    value = context.current_self
     
     evaluated_arguments = arguments.map { |arg| arg.eval(context) }
     value.apply(context, method, evaluated_arguments)

@@ -5,9 +5,9 @@
  - [X]  Mixins
 
 ##TODO for Beta 3:
- - [ ]  Arrow functions
- - [ ]  Destructureing assignment
+ - [X]  Arrow functions
  - [ ]  Closures
+ - [ ]  Destructureing assignment
 
 ##TODO for Beta 4:
  - [ ]  Observers

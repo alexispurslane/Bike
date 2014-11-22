@@ -3,28 +3,34 @@ class Parser
 # We need to tell the parser what tokens to expect. So each type of token produced
 # by our lexer needs to be declared here.
 token IF
-token UNLESS
 token ELSE
+token UNLESS
 token WHILE
+
 token IMPORT
 token INTO
-token DEF
-token LAMBDA
 token CLASS
 token WITH
 token MIXIN
 token PACKAGE
 token EXTENDS
+
+token DEF
+token ARROW
+token SLASH
 token APPLY
+
 token LET
 token VAR
-token NEWLINE
+
 token NUMBER
 token STRING
 token SYMBOL
 token TRUE FALSE NIL
+
 token IDENTIFIER
 token CONSTANT
+token NEWLINE
 
 # Here is the Operator Precedence Table. As presented before, it tells the parser in
 # which order to parse expressions containing operators.
@@ -93,6 +99,7 @@ rule
   | Operator
   | GetLocal
   | SetLocal
+  | Arrow
   | Def
   | Class
   | Mixin
@@ -148,7 +155,7 @@ rule
   ;
 
   Apply:
-    APPLY IDENTIFIER Arguments     { result = ApplyNode.new(nil, val[1], val[2]) }
+    IDENTIFIER APPLY Arguments     { result = ApplyNode.new(nil, val[0], val[2]) }
   ;
   Import:
     IMPORT IDENTIFIER                              { result = ImportNode.new(nil, "#{val[1]}.bk") }
@@ -176,6 +183,11 @@ rule
   ;
   
 
+  Arrow:
+    SLASH ParamList ARROW Expression    { result = LambdaNode.new(val[1], val[3]) }
+  | SLASH ParamList ARROW Block         { result = LambdaNode.new(val[1], val[3]) }
+  ;
+
   # In our language, like in Ruby, operators are converted to method calls.
   # So `1 + 2` will be converted to `1.+(2)`.
   # `1` is the receiver of the `+` method call, passing `2`
@@ -196,10 +208,6 @@ rule
   | Expression '-'  Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
   | Expression '*'  Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
   | Expression '/'  Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
-  ;
-  Lambda:
-    LAMBDA '(' ParamList ')' Block         { result = LambdaNode.new(val[2], val[4]) }
-  | LAMBDA '(' ParamList ')' Expression    { result = LambdaNode.new(val[2], val[4]) }
   ;
   
   GetLocal:
