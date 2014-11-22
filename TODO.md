@@ -2,7 +2,7 @@
  - [X]  Imports
  - [X]  Packages
  - [X]  Getters and Computed Properties
- - [ ]  Mixins
+ - [X]  Mixins
 
 ##TODO for Beta 3:
  - [ ]  Arrow functions
