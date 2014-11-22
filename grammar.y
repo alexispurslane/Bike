@@ -12,6 +12,7 @@ token DEF
 token LAMBDA
 token CLASS
 token WITH
+token MIXIN
 token PACKAGE
 token EXTENDS
 token APPLY
@@ -94,6 +95,7 @@ rule
   | SetLocal
   | Def
   | Class
+  | Mixin
   | Package
   | If
   | While
@@ -249,6 +251,10 @@ rule
   | CLASS IDENTIFIER EXTENDS IDENTIFIER Block        { result = ClassNode.new(val[1], val[3], val[4], nil) }
   | CLASS IDENTIFIER "(" Mixins ")" EXTENDS IDENTIFIER Block        { result = ClassNode.new(val[1], val[6], val[7], val[3]) }
   | CLASS IDENTIFIER "(" Mixins ")" Block        { result = ClassNode.new(val[1], "Object", val[5], val[3]) }
+  ;
+  Mixin:
+    MIXIN IDENTIFIER Block                        { result = ClassNode.new(val[1], "Object", val[2], nil) }
+  | MIXIN IDENTIFIER Mixins Block                 { result = ClassNode.new(val[1], "Object", val[5], val[3]) }
   ;
   Mixins:
     WITH IDENTIFIER                               { result = [val[1]] }

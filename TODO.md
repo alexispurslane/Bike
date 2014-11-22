@@ -1,8 +1,8 @@
 ##TODO for Beta 2:
  - [X]  Imports
  - [X]  Packages
+ - [X]  Getters and Computed Properties
  - [ ]  Mixins
- - [ ]  Getters and Setters
 
 ##TODO for Beta 3:
  - [ ]  Arrow functions
@@ -40,13 +40,18 @@
  - [ ]  Show lots of people
  - [ ]  Make screencasts
  - [ ]  Show more people
- - [ ]  Email the CYOFAPL guy!!!!!!
 
 ##TODO for Beta 9:
  - [ ]  Function composition operator
  - [ ]  Function currying operator
  - [ ]  Multiline strings
+ - [ ]  Threads
+ - [ ]  Actors
+ - [ ]  Make a Gem
+ - [ ]  Put on Brew
 
 #TODO for 1.0:
+ - [ ]  Bootstrap the language
  - [ ]  Just keep on doing more funcitons for the Wheels STDLIB!
+ - [ ]  Do more publicizing
 
