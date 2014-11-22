@@ -51,6 +51,7 @@ In the TODO.md file is our roadmap to 1.0. It will be updated every major versio
     $ sudo chown -R `whoami` /usr/local
     $ brew install ruby gem
     $ sudo gem install racc
+    $ sudo gem install colorize
     $ git clone git@github.com:christopherdumas/Bike.git bike
     $ cd bike/
     $ racc grammar.y -o parser.rb

@@ -19,6 +19,9 @@ Constants["false"] = Constants["FalseClass"].new_with_value(false)
 Constants["nil"] = Constants["NilClass"].new_with_value(nil)
 
 Constants["Class"].def :new do |receiver,arguments|
+  if receiver.runtime_methods["init"]
+    receiver.call("init", arguments)
+  end
   receiver.new
 end
 Constants["Object"].def :println do |receiver, arguments|
