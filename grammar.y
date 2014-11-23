@@ -263,6 +263,11 @@ rule
   | CLASS IDENTIFIER EXTENDS IDENTIFIER Block        { result = ClassNode.new(val[1], val[3], val[4], nil) }
   | CLASS IDENTIFIER "(" Mixins ")" EXTENDS IDENTIFIER Block        { result = ClassNode.new(val[1], val[6], val[7], val[3]) }
   | CLASS IDENTIFIER "(" Mixins ")" Block        { result = ClassNode.new(val[1], "Object", val[5], val[3]) }
+  | CLASS Block                        { result = ClassNode.new(nil, "Object", val[1], nil) }
+  | CLASS EXTENDS IDENTIFIER Block        { result = ClassNode.new(nil, val[2], val[3], nil) }
+  | CLASS "(" Mixins ")" EXTENDS IDENTIFIER Block        { result = ClassNode.new(nil, val[5], val[6], val[2]) }
+  | CLASS "(" Mixins ")" Block        { result = ClassNode.new(nil, "Object", val[4], val[2]) }
+
   ;
 
   Mixin:

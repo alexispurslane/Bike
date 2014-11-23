@@ -1,6 +1,12 @@
 require_relative "parser"
 require_relative "runtime"
 
+$gc = 0
+
+def gensym (base="anonymous_class#")
+  $gc += 1
+  base + $gc.to_s.to_sym
+end
 
 # First, we create an simple wrapper class to encapsulate the interpretation process.
 # All this does is parse the code and call `eval` on the node at the top of the AST.
@@ -226,6 +232,10 @@ end
 # where we set the value of `current_class`.
 class ClassNode
   def eval(context)
+    unless name
+      name = gensym()
+    end
+
     bike_class = Constants[name] # Check if class is already defined
     
     unless bike_class # Class doesn't exist yet

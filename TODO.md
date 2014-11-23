@@ -3,12 +3,13 @@
  - [X]  Packages
  - [X]  Getters and Computed Properties
  - [X]  Mixins
+ - [X]  Improve Interpreter
 
 ##TODO for Beta 3:
  - [X]  Arrow functions
  - [X]  Destructureing assignment
  - [X]  String Concatonation
- - [ ]  Hashes (Implemented as ananymous classes)
+ - [ ]  Hashes (Implemented as anonymous classes)
  - [ ]  Rest Arguments
  - [ ]  Splat arguments for functions
  - [ ]  Closures
@@ -16,10 +17,9 @@
 ##TODO for Beta 4:
  - [ ]  Observers
  - [ ]  private and public modifiers
- - [ ]  Maps
  - [ ]  Sets
- - [ ]  `for-in` for arrays
- - [ ]  `for-of` for maps
+ - [ ]  array comprehenson
+ - [ ]  `for-of` for hashes
 
 ##TODO for Beta 5:
  - [ ]  Documentation
@@ -31,7 +31,6 @@
 ##TODO for Beta 6:
  - [ ]  Better Error reporting
  - [ ]  More robust (for wierd edge-cases)
- - [ ]  Imporve Interpreter
 
 ##TODO for Beta 7:
  - [ ]  In-Depth language implementation docs
@@ -50,7 +49,6 @@
  - [ ]  Function currying operator
  - [ ]  Multiline strings
  - [ ]  Threads
- - [ ]  Actors
  - [ ]  Make a Gem
  - [ ]  Put on Brew
 
