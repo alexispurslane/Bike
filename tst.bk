@@ -1,0 +1,4 @@
+def fun_to_fun { let y = 9; \x -> x + y }
+let xFun = fun_to_fun()
+let y = 9
+xFun $ 10

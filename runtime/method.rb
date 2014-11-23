@@ -1,8 +1,9 @@
 class BikeMethod
-  attr_accessor :ruby_value
-  def initialize(params, body)
+  attr_accessor :ruby_value, :context
+  def initialize(params, body, context)
     @params = params
     @body = body
+    @context = context
     @ruby_value = "def (#{@params.join(', ')}) { <CODE> }"
   end
   

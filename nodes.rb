@@ -36,7 +36,6 @@ class LiteralNode < Struct.new(:value); end
 class NumberNode < LiteralNode; end
 
 class StringNode < LiteralNode; end
-class SymbolNode < LiteralNode; end
 class ArrayListNode < LiteralNode; end
 
 class TrueNode < LiteralNode
@@ -76,7 +75,9 @@ class SetConstantNode < Struct.new(:name, :value); end
 class GetLocalNode < Struct.new(:name, :dotIdent); end
 
 class SetLocalNode < Struct.new(:name, :value); end
-class SetMutLocalNode < Struct.new(:name, :value); end
+class SetMutLocalNode < SetLocalNode; end
+class SetLocalDescNode < SetLocalNode; end
+class SetMutLocalDescNode < SetMutLocalNode; end
 class SSetLocalNode < SetLocalNode; end
 
 # Each method definition will be stored into the following node. It holds the `name` of the method,
