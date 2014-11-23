@@ -5,7 +5,7 @@
 [Contact author](mailto:christopherdumas@me.com) or @christopherdumas
 
 
-The Bike programming language is a programming language that combines Haskell's currying, function composition, and array comprehension, with Scala's packages, classes, and traits, Python's `is` and `isnt` style operators, Scheme's everything is an expression idea, Ruby's everything-is-an-object philosophy, and Go's no paren control structures, with Coffeescript's infix `if` and `unless`. It also has optional no-paren function calls, and immutable arrays are also present. It is immutable in everything by default, but in a way that makes it fairly painless to use. 
+The Bike programming language is a programming language that combines Haskell's currying, function composition, anonymous functions, and array comprehension, with Scala's packages, classes, and traits, Python's `is` and `isnt` style operators, Scheme's everything is an expression idea, Ruby's everything-is-an-object philosophy, and Go's no paren control structures, with Coffeescript's infix `if` and `unless`. It also has optional no-paren function calls, and immutable arrays are also present. This is mixed in with mixins and Java's ananymous Classes, as well as JavaScript's Objects (called hashes) and ES6's destructuring assignment. It is immutable in everything by default, but in a way that makes it fairly painless to use. 
 
 Bike's motto is:
 > Not a lot of syntax, but a lot more sugar.
@@ -23,13 +23,14 @@ Some code samples are in order:
         }, n #!ALL WHEELS STDLIB FUNCTIONS ARE WRITTEN FOR USE IN CONTIUATION-PASSING STYLE! 
       }
     }
-    class Dog with Animal {
+    class Dog extends Animal {
       def sound = "Bark!" # override some stuff
       def name = "Doggie"
       def init { # Add an init method
         println "Initialized!"
       }
     }
+    let mutatedDog = class with Animal
     let dog = Dog.new # You could also use `let var` if you wanted the variable to be mutable
     dog.make_sound 3 + 2  
 
@@ -41,6 +42,11 @@ Some code samples are in order:
     } else {
       println "Run for the hills!!!!"
     }
+    let foo = object {
+      bar => "baz"
+      boo => "bar"
+    }
+    let var {bar, boo} = foo
 
 
 ## Roadmap

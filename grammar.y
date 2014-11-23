@@ -264,6 +264,7 @@ rule
   | CLASS IDENTIFIER "(" Mixins ")" EXTENDS IDENTIFIER Block        { result = ClassNode.new(val[1], val[6], val[7], val[3]) }
   | CLASS IDENTIFIER "(" Mixins ")" Block        { result = ClassNode.new(val[1], "Object", val[5], val[3]) }
   ;
+
   Mixin:
     MIXIN IDENTIFIER Block                        { result = ClassNode.new(val[1], "Object", val[2], nil) }
   | MIXIN IDENTIFIER Mixins Block                 { result = ClassNode.new(val[1], "Object", val[5], val[3]) }
