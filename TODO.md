@@ -6,9 +6,12 @@
 
 ##TODO for Beta 3:
  - [X]  Arrow functions
- - [ ]  Closures
  - [X]  Destructureing assignment
+ - [X]  String Concatonation
  - [ ]  Hashes (Implemented as ananymous classes)
+ - [ ]  Rest Arguments
+ - [ ]  Splat arguments for functions
+ - [ ]  Closures
 
 ##TODO for Beta 4:
  - [ ]  Observers
