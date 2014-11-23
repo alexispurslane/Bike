@@ -8,6 +8,7 @@
  - [X]  Arrow functions
  - [ ]  Closures
  - [X]  Destructureing assignment
+ - [ ]  Hashes (Implemented as ananymous classes)
 
 ##TODO for Beta 4:
  - [ ]  Observers
