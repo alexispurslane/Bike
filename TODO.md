@@ -7,7 +7,7 @@
 ##TODO for Beta 3:
  - [X]  Arrow functions
  - [ ]  Closures
- - [ ]  Destructureing assignment
+ - [X]  Destructureing assignment
 
 ##TODO for Beta 4:
  - [ ]  Observers

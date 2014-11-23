@@ -133,6 +133,7 @@ class SetLocalDescNode
         raise "Attemt to re-assign variable using normal variable."
       end
     end
+    Constants["nil"]
   end
 end
 class SetMutLocalDescNode
@@ -144,6 +145,7 @@ class SetMutLocalDescNode
         raise "Attemt to re-assign variable using mutable variable."
       end
     end
+    Constants["nil"]
   end
 end
 class SSetLocalNode
