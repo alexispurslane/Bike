@@ -18,17 +18,20 @@ Some code samples are in order:
       def sound = "some strange animal sound" # define function that returns a string. This gets you computed properties and getters for free!
       def name = "some strange animal"
       def make_sound (n) {
-        let result = flatten map lambda () {
+        let result = flatten repeat -> {
           name .. " makes " .. sound # Return doctored-up string
-        }, n #!ALL WHEELS STDLIB FUNCTIONS ARE WRITTEN FOR USE IN CONTIUATION-PASSING STYLE! Also, map works on everything that defines an fmap method! (sort of like haskell)
+        }, n #!ALL WHEELS STDLIB FUNCTIONS ARE WRITTEN FOR USE IN CONTIUATION-PASSING STYLE! 
       }
     }
     class Dog with Animal {
       def sound = "Bark!" # override some stuff
       def name = "Doggie"
+      def init { # Add an init method
+        println "Initialized!"
+      }
     }
     let dog = Dog.new # You could also use `let var` if you wanted the variable to be mutable
-    dog make_sound 3 + 2  # this is the same as dog.make_sound(3.+(2)) or dog.make_sound 3.+ 2
+    dog.make_sound 3 + 2  
 
 
     let array = [1, 2, 3, 4, 5, 99] unless false # Another way to write this is: `flatten [1..5, 99]`

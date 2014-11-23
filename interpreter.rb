@@ -46,11 +46,6 @@ class StringNode
     Constants["String"].new_with_value(value)
   end
 end
-class SymbolNode
-  def eval(context)
-    Constants["Symbol"].new_with_value(value)
-  end
-end
 
 class ArrayListNode
   def eval(context)
@@ -124,27 +119,56 @@ class SetLocalNode
       @@is_set[name] = true
       context.locals[name]
     else
-      raise "Attemt to re-assign variable."
+      raise "Attemt to re-assign variable using normal variable."
     end
   end
 end
-class SSetLocalNode < SetLocalNode
+class SetLocalDescNode
+  def eval(context)
+    name.each do |name|
+      if !@@is_set[name]
+        context.locals[name] = value.eval(context).call(name, [])
+        @@is_set[name] = true
+      else
+        raise "Attemt to re-assign variable using normal variable."
+      end
+    end
+    Constants["nil"]
+  end
+end
+class SetMutLocalDescNode
+  def eval(context)
+    name.each do |name|
+      if !@@is_set[name]
+        context.locals[name] = value.eval(context).call(name, [])
+      else
+        raise "Attemt to re-assign variable using mutable variable."
+      end
+    end
+    Constants["nil"]
+  end
+end
+class SSetLocalNode
   def eval(context)
     if !@@is_set[name]
       if context.locals[name]
         context.locals[name] = value.eval(context)
       else
-        raise "Attemt to assign undeclared variable."
+        raise "Attemt to assign undeclared mutable variable."
       end
       context.locals[name]
     else
-      raise "Attemt to re-assign variable."
+      raise "Attemt to re-assign normal variable."
     end
   end
 end
 class SetMutLocalNode
   def eval(context)
-    context.locals[name] = value.eval(context)
+    if !@@is_set[name]
+      context.locals[name] = value.eval(context)
+    else
+      raise "Attemt to re-assign variable using mutable variable."
+    end
   end
 end
 
@@ -159,6 +183,9 @@ class CallNode
     else
       value = context.current_self # Default to `self` if no receiver.
     end
+    if !value
+      raise "Receiver cannot be resolved by either getting current context, or through dot notation!"
+    end
     
     evaluated_arguments = arguments.map { |arg| arg.eval(context) }
     value.call(method, evaluated_arguments)
@@ -167,22 +194,25 @@ end
 class ApplyNode
   def eval(context)
     value = context.current_self
+    if !value
+      raise "Receiver cannot be resolved by getting current context!"
+    end
     
     evaluated_arguments = arguments.map { |arg| arg.eval(context) }
-    value.apply(context, method, evaluated_arguments)
+    value.apply(context, context.locals[method].context, method, evaluated_arguments)
   end
 end
 
 # Defining a method, using the `def` keyword, is done by adding a method to the current class.
 class DefNode
   def eval(context)
-    method = BikeMethod.new(params, body)
+    method = BikeMethod.new(params, body, context.current_class)
     context.current_class.runtime_methods[name] = method
   end
 end
 class LambdaNode
   def eval(context)
-    BikeMethod.new(params, body)
+    BikeMethod.new(params, body, context.current_class)
   end
 end
 

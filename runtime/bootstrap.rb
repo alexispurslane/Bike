@@ -25,57 +25,77 @@ Constants["Class"].def :new do |receiver,arguments|
   receiver.new
 end
 Constants["Object"].def :println do |receiver, arguments|
-  puts arguments.first.ruby_value
+  check_all_arguments(arguments)
   arguments[0] || Constants["nil"] # We always want to return objects from our runtime
 end
 Constants["Object"].def :println_all do |receiver, arguments|
-  arguments.foreach do |e|
-    puts e.ruby_value
+  check_all_arguments(arguments)
+  arguments.each do |e|
+    puts e
   end
   arguments || Constants["nil"] # We always want to return objects from our runtime
 end
 Constants["Object"].def :print do |receiver, arguments|
+  check_all_arguments(arguments)
   print arguments.first.ruby_value
   arguments[0] || Constants["nil"] # We always want to return objects from our runtime
 end
+def check_all_arguments (args) 
+  args.each_index do |i|
+    arg = args[i]
+    unless arg
+      raise "Nil argument at number #{i}!"
+    end
+  end
+end
+
 Constants["Object"].def :call do |receiver, arguments|
   receiver
 end
 Constants["Number"].def :+ do|receiver,arguments|
+  check_all_arguments(arguments)
   result = receiver.ruby_value + arguments.first.ruby_value
   Constants["Number"].new_with_value(result)
 end
 Constants["Number"].def :- do|receiver,arguments|
+  check_all_arguments(arguments)
   result = receiver.ruby_value - arguments.first.ruby_value
   Constants["Number"].new_with_value(result)
 end
 Constants["Number"].def :< do|receiver,arguments|
+  check_all_arguments(arguments)
   result = receiver.ruby_value < arguments.first.ruby_value
   Constants["Number"].new_with_value(result)
 end
 Constants["Number"].def :> do|receiver,arguments|
+  check_all_arguments(arguments)
   result = receiver.ruby_value > arguments.first.ruby_value
   Constants["Number"].new_with_value(result)
 end
 Constants["Number"].def :<= do|receiver,arguments|
+  check_all_arguments(arguments)
   result = receiver.ruby_value <= arguments.first.ruby_value
   Constants["Number"].new_with_value(result)
 end
 Constants["Number"].def :>= do|receiver,arguments|
+  check_all_arguments(arguments)
   result = receiver.ruby_value >= arguments.first.ruby_value
   Constants["Number"].new_with_value(result)
 end
 Constants["Number"].def :* do|receiver,arguments|
+  check_all_arguments(arguments)
   result = receiver.ruby_value * arguments.first.ruby_value
   Constants["Number"].new_with_value(result)
 end
 Constants["Number"].def :/ do|receiver,arguments|
+  check_all_arguments(arguments)
   result = receiver.ruby_value / arguments.first.ruby_value
   Constants["Number"].new_with_value(result)
 end
 
 def define_is(type)
   Constants[type].def :is do|receiver, arguments|
+    check_all_arguments(arguments)
     result = receiver.ruby_value == arguments.first.ruby_value
     if result
       Constants["true"]
@@ -87,6 +107,7 @@ end
 
 def define_isnt(type)
   Constants[type].def :isnt do|receiver, arguments|
+    check_all_arguments(arguments)
     result = receiver.ruby_value != arguments.first.ruby_value
     if result
       Constants["true"]
@@ -98,6 +119,7 @@ end
 
 def define_and(type)
   Constants[type].def :and do|receiver, arguments|
+    check_all_arguments(arguments)
     result = receiver.ruby_value && arguments.first.ruby_value
     if result
       Constants["true"]
@@ -109,6 +131,7 @@ end
 
 def define_or(type)
   Constants[type].def :or do|receiver, arguments|
+    check_all_arguments(arguments)
     result = receiver.ruby_value || arguments.first.ruby_value
     if result
       Constants["true"]

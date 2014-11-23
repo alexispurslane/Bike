@@ -7,8 +7,8 @@ class BikeObject
   def call(method, arguments=[])
     @runtime_class.lookup(method).call(self, arguments)
   end
-  def apply(context, method, arguments=[])
-    context.locals[method].call(self, arguments)
+  def apply(context, closure, method, arguments=[])
+    context.locals[method].call(closure, arguments)
   end
 end
 
