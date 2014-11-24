@@ -280,8 +280,8 @@ rule
   ;
   KeyVal:
     /* nothing */                                  { result = [] }
-  | IDENTIFIER ROCKET Expression                   { result = [val[0], val[2]] }
-  | KeyVal Terminator IDENTIFIER ROCKET Expression { result = val[0] << [val[2], val[4]] }
+  | IDENTIFIER ROCKET Expression                   { result = [[val[0], val[2]]] }
+  | KeyVal Terminator IDENTIFIER ROCKET Expression        { result = val[0] << [val[2], val[4]] }
   ;
 
 

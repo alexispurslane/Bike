@@ -9,7 +9,8 @@
  - [X]  Arrow functions
  - [X]  Destructureing assignment
  - [X]  String Concatonation
- - [ ]  Hashes (Implemented as anonymous classes)
+ - [X]  Ananymos Classes
+ - [X]  Hashes
  - [ ]  Rest Arguments
  - [ ]  Splat arguments for functions
  - [ ]  Closures

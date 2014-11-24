@@ -35,6 +35,7 @@ else
     line = Readline::readline("[#{n}] >> ".blue)    # 1. Read
     Readline::HISTORY.push(line)
     n += 1
+    line = line.strip
     if line == ":exit"
       puts "Bye!".blue
       exit
