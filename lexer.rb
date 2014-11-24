@@ -2,7 +2,7 @@ def to_fi(v)
   v.match('\.').nil? ? Integer(v) : Float(v)
 end
 class Lexer
-  KEYWORDS = ["var", "def", "class", "if", "let", "else", "true", "false", "nil", "while", "unless", "apply", "extends", "import", "into", "package", "with", "mixin"]
+  KEYWORDS = ["var", "def", "class", "if", "let", "else", "true", "false", "nil", "while", "unless", "apply", "extends", "import", "into", "package", "with", "mixin", "hash"]
   
   def tokenize(code)
     code.chomp!
@@ -12,9 +12,11 @@ class Lexer
     while i < code.size
       chunk = code[i..-1]
 
-      if operator = chunk[/\A(isnt|or|and|not|is|<=|>=|->|\\|\$)/, 1]
+      if operator = chunk[/\A(isnt|or|and|not|is|<=|>=|->|=>|\\|\$)/, 1]
         if operator == "->"
           tokens << [:ARROW, "arrow"]
+        elsif operator == "=>"
+          tokens << [:ROCKET, "rocket"]
         elsif operator == "\\"
           tokens << [:SLASH, "slash"]
         elsif operator == "$"

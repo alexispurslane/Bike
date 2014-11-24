@@ -10,6 +10,8 @@ token WHILE
 token IMPORT
 token INTO
 token CLASS
+token HASH
+token ROCKET
 token WITH
 token MIXIN
 token PACKAGE
@@ -102,14 +104,15 @@ rule
   | Arrow
   | Def
   | Class
+  | Hash
   | Mixin
   | Package
   | If
   | While
   | Unless
   | Array
-  | '(' Expression ')'    { result = val[1] }
-  | '(' Expression NEWLINE ')'    { result = val[1] }
+  | '(' Expression ')'                    { result = val[1] }
+  | '(' Expression NEWLINE ')'            { result = val[1] }
   | '(' NEWLINE Expression NEWLINE ')'    { result = val[2] }
   ;
 
@@ -217,11 +220,11 @@ rule
   ;
   
   SetLocal:
-    LET IDENTIFIER "=" Expression  { result = SetLocalNode.new(val[1], val[3]) }
-  | LET VAR IDENTIFIER "=" Expression  { result = SetMutLocalNode.new(val[2], val[4]) }
-  | LET "{" ParamList "}" "=" Expression  { result = SetLocalDescNode.new(val[2], val[5]) }
+    LET IDENTIFIER "=" Expression             { result = SetLocalNode.new(val[1], val[3]) }
+  | LET VAR IDENTIFIER "=" Expression         { result = SetMutLocalNode.new(val[2], val[4]) }
+  | LET "{" ParamList "}" "=" Expression      { result = SetLocalDescNode.new(val[2], val[5]) }
   | LET VAR "{" ParamList "}" "=" Expression  { result = SetMutLocalDescNode.new(val[3], val[6]) }
-  | IDENTIFIER "=" Expression      { result = SSetLocalNode.new(val[0], val[2]) }
+  | IDENTIFIER "=" Expression                 { result = SSetLocalNode.new(val[0], val[2]) }
   ;
 
   # Our language uses indentation to separate blocks of code. But the lexer took care of all
@@ -233,19 +236,19 @@ rule
   # simply need to modify this one rule.
   # You'll also need to remove the indentation logic from the lexer.
   Block:
-    "{" Expressions "}"           { result = val[1] }
+    "{" Expressions "}"                   { result = val[1] }
   | "{" NEWLINE Expressions "}"           { result = val[2] }
-  | "{"  "}"           { result = val[2] }
+  | "{"  "}"                              { result = val[2] }
   | "{" Expressions NEWLINE "}"           { result = val[1] }
-  | "{" NEWLINE Expressions NEWLINE "}"           { result = val[2] }
+  | "{" NEWLINE Expressions NEWLINE "}"   { result = val[2] }
   ;
   
   # The `def` keyword is used for defining methods. Once again, we're introducing
   # a bit of syntactic sugar here to allow skipping the parentheses when there are no parameters.
   Def:
     DEF IDENTIFIER Block          { result = DefNode.new(val[1], [], val[2]) }
-  | DEF IDENTIFIER "=" Expression          { result = DefNode.new(val[1], [], val[3]) }
-  | DEF IDENTIFIER "=" Block          { result = DefNode.new(val[1], [], val[3]) }
+  | DEF IDENTIFIER "=" Expression { result = DefNode.new(val[1], [], val[3]) }
+  | DEF IDENTIFIER "=" Block      { result = DefNode.new(val[1], [], val[3]) }
   | DEF IDENTIFIER
       "(" ParamList ")" Block     { result = DefNode.new(val[1], val[3], val[5]) }
   ;
@@ -259,16 +262,28 @@ rule
   # Class definition is similar to method definition.
   # Class names are also constants because they start with a capital letter.
   Class:
-    CLASS IDENTIFIER Block                        { result = ClassNode.new(val[1], "Object", val[2], nil) }
-  | CLASS IDENTIFIER EXTENDS IDENTIFIER Block        { result = ClassNode.new(val[1], val[3], val[4], nil) }
+    CLASS IDENTIFIER Block                                          { result = ClassNode.new(val[1], "Object", val[2], nil) }
+  | CLASS IDENTIFIER EXTENDS IDENTIFIER Block                       { result = ClassNode.new(val[1], val[3], val[4], nil) }
   | CLASS IDENTIFIER "(" Mixins ")" EXTENDS IDENTIFIER Block        { result = ClassNode.new(val[1], val[6], val[7], val[3]) }
-  | CLASS IDENTIFIER "(" Mixins ")" Block        { result = ClassNode.new(val[1], "Object", val[5], val[3]) }
-  | CLASS Block                        { result = ClassNode.new(nil, "Object", val[1], nil) }
-  | CLASS EXTENDS IDENTIFIER Block        { result = ClassNode.new(nil, val[2], val[3], nil) }
-  | CLASS "(" Mixins ")" EXTENDS IDENTIFIER Block        { result = ClassNode.new(nil, val[5], val[6], val[2]) }
-  | CLASS "(" Mixins ")" Block        { result = ClassNode.new(nil, "Object", val[4], val[2]) }
-
+  | CLASS IDENTIFIER "(" Mixins ")" Block                           { result = ClassNode.new(val[1], "Object", val[5], val[3]) }
+  | CLASS Block                                                     { result = ClassNode.new(nil, "Object", val[1], nil) }
+  | CLASS EXTENDS IDENTIFIER Block                                  { result = ClassNode.new(nil, val[2], val[3], nil) }
+  | CLASS "(" Mixins ")" EXTENDS IDENTIFIER Block                   { result = ClassNode.new(nil, val[5], val[6], val[2]) }
+  | CLASS "(" Mixins ")" Block                                      { result = ClassNode.new(nil, "Object", val[4], val[2]) }
   ;
+  Hash:
+    HASH "{" NEWLINE KeyVal "}"                { result = HashNode.new(val[3]) }
+  | HASH "{" KeyVal "}"                        { result = HashNode.new(val[2]) }
+  | HASH "{" KeyVal NEWLINE "}"                { result = HashNode.new(val[2]) }
+  | HASH "{" NEWLINE KeyVal NEWLINE "}"        { result = HashNode.new(val[3]) }
+  | HASH "{" "}"                               { result = HashNode.new([]) }
+  ;
+  KeyVal:
+    /* nothing */                                  { result = [] }
+  | IDENTIFIER ROCKET Expression                   { result = [val[0], val[2]] }
+  | KeyVal Terminator IDENTIFIER ROCKET Expression { result = val[0] << [val[2], val[4]] }
+  ;
+
 
   Mixin:
     MIXIN IDENTIFIER Block                        { result = ClassNode.new(val[1], "Object", val[2], nil) }

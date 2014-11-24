@@ -251,6 +251,23 @@ class ClassNode
     bike_class
   end
 end
+class HashNode
+  def eval(context)
+    bike_class = BikeClass.new(Constants["Object"], [])
+    
+    class_context = Context.new(bike_class, bike_class)
+    class_context.locals["self"] = bike_class
+    key_values.each do |e|
+      key = e[0]
+      val = e[1]
+      bike_class.def key.to_sym do |receiver, arguments|
+        val.eval(class_context)
+      end
+    end
+    bike_class.call("new", [])
+  end
+end
+
 class PackageNode
   def eval(context)
     sup = Constants["Object"]
