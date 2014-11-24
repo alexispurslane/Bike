@@ -3,7 +3,7 @@ require_relative "runtime"
 
 $gc = 0
 
-def gensym (base="anonymous_class_")
+def gensym (base="AnonymousClass_")
   $gc += 1
   r = "#{base}#{$gc}".to_sym
 
