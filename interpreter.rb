@@ -3,9 +3,11 @@ require_relative "runtime"
 
 $gc = 0
 
-def gensym (base="anonymous_class#")
+def gensym (base="anonymous_class_")
   $gc += 1
-  base + $gc.to_s.to_sym
+  r = "#{base}#{$gc}".to_sym
+
+  r
 end
 
 # First, we create an simple wrapper class to encapsulate the interpretation process.
@@ -232,16 +234,14 @@ end
 # where we set the value of `current_class`.
 class ClassNode
   def eval(context)
-    unless name
-      name = gensym()
-    end
+    classname = name || gensym()
 
-    bike_class = Constants[name] # Check if class is already defined
+    bike_class = Constants[classname] # Check if class is already defined
     
     unless bike_class # Class doesn't exist yet
       sup = Constants[superclass]
       bike_class = BikeClass.new(sup, mixins)
-      Constants[name] = bike_class # Define the class in the runtime
+      Constants[classname] = bike_class # Define the class in the runtime
     end
     
     class_context = Context.new(bike_class, bike_class)

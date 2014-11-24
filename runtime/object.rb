@@ -1,6 +1,6 @@
 class BikeObject
   attr_accessor :runtime_class, :ruby_value
-  def initialize(runtime_class, ruby_value="Bike Class")
+  def initialize(runtime_class, ruby_value="Class")
     @runtime_class = runtime_class
     @ruby_value = ruby_value
   end
