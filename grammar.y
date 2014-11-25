@@ -248,9 +248,12 @@ rule
   Def:
     DEF IDENTIFIER Block          { result = DefNode.new(val[1], [], val[2]) }
   | DEF IDENTIFIER "=" Expression { result = DefNode.new(val[1], [], val[3]) }
-  | DEF IDENTIFIER "=" Block      { result = DefNode.new(val[1], [], val[3]) }
   | DEF IDENTIFIER
       "(" ParamList ")" Block     { result = DefNode.new(val[1], val[3], val[5]) }
+  | DEF IDENTIFIER
+      "(" ParamList "|" IDENTIFIER ")" Block     { result = DefNode.new(val[1], val[3], val[7], val[5]) }
+  | DEF IDENTIFIER
+      "(" "|" IDENTIFIER ")" Block     { result = DefNode.new(val[1], [], val[6], val[4]) }
   ;
 
   ParamList:

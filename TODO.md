@@ -13,7 +13,6 @@
  - [X]  Hashes
  - [ ]  Rest Arguments
  - [ ]  Splat arguments for functions
- - [ ]  Closures
 
 ##TODO for Beta 4:
  - [ ]  Observers
@@ -21,6 +20,7 @@
  - [ ]  Sets
  - [ ]  array comprehenson
  - [ ]  `for-of` for hashes
+ - [ ]  Closures
 
 ##TODO for Beta 5:
  - [ ]  Documentation
