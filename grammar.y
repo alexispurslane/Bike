@@ -251,9 +251,9 @@ rule
   | DEF IDENTIFIER
       "(" ParamList ")" Block     { result = DefNode.new(val[1], val[3], val[5]) }
   | DEF IDENTIFIER
-      "(" ParamList "|" IDENTIFIER ")" Block     { result = DefNode.new(val[1], val[3], val[7], val[5]) }
+      "(" ParamList "." "." "." IDENTIFIER ")" Block     { result = DefNode.new(val[1], val[3], val[9], val[7]) }
   | DEF IDENTIFIER
-      "(" "|" IDENTIFIER ")" Block     { result = DefNode.new(val[1], [], val[6], val[4]) }
+      "(" "." "." "." IDENTIFIER ")" Block     { result = DefNode.new(val[1], [], val[8], val[6]) }
   ;
 
   ParamList:

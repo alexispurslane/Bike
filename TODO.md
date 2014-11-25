@@ -11,7 +11,7 @@
  - [X]  String Concatonation
  - [X]  Ananymos Classes
  - [X]  Hashes
- - [ ]  Rest Arguments
+ - [X]  Rest Arguments
  - [ ]  Splat arguments for functions
 
 ##TODO for Beta 4:
