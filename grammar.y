@@ -148,12 +148,13 @@ rule
   #
   # Each one of those is handled by the following rule.
   Call:
-    IDENTIFIER Arguments          { result = CallNode.new(nil, val[0], val[1]) }
+    IDENTIFIER Arguments          { result = CallNode.new(nil, val[0], val[1], false) }
   | Expression "." IDENTIFIER
-      Arguments                   { result = CallNode.new(val[0], val[2], val[3]) }
-  | Expression "." IDENTIFIER     { result = CallNode.new(val[0], val[2], []) }
-  | Expression IDENTIFIER
-      Arguments                   { result = CallNode.new(val[0], val[1], val[2]) }
+      Arguments                   { result = CallNode.new(val[0], val[2], val[3], false) }
+  | Expression "." IDENTIFIER     { result = CallNode.new(val[0], val[2], [], false) }
+  | Expression "." IDENTIFIER
+      IDENTIFIER "." "." "."                  { result = CallNode.new(val[0], val[2], val[3], true) }
+  | IDENTIFIER IDENTIFIER "." "." "."          { result = CallNode.new(nil, val[0], val[1], true) }
   ;
 
   Apply:

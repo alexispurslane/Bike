@@ -13,7 +13,7 @@ class BikeClass < BikeObject
     end
     @runtime_class = Constants["Class"]
     @runtime_superclass = superclass
-    @ruby_value = "<bike uninitialized class>"
+    @ruby_value = "<class>"
   end
   # Lookup a method
   def lookup(method_name)

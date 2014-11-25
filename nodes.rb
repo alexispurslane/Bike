@@ -55,10 +55,12 @@ class NilNode < LiteralNode
   end
 end
 
+class ArrayListNode < LiteralNode; end
+
 # The node for a method call holds the `receiver`,
 # the object on which the method is called, the `method` name and its
 # arguments, which are other nodes.
-class CallNode < Struct.new(:receiver, :method, :arguments); end
+class CallNode < Struct.new(:receiver, :method, :arguments, :is_splat); end
 class ApplyNode < Struct.new(:receiver, :method, :arguments); end
 class ImportNode < Struct.new(:into, :file); end
 

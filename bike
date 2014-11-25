@@ -14,7 +14,7 @@ LIST = [
   'let', 'var', 'def', 'lambda',
   'with', 'apply', 'while', 'else',
   'unless', 'if', 'println', 'print',
-  'package', 'with', 'mixin', 'reopen'
+  'package', 'with', 'mixin', 'reopen', '...'
 ].sort
 
 comp = proc { |s| LIST.grep( /^#{Regexp.escape(s)}/ ) }
@@ -67,9 +67,9 @@ else
       else
         value = interpreter.eval(line)         # 2. Eval
         if value.ruby_value.is_a?(Array)
-          print "["
-          print value.ruby_value.map { |i| i.ruby_value.inspect }.join(", ")
-          puts "]"
+          print "<= [".light_white
+          print value.ruby_value.map { |i| i.ruby_value.inspect }.join(", ").light_white
+          puts "]".light_white
         else
           puts "<= #{value.ruby_value.inspect}".light_white   # 3. Print
         end

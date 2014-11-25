@@ -195,10 +195,15 @@ class CallNode
       raise "Receiver cannot be resolved by either getting current context, or through dot notation!"
     end
     
-    evaluated_arguments = arguments.map { |arg| arg.eval(context) }
+    if !is_splat
+      evaluated_arguments = arguments.map { |arg| arg.eval(context) }
+    else
+      evaluated_arguments = context.locals[arguments].ruby_value
+    end
     value.call(method, evaluated_arguments)
   end
 end
+
 class ApplyNode
   def eval(context)
     value = context.current_self
