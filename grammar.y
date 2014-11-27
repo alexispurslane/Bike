@@ -40,10 +40,10 @@ token NEWLINE
 prechigh
   left  '.'
   right 'not'
-  left  '*' '/'
+  left  '*' '/' 
   left  '+' '-'
   left  '>' '>=' '<' '<='
-  left  'is' 'isnt'
+  left  'is' 'isnt' '@' 'set'
   left  'and'
   left  'or'
   right '='
@@ -179,8 +179,9 @@ rule
     "[" "]"                       { result = [] }
   | "[" LitArray "]"              { result = ArrayListNode.new(val[1]) }
   ;
+
   LitArray:
-    Literal                    { result = val }
+    Expression                    { result = val }
   | LitArray "," Expression    { result = val[0] << val[2] }
   ;
 
@@ -207,6 +208,8 @@ rule
     Expression 'or' Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
   | Expression 'and' Expression   { result = CallNode.new(val[0], val[1], [val[2]]) }
   | Expression 'is' Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
+  | Expression '@' Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
+  | Expression 'set' Expression Expression    { result = CallNode.new(val[0], val[1], [val[2], val[3]]) }
   | Expression 'isnt' Expression  { result = CallNode.new(val[0], val[1], [val[2]]) }
   | 'not' Expression              { result = CallNode.new(val[1], val[0], []) }
   | Expression '>'  Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }

@@ -157,9 +157,10 @@ end
 
 
 
-Constants["Array"].def :get do |receiver, arguments|
+Constants["Array"].def :'@' do |receiver, arguments|
   (receiver.ruby_value[arguments[0].ruby_value-1]) || Constants["nil"]
 end
+
 Constants["Array"].def :set do |receiver, arguments|
   clone = receiver.ruby_value.clone
   clone[arguments[0].ruby_value-1] = arguments[1]
@@ -168,6 +169,35 @@ end
 Constants["Array"].def :length do |receiver, arguments|
   Constants["Number"].new_with_value(receiver.ruby_value.count) || Constants["nil"]
 end
-Constants["String"].def :set do |receiver, arguments|
-  raise "Attempt to set on immutable string object!"
+Constants["Array"].def :+ do |receiver, arguments|
+  Constants["Array"].new_with_value(receiver.ruby_value + arguments.first.ruby_value)
 end
+Constants["Array"].def :* do |receiver, arguments|
+  Constants["Array"].new_with_value(receiver.ruby_value * arguments.first.ruby_value)
+end
+Constants["Array"].def :- do |receiver, arguments|
+  Constants["Array"].new_with_value(receiver.ruby_value.delete(receiver.ruby_value.index(arguments.first.ruby_value)))
+end
+Constants["Array"].def :/ do |receiver, arguments|
+  Constants["Array"].new_with_value ((0..(receiver.ruby_value.length - 1) / arguments.first.ruby_value).map { |i| receiver.ruby_value[i * arguments.first.ruby_value, arguments.first.ruby_value] }).map { |e| Constants[e.type].new_with_value(e.value) }
+end
+
+
+
+Constants["String"].def :'@' do |receiver, arguments|
+  Constants["String"].new_with_value(receiver.ruby_value[arguments[0].ruby_value-1]) || Constants["nil"]
+end
+Constants["String"].def :+ do |receiver, arguments|
+  Constants["String"].new_with_value(receiver.ruby_value + arguments.first.ruby_value)
+end
+Constants["String"].def :* do |receiver, arguments|
+  Constants["String"].new_with_value(receiver.ruby_value * arguments.first.ruby_value)
+end
+Constants["String"].def :- do |receiver, arguments|
+  Constants["String"].new_with_value(receiver.ruby_value.gsub(arguments.first.ruby_value, ''))
+end
+Constants["String"].def :/ do |receiver, arguments|
+  Constants["Array"].new_with_value ((0..(receiver.ruby_value.length - 1) / arguments.first.ruby_value).map { |i| receiver.ruby_value[i * arguments.first.ruby_value, arguments.first.ruby_value] }).map { |e| Constants["String"].new_with_value(e) }
+end
+
+

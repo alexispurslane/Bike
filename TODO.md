@@ -8,8 +8,8 @@
 ##TODO for Beta 3:
  - [X]  Arrow functions
  - [X]  Destructureing assignment
- - [X]  String Concatonation
- - [X]  Ananymos Classes
+ - [X]  String Concatenations
+ - [X]  Anonymous Classes
  - [X]  Hashes
  - [X]  Rest Arguments
  - [X]  Document Source

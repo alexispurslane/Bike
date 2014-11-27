@@ -18,25 +18,21 @@ Some code samples are in order:
       def sound = "some strange animal sound" # define function that returns a string. This gets you computed properties and getters for free!
       def name = "some strange animal"
       def make_sound (n) {
-        let result = flatten repeat -> {
-          name .. " makes " .. sound # Return doctored-up string
-        }, n #!ALL WHEELS STDLIB FUNCTIONS ARE WRITTEN FOR USE IN CONTIUATION-PASSING STYLE! 
+        (name + " makes " + sound) * n # Return doctored-up string
       }
     }
     class Dog extends Animal {
       def sound = "Bark!" # override some stuff
       def name = "Doggie"
-      def init { # Add an init method
-        println "Initialized!"
-      }
+      def init = println "Initialized!" # Add an init method
     }
-    let mutatedDog = class with Animal
+    let mutatedDog = class with Animal {  }
     let dog = Dog.new # You could also use `let var` if you wanted the variable to be mutable
     dog.make_sound 3 + 2  
 
 
     let array = [1, 2, 3, 4, 5, 99] unless false # Another way to write this is: `flatten [1..5, 99]`
-    let fixed_count_array = (array.set 6, 6) if true
+    let fixed_count_array = (array =@ 6 6) if true
     if array isnt fixed_count_array {
       println "Ok!"
     } else {
