@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>Parser.html - RDoc Documentation</title>
+
+<link href="../../fonts.css" rel="stylesheet">
+<link href="../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+</script>
+
+<script src="../../js/jquery.js"></script>
+<script src="../../js/navigation.js"></script>
+<script src="../../js/search_index.js"></script>
+<script src="../../js/search.js"></script>
+<script src="../../js/searcher.js"></script>
+<script src="../../js/darkfish.js"></script>
+
+
+<body id="top" role="document" class="file">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../../table_of_contents.html#pages">Pages</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="project-metadata">
+    <div id="fileindex-section" class="nav-section">
+  <h3>Pages</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../LICENSE_txt.html">LICENSE</a>
+  
+    <li><a href="../../README_md.html">README</a>
+  
+    <li><a href="../../TODO_md.html">TODO</a>
+  
+    <li><a href="../../Wheels_bk.html">Wheels.bk</a>
+  
+    <li><a href="../../comp_txt.html">comp</a>
+  
+    <li><a href="../../doc/ApplyNode_html.html">ApplyNode.html</a>
+  
+    <li><a href="../../doc/ArrayListNode_html.html">ArrayListNode.html</a>
+  
+    <li><a href="../../doc/BikeClass_html.html">BikeClass.html</a>
+  
+    <li><a href="../../doc/BikeMethod_html.html">BikeMethod.html</a>
+  
+    <li><a href="../../doc/BikeObject_html.html">BikeObject.html</a>
+  
+    <li><a href="../../doc/CallNode_html.html">CallNode.html</a>
+  
+    <li><a href="../../doc/ClassNode_html.html">ClassNode.html</a>
+  
+    <li><a href="../../doc/Context_html.html">Context.html</a>
+  
+    <li><a href="../../doc/DefNode_html.html">DefNode.html</a>
+  
+    <li><a href="../../doc/FalseNode_html.html">FalseNode.html</a>
+  
+    <li><a href="../../doc/GetConstantNode_html.html">GetConstantNode.html</a>
+  
+    <li><a href="../../doc/GetLocalNode_html.html">GetLocalNode.html</a>
+  
+    <li><a href="../../doc/HashNode_html.html">HashNode.html</a>
+  
+    <li><a href="../../doc/IfNode_html.html">IfNode.html</a>
+  
+    <li><a href="../../doc/ImportNode_html.html">ImportNode.html</a>
+  
+    <li><a href="../../doc/Interpreter_html.html">Interpreter.html</a>
+  
+    <li><a href="../../doc/LICENSE_txt_html.html">LICENSE_txt.html</a>
+  
+    <li><a href="../../doc/LambdaNode_html.html">LambdaNode.html</a>
+  
+    <li><a href="../../doc/Lexer_html.html">Lexer.html</a>
+  
+    <li><a href="../../doc/LiteralNode_html.html">LiteralNode.html</a>
+  
+    <li><a href="../../doc/NilNode_html.html">NilNode.html</a>
+  
+    <li><a href="../../doc/Nodes_html.html">Nodes.html</a>
+  
+    <li><a href="../../doc/NumberNode_html.html">NumberNode.html</a>
+  
+    <li><a href="../../doc/Object_html.html">Object.html</a>
+  
+    <li><a href="../../doc/PackageNode_html.html">PackageNode.html</a>
+  
+    <li><a href="../../doc/Parser_html.html">Parser.html</a>
+  
+    <li><a href="../../doc/README_md_html.html">README_md.html</a>
+  
+    <li><a href="../../doc/Readline_html.html">Readline.html</a>
+  
+    <li><a href="../../doc/SSetLocalNode_html.html">SSetLocalNode.html</a>
+  
+    <li><a href="../../doc/SetConstantNode_html.html">SetConstantNode.html</a>
+  
+    <li><a href="../../doc/SetLocalDescNode_html.html">SetLocalDescNode.html</a>
+  
+    <li><a href="../../doc/SetLocalNode_html.html">SetLocalNode.html</a>
+  
+    <li><a href="../../doc/SetMutLocalDescNode_html.html">SetMutLocalDescNode.html</a>
+  
+    <li><a href="../../doc/SetMutLocalNode_html.html">SetMutLocalNode.html</a>
+  
+    <li><a href="../../doc/StringNode_html.html">StringNode.html</a>
+  
+    <li><a href="../../doc/TODO_md_html.html">TODO_md.html</a>
+  
+    <li><a href="../../doc/TestClass_html.html">TestClass.html</a>
+  
+    <li><a href="../../doc/TrueNode_html.html">TrueNode.html</a>
+  
+    <li><a href="../../doc/UnlessNode_html.html">UnlessNode.html</a>
+  
+    <li><a href="../../doc/Wheels_bk_html.html">Wheels_bk.html</a>
+  
+    <li><a href="../../doc/WhileNode_html.html">WhileNode.html</a>
+  
+    <li><a href="../../doc/classes/ApplyNode_html.html">ApplyNode.html</a>
+  
+    <li><a href="../../doc/classes/ArrayListNode_html.html">ArrayListNode.html</a>
+  
+    <li><a href="../../doc/classes/BikeClass_html.html">BikeClass.html</a>
+  
+    <li><a href="../../doc/classes/BikeMethod_html.html">BikeMethod.html</a>
+  
+    <li><a href="../../doc/classes/BikeObject_html.html">BikeObject.html</a>
+  
+    <li><a href="../../doc/classes/CallNode_html.html">CallNode.html</a>
+  
+    <li><a href="../../doc/classes/ClassNode_html.html">ClassNode.html</a>
+  
+    <li><a href="../../doc/classes/Context_html.html">Context.html</a>
+  
+    <li><a href="../../doc/classes/DefNode_html.html">DefNode.html</a>
+  
+    <li><a href="../../doc/classes/FalseNode_html.html">FalseNode.html</a>
+  
+    <li><a href="../../doc/classes/GetConstantNode_html.html">GetConstantNode.html</a>
+  
+    <li><a href="../../doc/classes/GetLocalNode_html.html">GetLocalNode.html</a>
+  
+    <li><a href="../../doc/classes/HashNode_html.html">HashNode.html</a>
+  
+    <li><a href="../../doc/classes/IfNode_html.html">IfNode.html</a>
+  
+    <li><a href="../../doc/classes/ImportNode_html.html">ImportNode.html</a>
+  
+    <li><a href="../../doc/classes/Interpreter_html.html">Interpreter.html</a>
+  
+    <li><a href="../../doc/classes/LambdaNode_html.html">LambdaNode.html</a>
+  
+    <li><a href="../../doc/classes/Lexer_html.html">Lexer.html</a>
+  
+    <li><a href="../../doc/classes/LiteralNode_html.html">LiteralNode.html</a>
+  
+    <li><a href="../../doc/classes/NilNode_html.html">NilNode.html</a>
+  
+    <li><a href="../../doc/classes/Nodes_html.html">Nodes.html</a>
+  
+    <li><a href="../../doc/classes/NumberNode_html.html">NumberNode.html</a>
+  
+    <li><a href="../../doc/classes/Object_html.html">Object.html</a>
+  
+    <li><a href="../../doc/classes/PackageNode_html.html">PackageNode.html</a>
+  
+    <li><a href="../../doc/classes/Parser_html.html">Parser.html</a>
+  
+    <li><a href="../../doc/classes/Readline_html.html">Readline.html</a>
+  
+    <li><a href="../../doc/classes/SSetLocalNode_html.html">SSetLocalNode.html</a>
+  
+    <li><a href="../../doc/classes/SetConstantNode_html.html">SetConstantNode.html</a>
+  
+    <li><a href="../../doc/classes/SetLocalDescNode_html.html">SetLocalDescNode.html</a>
+  
+    <li><a href="../../doc/classes/SetLocalNode_html.html">SetLocalNode.html</a>
+  
+    <li><a href="../../doc/classes/SetMutLocalDescNode_html.html">SetMutLocalDescNode.html</a>
+  
+    <li><a href="../../doc/classes/SetMutLocalNode_html.html">SetMutLocalNode.html</a>
+  
+    <li><a href="../../doc/classes/StringNode_html.html">StringNode.html</a>
+  
+    <li><a href="../../doc/classes/TestClass_html.html">TestClass.html</a>
+  
+    <li><a href="../../doc/classes/TrueNode_html.html">TrueNode.html</a>
+  
+    <li><a href="../../doc/classes/UnlessNode_html.html">UnlessNode.html</a>
+  
+    <li><a href="../../doc/classes/WhileNode_html.html">WhileNode.html</a>
+  
+    <li><a href="../../doc/comp_txt_html.html">comp_txt.html</a>
+  
+    <li><a href="../../doc/css/style_css.html">style.css</a>
+  
+    <li><a href="../../doc/files/LICENSE_txt_html.html">LICENSE_txt.html</a>
+  
+    <li><a href="../../doc/files/README_md_html.html">README_md.html</a>
+  
+    <li><a href="../../doc/files/TODO_md_html.html">TODO_md.html</a>
+  
+    <li><a href="../../doc/files/Wheels_bk_html.html">Wheels_bk.html</a>
+  
+    <li><a href="../../doc/files/bike_html.html">bike.html</a>
+  
+    <li><a href="../../doc/files/comp_txt_html.html">comp_txt.html</a>
+  
+    <li><a href="../../doc/files/doc/ApplyNode_html_html.html">ApplyNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/ArrayListNode_html_html.html">ArrayListNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/BikeClass_html_html.html">BikeClass_html.html</a>
+  
+    <li><a href="../../doc/files/doc/BikeMethod_html_html.html">BikeMethod_html.html</a>
+  
+    <li><a href="../../doc/files/doc/BikeObject_html_html.html">BikeObject_html.html</a>
+  
+    <li><a href="../../doc/files/doc/CallNode_html_html.html">CallNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/ClassNode_html_html.html">ClassNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/Context_html_html.html">Context_html.html</a>
+  
+    <li><a href="../../doc/files/doc/DefNode_html_html.html">DefNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/FalseNode_html_html.html">FalseNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/GetConstantNode_html_html.html">GetConstantNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/GetLocalNode_html_html.html">GetLocalNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/HashNode_html_html.html">HashNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/IfNode_html_html.html">IfNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/ImportNode_html_html.html">ImportNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/Interpreter_html_html.html">Interpreter_html.html</a>
+  
+    <li><a href="../../doc/files/doc/LICENSE_txt_html_html.html">LICENSE_txt_html.html</a>
+  
+    <li><a href="../../doc/files/doc/LambdaNode_html_html.html">LambdaNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/Lexer_html_html.html">Lexer_html.html</a>
+  
+    <li><a href="../../doc/files/doc/LiteralNode_html_html.html">LiteralNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/NilNode_html_html.html">NilNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/Nodes_html_html.html">Nodes_html.html</a>
+  
+    <li><a href="../../doc/files/doc/NumberNode_html_html.html">NumberNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/Object_html_html.html">Object_html.html</a>
+  
+    <li><a href="../../doc/files/doc/PackageNode_html_html.html">PackageNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/Parser_html_html.html">Parser_html.html</a>
+  
+    <li><a href="../../doc/files/doc/README_md_html_html.html">README_md_html.html</a>
+  
+    <li><a href="../../doc/files/doc/Readline_html_html.html">Readline_html.html</a>
+  
+    <li><a href="../../doc/files/doc/SSetLocalNode_html_html.html">SSetLocalNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/SetConstantNode_html_html.html">SetConstantNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/SetLocalDescNode_html_html.html">SetLocalDescNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/SetLocalNode_html_html.html">SetLocalNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/SetMutLocalDescNode_html_html.html">SetMutLocalDescNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/SetMutLocalNode_html_html.html">SetMutLocalNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/StringNode_html_html.html">StringNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/TODO_md_html_html.html">TODO_md_html.html</a>
+  
+    <li><a href="../../doc/files/doc/TestClass_html_html.html">TestClass_html.html</a>
+  
+    <li><a href="../../doc/files/doc/TrueNode_html_html.html">TrueNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/UnlessNode_html_html.html">UnlessNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/Wheels_bk_html_html.html">Wheels_bk_html.html</a>
+  
+    <li><a href="../../doc/files/doc/WhileNode_html_html.html">WhileNode_html.html</a>
+  
+    <li><a href="../../doc/files/doc/comp_txt_html_html.html">comp_txt_html.html</a>
+  
+    <li><a href="../../doc/files/doc/fonts_css_html.html">fonts_css.html</a>
+  
+    <li><a href="../../doc/files/doc/index_html_html.html">index_html.html</a>
+  
+    <li><a href="../../doc/files/doc/js/darkfish_js_html.html">darkfish_js.html</a>
+  
+    <li><a href="../../doc/files/doc/js/jquery_js_html.html">jquery_js.html</a>
+  
+    <li><a href="../../doc/files/doc/js/navigation_js_html.html">navigation_js.html</a>
+  
+    <li><a href="../../doc/files/doc/js/search_index_js_html.html">search_index_js.html</a>
+  
+    <li><a href="../../doc/files/doc/js/search_js_html.html">search_js.html</a>
+  
+    <li><a href="../../doc/files/doc/js/searcher_js_html.html">searcher_js.html</a>
+  
+    <li><a href="../../doc/files/doc/rdoc_css_html.html">rdoc_css.html</a>
+  
+    <li><a href="../../doc/files/doc/table_of_contents_html_html.html">table_of_contents_html.html</a>
+  
+    <li><a href="../../doc/files/doc/test_bk_html_html.html">test_bk_html.html</a>
+  
+    <li><a href="../../doc/files/doc/tst_bk_html_html.html">tst_bk_html.html</a>
+  
+    <li><a href="../../doc/files/grammar_y_html.html">grammar_y.html</a>
+  
+    <li><a href="../../doc/files/interpreter_rb_html.html">interpreter_rb.html</a>
+  
+    <li><a href="../../doc/files/lexer_rb_html.html">lexer_rb.html</a>
+  
+    <li><a href="../../doc/files/nodes_rb_html.html">nodes_rb.html</a>
+  
+    <li><a href="../../doc/files/parser_rb_html.html">parser_rb.html</a>
+  
+    <li><a href="../../doc/files/runtime/bootstrap_rb_html.html">bootstrap_rb.html</a>
+  
+    <li><a href="../../doc/files/runtime/class_rb_html.html">class_rb.html</a>
+  
+    <li><a href="../../doc/files/runtime/context_rb_html.html">context_rb.html</a>
+  
+    <li><a href="../../doc/files/runtime/method_rb_html.html">method_rb.html</a>
+  
+    <li><a href="../../doc/files/runtime/object_rb_html.html">object_rb.html</a>
+  
+    <li><a href="../../doc/files/runtime_rb_html.html">runtime_rb.html</a>
+  
+    <li><a href="../../doc/files/test_bk_html.html">test_bk.html</a>
+  
+    <li><a href="../../doc/files/test_rb_html.html">test_rb.html</a>
+  
+    <li><a href="../../doc/files/tst_bk_html.html">tst_bk.html</a>
+  
+    <li><a href="../../doc/fonts_css.html">fonts.css</a>
+  
+    <li><a href="../../doc/fr_class_index_html.html">fr_class_index.html</a>
+  
+    <li><a href="../../doc/fr_file_index_html.html">fr_file_index.html</a>
+  
+    <li><a href="../../doc/fr_method_index_html.html">fr_method_index.html</a>
+  
+    <li><a href="../../doc/index_html.html">index.html</a>
+  
+    <li><a href="../../doc/js/darkfish_js.html">darkfish.js</a>
+  
+    <li><a href="../../doc/js/jquery_js.html">jquery.js</a>
+  
+    <li><a href="../../doc/js/navigation_js.html">navigation.js</a>
+  
+    <li><a href="../../doc/js/search_js.html">search.js</a>
+  
+    <li><a href="../../doc/js/search_index_js.html">search_index.js</a>
+  
+    <li><a href="../../doc/js/searcher_js.html">searcher.js</a>
+  
+    <li><a href="../../doc/rdoc_css.html">rdoc.css</a>
+  
+    <li><a href="../../doc/table_of_contents_html.html">table_of_contents.html</a>
+  
+    <li><a href="../../doc/test_bk_html.html">test_bk.html</a>
+  
+    <li><a href="../../doc/tst_bk_html.html">tst_bk.html</a>
+  
+    <li><a href="../../test_bk.html">test.bk</a>
+  
+    <li><a href="../../tst_bk.html">tst.bk</a>
+  
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-label="Page doc/classes/Parser.html">
+
+<p>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD HTML 4.01//EN” “<a
+href="http://www.w3.org/TR/html4/strict.dtd">www.w3.org/TR/html4/strict.dtd</a>”&gt;
+&lt;html lang=&#39;en&#39;&gt;</p>
+
+<pre>&lt;head&gt;
+  &lt;title&gt;Parser&lt;/title&gt;
+  &lt;meta content=&#39;text/html; charset=UTF-8&#39; http-equiv=&#39;Content-Type&#39;&gt;
+  &lt;link href=&#39;../css/style.css&#39; media=&#39;screen&#39; rel=&#39;stylesheet&#39; type=&#39;text/css&#39;&gt;
+  &lt;script type=&#39;text/javascript&#39;&gt;
+    //&lt;![CDATA[
+      function popupCode(url) {
+        window.open(url, &quot;Code&quot;, &quot;resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400&quot;)
+      }
+
+      function toggleCode(id) {
+        var code = document.getElementById(id)
+
+        code.style.display = code.style.display != &#39;block&#39; ? &#39;block&#39; : &#39;none&#39;
+        return true
+      }
+
+      // Make codeblocks hidden by default
+      document.writeln(&#39;&lt;&#39; + &#39;style type=&quot;text/css&quot;&gt;.method .source pre { display: none }&lt;\/style&gt;&#39;)
+    //]]&gt;
+  &lt;/script&gt;
+&lt;/head&gt;
+&lt;body class=&#39;page&#39;&gt;
+  &lt;div class=&#39;class&#39; id=&#39;wrapper&#39;&gt;
+    &lt;div class=&#39;header&#39;&gt;
+      &lt;h1 class=&#39;name&#39;&gt;
+        &lt;span class=&#39;type&#39;&gt;class&lt;/span&gt;
+        Parser
+      &lt;/h1&gt;
+      &lt;ol class=&#39;paths&#39;&gt;
+        &lt;li&gt;
+          &lt;a target=&quot;docwin&quot; href=&quot;../files/parser_rb.html&quot;&gt;parser.rb&lt;/a&gt;
+        &lt;/li&gt;
+      &lt;/ol&gt;
+      &lt;div class=&#39;parent&#39;&gt;
+        Superclass:
+        &lt;strong&gt;Racc::Parser&lt;/strong&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div id=&#39;content&#39;&gt;
+      &lt;div id=&#39;text&#39;&gt;
+        &lt;div id=&#39;description&#39;&gt;&lt;/div&gt;
+        &lt;div id=&#39;method-list&#39;&gt;
+          &lt;h2&gt;Methods&lt;/h2&gt;
+          &lt;h3&gt;Public Instance&lt;/h3&gt;
+          &lt;ol&gt;
+            &lt;li&gt;&lt;a target=&quot;docwin&quot; href=&quot;#method-i-_reduce_none&quot;&gt;_reduce_none&lt;/a&gt;&lt;/li&gt;
+          &lt;/ol&gt;
+        &lt;/div&gt;
+        &lt;div id=&#39;context&#39;&gt;
+        &lt;/div&gt;
+        &lt;div id=&#39;section&#39;&gt;
+          &lt;div id=&#39;constants-list&#39;&gt;
+            &lt;h2&gt;Constants&lt;/h2&gt;
+            &lt;div class=&#39;name-list&#39;&gt;
+              &lt;table summary=&#39;Constants&#39;&gt;
+                &lt;tr class=&#39;top-aligned-row context-row&#39;&gt;
+                  &lt;td class=&#39;context-item-name&#39;&gt;Racc_arg&lt;/td&gt;
+                  &lt;td&gt;=&lt;/td&gt;
+                  &lt;td class=&#39;context-item-value&#39;&gt;
+                    [
+                    racc_action_table,
+                    racc_action_check,
+                    racc_action_default,
+                    racc_action_pointer,
+                    racc_goto_table,
+                    racc_goto_check,
+                    racc_goto_default,
+                    racc_goto_pointer,
+                    racc_nt_base,
+                    racc_reduce_table,
+                    racc_token_table,
+                    racc_shift_n,
+                    racc_reduce_n,
+                    racc_use_result_var ]
+                  &lt;/td&gt;
+                  &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+                  &lt;td class=&#39;context-item-desc&#39;&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr class=&#39;top-aligned-row context-row&#39;&gt;
+                  &lt;td class=&#39;context-item-name&#39;&gt;Racc_debug_parser&lt;/td&gt;
+                  &lt;td&gt;=&lt;/td&gt;
+                  &lt;td class=&#39;context-item-value&#39;&gt;false&lt;/td&gt;
+                  &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+                  &lt;td class=&#39;context-item-desc&#39;&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr class=&#39;top-aligned-row context-row&#39;&gt;
+                  &lt;td class=&#39;context-item-name&#39;&gt;Racc_token_to_s_table&lt;/td&gt;
+                  &lt;td&gt;=&lt;/td&gt;
+                  &lt;td class=&#39;context-item-value&#39;&gt;
+                    [
+                    &quot;$end&quot;,
+                    &quot;error&quot;,
+                    &quot;IF&quot;,
+                    &quot;ELSE&quot;,
+                    &quot;UNLESS&quot;,
+                    &quot;WHILE&quot;,
+                    &quot;IMPORT&quot;,
+                    &quot;INTO&quot;,
+                    &quot;CLASS&quot;,
+                    &quot;HASH&quot;,
+                    &quot;ROCKET&quot;,
+                    &quot;WITH&quot;,
+                    &quot;MIXIN&quot;,
+                    &quot;PACKAGE&quot;,
+                    &quot;EXTENDS&quot;,
+                    &quot;DEF&quot;,
+                    &quot;ARROW&quot;,
+                    &quot;SLASH&quot;,
+                    &quot;APPLY&quot;,
+                    &quot;LET&quot;,
+                    &quot;VAR&quot;,
+                    &quot;NUMBER&quot;,
+                    &quot;STRING&quot;,
+                    &quot;SYMBOL&quot;,
+                    &quot;TRUE&quot;,
+                    &quot;FALSE&quot;,
+                    &quot;NIL&quot;,
+                    &quot;IDENTIFIER&quot;,
+                    &quot;CONSTANT&quot;,
+                    &quot;NEWLINE&quot;,
+                    &quot;\&quot;.\&quot;&quot;,
+                    &quot;\&quot;not\&quot;&quot;,
+                    &quot;\&quot;*\&quot;&quot;,
+                    &quot;\&quot;/\&quot;&quot;,
+                    &quot;\&quot;+\&quot;&quot;,
+                    &quot;\&quot;-\&quot;&quot;,
+                    &quot;\&quot;&gt;\&quot;&quot;,
+                    &quot;\&quot;&gt;=\&quot;&quot;,
+                    &quot;\&quot;&lt;\&quot;&quot;,
+                    &quot;\&quot;&lt;=\&quot;&quot;,
+                    &quot;\&quot;is\&quot;&quot;,
+                    &quot;\&quot;isnt\&quot;&quot;,
+                    &quot;\&quot;and\&quot;&quot;,
+                    &quot;\&quot;or\&quot;&quot;,
+                    &quot;\&quot;=\&quot;&quot;,
+                    &quot;\&quot;,\&quot;&quot;,
+                    &quot;\&quot;(\&quot;&quot;,
+                    &quot;\&quot;)\&quot;&quot;,
+                    &quot;\&quot;;\&quot;&quot;,
+                    &quot;\&quot;[\&quot;&quot;,
+                    &quot;\&quot;]\&quot;&quot;,
+                    &quot;\&quot;{\&quot;&quot;,
+                    &quot;\&quot;}\&quot;&quot;,
+                    &quot;$start&quot;,
+                    &quot;Program&quot;,
+                    &quot;Expressions&quot;,
+                    &quot;Expression&quot;,
+                    &quot;Terminator&quot;,
+                    &quot;Literal&quot;,
+                    &quot;Call&quot;,
+                    &quot;Import&quot;,
+                    &quot;Apply&quot;,
+                    &quot;Operator&quot;,
+                    &quot;GetLocal&quot;,
+                    &quot;SetLocal&quot;,
+                    &quot;Arrow&quot;,
+                    &quot;Def&quot;,
+                    &quot;Class&quot;,
+                    &quot;Hash&quot;,
+                    &quot;Mixin&quot;,
+                    &quot;Package&quot;,
+                    &quot;If&quot;,
+                    &quot;While&quot;,
+                    &quot;Unless&quot;,
+                    &quot;Array&quot;,
+                    &quot;Arguments&quot;,
+                    &quot;ArgList&quot;,
+                    &quot;LitArray&quot;,
+                    &quot;ParamList&quot;,
+                    &quot;Block&quot;,
+                    &quot;Mixins&quot;,
+                    &quot;KeyVal&quot; ]
+                  &lt;/td&gt;
+                  &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+                  &lt;td class=&#39;context-item-desc&#39;&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+              &lt;/table&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div id=&#39;methods&#39;&gt;
+            &lt;h2&gt;Public Instance methods&lt;/h2&gt;
+            &lt;div class=&#39;method public-instance&#39; id=&#39;method-method-i-_reduce_none&#39;&gt;
+              &lt;a name=&#39;method-i-_reduce_none&#39;&gt;&lt;/a&gt;
+              &lt;div class=&#39;synopsis&#39;&gt;
+                &lt;span class=&#39;name&#39;&gt;_reduce_none&lt;/span&gt;
+                &lt;span class=&#39;arguments&#39;&gt;(val, _values, result)&lt;/span&gt;
+              &lt;/div&gt;
+              &lt;div class=&#39;description&#39;&gt;
+
+              &lt;/div&gt;
+              &lt;div class=&#39;source&#39;&gt;
+                &lt;a class=&#39;source-toggle&#39; href=&#39;#&#39; onclick=&quot;toggleCode(&#39;method-i-_reduce_none-source&#39;); return false&quot;&gt;
+                  [show source]
+                &lt;/a&gt;
+                &lt;pre id=&#39;method-i-_reduce_none-source&#39;&gt;&lt;span class=&quot;ruby-comment&quot;&gt;# File parser.rb, line 1414&lt;/span&gt;&amp;#x000A;&lt;span class=&quot;ruby-keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;ruby-identifier&quot;&gt;_reduce_none&lt;/span&gt;(&lt;span class=&quot;ruby-identifier&quot;&gt;val&lt;/span&gt;, &lt;span class=&quot;ruby-identifier&quot;&gt;_values&lt;/span&gt;, &lt;span class=&quot;ruby-identifier&quot;&gt;result&lt;/span&gt;)&amp;#x000A;  &lt;span class=&quot;ruby-identifier&quot;&gt;val&lt;/span&gt;[&lt;span class=&quot;ruby-value&quot;&gt;0&lt;/span&gt;]&amp;#x000A;&lt;span class=&quot;ruby-keyword&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div id=&#39;footer-push&#39;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div id=&#39;footer&#39;&gt;
+    &lt;a target=&quot;docwin&quot; href=&quot;http://github.com/mislav/hanna/tree/master&quot;&gt;&lt;strong&gt;Hanna&lt;/strong&gt; RDoc template&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/body&gt;</pre>
+
+<p>&lt;/html&gt;</p>
+</main>
+
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.1.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

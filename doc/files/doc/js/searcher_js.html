@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>searcher.js</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <link href='../../../css/style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='file' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>searcher.js</h1>
+        <div class='paths'>
+          doc/js/searcher.js
+        </div>
+        <div class='last-update'>
+          Last Update:
+          <span class='datetime'>2014-11-26 18:44:11 -0800</span>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'>
+            
+            <p>Searcher = function(data) {</p>
+            
+            <pre class="ruby"><span class="ruby-identifier">this</span>.<span class="ruby-identifier">data</span> = <span class="ruby-identifier">data</span>;&#x000A;<span class="ruby-identifier">this</span>.<span class="ruby-identifier">handlers</span> = [];</pre>
+            
+            <p>}</p>
+            
+            <p>Searcher.prototype = new function() {</p>
+            
+            <pre>// search is performed in chunks of 1000 for non-blocking user input&#x000A;var CHUNK_SIZE = 1000;&#x000A;// do not try to find more than 100 results&#x000A;var MAX_RESULTS = 100;&#x000A;var huid = 1;&#x000A;var suid = 1;&#x000A;var runs = 0;&#x000A;this.find = function(query) {&#x000A;  var queries = splitQuery(query);&#x000A;  var regexps = buildRegexps(queries);&#x000A;  var highlighters = buildHilighters(queries);&#x000A;  var state = { from: 0, pass: 0, limit: MAX_RESULTS, n: suid++};&#x000A;  var _this = this;&#x000A;&#x000A;  this.currentSuid = state.n;&#x000A;&#x000A;  if (!query) return;&#x000A;&#x000A;  var run = function() {&#x000A;    // stop current search thread if new search started&#x000A;    if (state.n != _this.currentSuid) return;&#x000A;&#x000A;    var results =&#x000A;      performSearch(_this.data, regexps, queries, highlighters, state);&#x000A;    var hasMore = (state.limit &gt; 0 &amp;&amp; state.pass &lt; 4);&#x000A;&#x000A;    triggerResults.call(_this, results, !hasMore);&#x000A;    if (hasMore) {&#x000A;      setTimeout(run, 2);&#x000A;    }&#x000A;    runs++;&#x000A;  };&#x000A;  runs = 0;&#x000A;&#x000A;  // start search thread&#x000A;  run();&#x000A;}&#x000A;&#x000A;    ----- Events ------    &#x000A;this.ready = function(fn) {&#x000A;  fn.huid = huid;&#x000A;  this.handlers.push(fn);&#x000A;}&#x000A;&#x000A;    ----- Utilities ------    &#x000A;function splitQuery(query) {&#x000A;  return jQuery.grep(query.split(/(\s+|::?|\(\)?)/), function(string) {&#x000A;    return string.match(/\S/)&#x000A;  });&#x000A;}&#x000A;&#x000A;function buildRegexps(queries) {&#x000A;  return jQuery.map(queries, function(query) {&#x000A;    return new RegExp(query.replace(/(.)/g, &#39;([$1])([^$1]*?)&#39;), &#39;i&#39;)&#x000A;  });&#x000A;}&#x000A;&#x000A;function buildHilighters(queries) {&#x000A;  return jQuery.map(queries, function(query) {&#x000A;    return jQuery.map(query.split(&#39;&#39;), function(l, i) {&#x000A;      return &#39;\u0001$&#39; + (i*2+1) + &#39;\u0002$&#39; + (i*2+2);&#x000A;    }).join(&#39;&#39;);&#x000A;  });&#x000A;}&#x000A;&#x000A;// function longMatchRegexp(index, longIndex, regexps) {&#x000A;//     for (var i = regexps.length - 1; i &gt;= 0; i--){&#x000A;//         if (!index.match(regexps[i]) &amp;&amp; !longIndex.match(regexps[i])) return false;&#x000A;//     };&#x000A;//     return true;&#x000A;// }&#x000A;&#x000A;/*  ----- Mathchers ------  */&#x000A;&#x000A;/*&#x000A;   This record matches if the index starts with queries[0] and the record&#x000A;   matches all of the regexps&#x000A;  /&#x000A;function matchPassBeginning(index, longIndex, queries, regexps) {&#x000A;  if (index.indexOf(queries[0]) != 0) return false;&#x000A;  for (var i=1, l = regexps.length; i &lt; l; i++) {&#x000A;    if (!index.match(regexps[i]) &amp;&amp; !longIndex.match(regexps[i]))&#x000A;      return false;&#x000A;  };&#x000A;  return true;&#x000A;}&#x000A;&#x000A;/*&#x000A;   This record matches if the longIndex starts with queries[0] and the&#x000A;   longIndex matches all of the regexps&#x000A;  /&#x000A;function matchPassLongIndex(index, longIndex, queries, regexps) {&#x000A;  if (longIndex.indexOf(queries[0]) != 0) return false;&#x000A;  for (var i=1, l = regexps.length; i &lt; l; i++) {&#x000A;    if (!longIndex.match(regexps[i]))&#x000A;      return false;&#x000A;  };&#x000A;  return true;&#x000A;}&#x000A;&#x000A;/*&#x000A;   This record matches if the index contains queries[0] and the record&#x000A;   matches all of the regexps&#x000A;  /&#x000A;function matchPassContains(index, longIndex, queries, regexps) {&#x000A;  if (index.indexOf(queries[0]) == -1) return false;&#x000A;  for (var i=1, l = regexps.length; i &lt; l; i++) {&#x000A;    if (!index.match(regexps[i]) &amp;&amp; !longIndex.match(regexps[i]))&#x000A;      return false;&#x000A;  };&#x000A;  return true;&#x000A;}&#x000A;&#x000A;/*&#x000A;   This record matches if regexps[0] matches the index and the record&#x000A;   matches all of the regexps&#x000A;  /&#x000A;function matchPassRegexp(index, longIndex, queries, regexps) {&#x000A;  if (!index.match(regexps[0])) return false;&#x000A;  for (var i=1, l = regexps.length; i &lt; l; i++) {&#x000A;    if (!index.match(regexps[i]) &amp;&amp; !longIndex.match(regexps[i]))&#x000A;      return false;&#x000A;  };&#x000A;  return true;&#x000A;}&#x000A;&#x000A;/*  ----- Highlighters ------  */&#x000A;function highlightRegexp(info, queries, regexps, highlighters) {&#x000A;  var result = createResult(info);&#x000A;  for (var i=0, l = regexps.length; i &lt; l; i++) {&#x000A;    result.title = result.title.replace(regexps[i], highlighters[i]);&#x000A;    result.namespace = result.namespace.replace(regexps[i], highlighters[i]);&#x000A;  };&#x000A;  return result;&#x000A;}&#x000A;&#x000A;function hltSubstring(string, pos, length) {&#x000A;  return string.substring(0, pos) + &#39;\u0001&#39; + string.substring(pos, pos + length) + &#39;\u0002&#39; + string.substring(pos + length);&#x000A;}&#x000A;&#x000A;function highlightQuery(info, queries, regexps, highlighters) {&#x000A;  var result = createResult(info);&#x000A;  var pos = 0;&#x000A;  var lcTitle = result.title.toLowerCase();&#x000A;&#x000A;  pos = lcTitle.indexOf(queries[0]);&#x000A;  if (pos != -1) {&#x000A;    result.title = hltSubstring(result.title, pos, queries[0].length);&#x000A;  }&#x000A;&#x000A;  result.namespace = result.namespace.replace(regexps[0], highlighters[0]);&#x000A;  for (var i=1, l = regexps.length; i &lt; l; i++) {&#x000A;    result.title = result.title.replace(regexps[i], highlighters[i]);&#x000A;    result.namespace = result.namespace.replace(regexps[i], highlighters[i]);&#x000A;  };&#x000A;  return result;&#x000A;}&#x000A;&#x000A;function createResult(info) {&#x000A;  var result = {};&#x000A;  result.title = info[0];&#x000A;  result.namespace = info[1];&#x000A;  result.path = info[2];&#x000A;  result.params = info[3];&#x000A;  result.snippet = info[4];&#x000A;  return result;&#x000A;}&#x000A;&#x000A;/*  ----- Searching ------  */&#x000A;function performSearch(data, regexps, queries, highlighters, state) {&#x000A;  var searchIndex = data.searchIndex;&#x000A;  var longSearchIndex = data.longSearchIndex;&#x000A;  var info = data.info;&#x000A;  var result = [];&#x000A;  var i = state.from;&#x000A;  var l = searchIndex.length;&#x000A;  var togo = CHUNK_SIZE;&#x000A;  var matchFunc, hltFunc;&#x000A;&#x000A;  while (state.pass &lt; 4 &amp;&amp; state.limit &gt; 0 &amp;&amp; togo &gt; 0) {&#x000A;    if (state.pass == 0) {&#x000A;      matchFunc = matchPassBeginning;&#x000A;      hltFunc = highlightQuery;&#x000A;    } else if (state.pass == 1) {&#x000A;      matchFunc = matchPassLongIndex;&#x000A;      hltFunc = highlightQuery;&#x000A;    } else if (state.pass == 2) {&#x000A;      matchFunc = matchPassContains;&#x000A;      hltFunc = highlightQuery;&#x000A;    } else if (state.pass == 3) {&#x000A;      matchFunc = matchPassRegexp;&#x000A;      hltFunc = highlightRegexp;&#x000A;    }&#x000A;&#x000A;    for (; togo &gt; 0 &amp;&amp; i &lt; l &amp;&amp; state.limit &gt; 0; i++, togo--) {&#x000A;      if (info[i].n == state.n) continue;&#x000A;      if (matchFunc(searchIndex[i], longSearchIndex[i], queries, regexps)) {&#x000A;        info[i].n = state.n;&#x000A;        result.push(hltFunc(info[i], queries, regexps, highlighters));&#x000A;        state.limit--;&#x000A;      }&#x000A;    };&#x000A;    if (searchIndex.length &lt;= i) {&#x000A;      state.pass++;&#x000A;      i = state.from = 0;&#x000A;    } else {&#x000A;      state.from = i;&#x000A;    }&#x000A;  }&#x000A;  return result;&#x000A;}&#x000A;&#x000A;function triggerResults(results, isLast) {&#x000A;  jQuery.each(this.handlers, function(i, fn) {&#x000A;    fn.call(this, results, isLast)&#x000A;  })&#x000A;}</pre>
+            
+            <p>}</p>
+          </div>
+          <div id='context'>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a target="docwin" href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>

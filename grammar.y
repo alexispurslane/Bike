@@ -131,9 +131,8 @@ rule
   # Literals are the hard-coded values inside the program. If you want to add support
   # for other literal types, such as arrays or hashes, this it where you'd do it.
   Literal:
-    NUMBER                        { result = NumberNode.new(val[0]) }
-  | STRING                        { result = StringNode.new(val[0]) }
-  | SYMBOL                        { result = SymbolNode.new(val[0]) }
+    NUMBER                        { result = NumberNode.new(val[0], "Number") }
+  | STRING                        { result = StringNode.new(val[0], "String") }
   | TRUE                          { result = TrueNode.new }
   | FALSE                         { result = FalseNode.new }
   | NIL                           { result = NilNode.new }
@@ -154,7 +153,11 @@ rule
   | Expression "." IDENTIFIER     { result = CallNode.new(val[0], val[2], [], false) }
   | Expression "." IDENTIFIER
       IDENTIFIER "." "." "."                  { result = CallNode.new(val[0], val[2], val[3], true) }
+  | Expression "." IDENTIFIER
+      "(" IDENTIFIER "." "." "." ")"                  { result = CallNode.new(val[0], val[2], val[4], true) }
+
   | IDENTIFIER IDENTIFIER "." "." "."          { result = CallNode.new(nil, val[0], val[1], true) }
+  | IDENTIFIER "(" IDENTIFIER "." "." "." ")"          { result = CallNode.new(nil, val[0], val[2], true) }
   ;
 
   Apply:
@@ -249,6 +252,9 @@ rule
   Def:
     DEF IDENTIFIER Block          { result = DefNode.new(val[1], [], val[2]) }
   | DEF IDENTIFIER "=" Expression { result = DefNode.new(val[1], [], val[3]) }
+  | DEF IDENTIFIER "(" ParamList ")" "=" Expression { result = DefNode.new(val[1], val[3], val[6]) }
+  | DEF IDENTIFIER "(" ParamList "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[1], val[3], val[10], val[7]) }
+  | DEF IDENTIFIER "(" "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[1], [], val[9], val[6]) }
   | DEF IDENTIFIER
       "(" ParamList ")" Block     { result = DefNode.new(val[1], val[3], val[5]) }
   | DEF IDENTIFIER

@@ -12,6 +12,7 @@
  - [X]  Ananymos Classes
  - [X]  Hashes
  - [X]  Rest Arguments
+ - [ ]  Document Source
  - [ ]  Splat arguments for functions
 
 ##TODO for Beta 4:
@@ -26,7 +27,6 @@
  - [ ]  Documentation
  - [ ]  Markdown Comments
  - [ ]  Multiline Comments
- - [ ]  Comment Code
  - [ ]  Wheels API documentation with Markdown Comments
 
 ##TODO for Beta 6:
