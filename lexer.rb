@@ -27,7 +27,7 @@ class Lexer
           tokens << [operator, operator]
         end
         i += operator.size
-      elsif identifier = chunk[/\A([a-zA-Z]\w*)/, 1]
+      elsif identifier = chunk[/\A([a-zA-Z](\w|&|=)*)/, 1]
         if KEYWORDS.include?(identifier)
           tokens << [identifier.upcase.to_sym, identifier]
         else

@@ -50,7 +50,7 @@ prechigh
   left  ','
 preclow
 
-# In the following `rule` section, we define the parsing rules.
+# In the following +rule+ section, we define the parsing rules.
 # All rules are declared using the following format:
 #
 #     RuleName:
@@ -58,14 +58,14 @@ preclow
 #     | OtherRule                      { ... }
 #     ;
 #
-# In the action section (inside the `{...}` on the right), you can do the following:
+# In the action section (inside the +{...}+ on the right), you can do the following:
 #
-# * Assign to `result` the value returned by the rule, usually a node for the AST.
-# * Use `val[index of expression]` to get the `result` of a matched
+# * Assign to +result+ the value returned by the rule, usually a node for the AST.
+# * Use +val[index of expression]+ to get the +result+ of a matched
 #   expressions on the left.
 rule
   # First, parsers are dumb, we need to explicitly tell it how to handle empty
-  # programs. This is what the first rule does. Note that everything between `/* ... */` is
+  # programs. This is what the first rule does. Note that everything between +/* ... */+ is
   # a comment.
   Program:
     /* nothing */                      { result = Nodes.new([]) }
@@ -73,7 +73,7 @@ rule
   ;
   
   # Next, we define what a list of expressions is. Simply put, it's series of expressions separated by a
-  # terminator (a new line or `;` as defined later). But once again, we need to explicitly
+  # terminator (a new line or +;+ as defined later). But once again, we need to explicitly
   # define how to handle trailing and orphans line breaks (the last two lines).
   #
   # One very powerful trick we'll use to define variable rules like this one
@@ -82,7 +82,7 @@ rule
   # type of parser we're using (LR). For other types of parsers like ANTLR (LL), it's the opposite,
   # you can only use right-recursion.
   #
-  # As you'll see bellow, the `Expressions` rule references `Expressions` itself.
+  # As you'll see bellow, the +Expressions+ rule references +Expressions+ itself.
   # In other words, a list of expressions can be another list of expressions followed by
   # another expression.
   Expressions:
@@ -117,7 +117,7 @@ rule
   ;
 
   # Notice how we implement support for parentheses using the previous rule. 
-  # `'(' Expression ')'` will force the parsing of `Expression` in its
+  # +'(' Expression ')'+ will force the parsing of +Expression+ in its
   # entirety first. Parentheses will then be discarded leaving only the fully parsed expression.
   #
   # Terminators are tokens that can terminate an expression.
@@ -140,10 +140,10 @@ rule
   
   # Method calls can take three forms:
   #
-  # * Without a receiver (`self` is assumed): `method(arguments)`.
-  # * With a receiver: `receiver.method(arguments)`.
+  # * Without a receiver (+self+ is assumed): +method(arguments)+.
+  # * With a receiver: +receiver.method(arguments)+.
   # * And a hint of syntactic sugar so that we can drop
-  #   the `()` if no arguments are given: `receiver.method`.
+  #   the +()+ if no arguments are given: +receiver.method+.
   #
   # Each one of those is handled by the following rule.
   Call:
@@ -158,6 +158,7 @@ rule
 
   | IDENTIFIER IDENTIFIER "." "." "."          { result = CallNode.new(nil, val[0], val[1], true) }
   | IDENTIFIER "(" IDENTIFIER "." "." "." ")"          { result = CallNode.new(nil, val[0], val[2], true) }
+  | Expression "." IDENTIFIER "=" Expression     { result = CallNode.new(val[0], val[2] + "=", [val[4]], false) }
   ;
 
   Apply:
@@ -199,8 +200,8 @@ rule
   ;
 
   # In our language, like in Ruby, operators are converted to method calls.
-  # So `1 + 2` will be converted to `1.+(2)`.
-  # `1` is the receiver of the `+` method call, passing `2`
+  # So +1 + 2+ will be converted to +1.+(2)+.
+  # +1+ is the receiver of the +++ method call, passing +2+
   # as an argument.
   # Operators need to be defined individually for the Operator Precedence Table to take
   # action.
@@ -235,11 +236,11 @@ rule
   ;
 
   # Our language uses indentation to separate blocks of code. But the lexer took care of all
-  # that complexity for us and wrapped all blocks in `INDENT ... DEDENT`. A block
+  # that complexity for us and wrapped all blocks in +INDENT ... DEDENT+. A block
   # is simply an increment in indentation followed by some code and closing with an equivalent
   # decrement in indentation.
   # 
-  # If you'd like to use curly brackets or `end` to delimit blocks instead, you'd
+  # If you'd like to use curly brackets or +end+ to delimit blocks instead, you'd
   # simply need to modify this one rule.
   # You'll also need to remove the indentation logic from the lexer.
   Block:
@@ -250,7 +251,7 @@ rule
   | "{" NEWLINE Expressions NEWLINE "}"   { result = val[2] }
   ;
   
-  # The `def` keyword is used for defining methods. Once again, we're introducing
+  # The +def+ keyword is used for defining methods. Once again, we're introducing
   # a bit of syntactic sugar here to allow skipping the parentheses when there are no parameters.
   Def:
     DEF IDENTIFIER Block          { result = DefNode.new(val[1], [], val[2]) }
@@ -311,7 +312,7 @@ rule
   | PACKAGE IDENTIFIER Block             { result = DefNode.new(val[1], [], PackageNode.new(val[2])) }
   ;
   
-  # Finally, `if` is similar to `class` but receives a *condition*.
+  # Finally, +if+ is similar to +class+ but receives a *condition*.
   If:
     IF Expression Block            { result = IfNode.new(val[1], val[2], nil) }
   | IF Expression Block ELSE Block { result = IfNode.new(val[1], val[2], val[3]) }
@@ -326,8 +327,8 @@ rule
   ;
 end
 
-# The final code at the bottom of this Racc file will be put as-is in the generated `Parser` class.
-# You can put some code at the top (`header`) and some inside the class (`inner`).
+# The final code at the bottom of this Racc file will be put as-is in the generated +Parser+ class.
+# You can put some code at the top (+header+) and some inside the class (+inner+).
 ---- header
   require_relative "lexer"
   require_relative "nodes"
