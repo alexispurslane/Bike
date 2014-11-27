@@ -1,7 +1,7 @@
 class BikeClass < BikeObject
   # Classes are objects in Bike so they inherit from BikeObject.
   attr_reader :runtime_methods, :runtime_superclass, :runtime_mixins, :ruby_value
-  def initialize(superclass=nil, mixins=[])
+  def initialize(superclass="Object", mixins=[])
     @runtime_mixins = mixins
     @runtime_methods = {}
     if mixins != nil
@@ -12,7 +12,7 @@ class BikeClass < BikeObject
       end
     end
     @runtime_class = Constants["Class"]
-    @runtime_superclass = superclass
+    @runtime_superclass = Constants[superclass]
     @ruby_value = "<class>"
   end
   # Lookup a method
@@ -22,7 +22,7 @@ class BikeClass < BikeObject
       if @runtime_superclass
         method = @runtime_superclass.lookup(method_name)
       else
-        raise "Method not found: #{method_name} of #{@runtime_methods.inspect}"
+        raise "Method not found: #{method_name} of #{@runtime_superclass}"
       end
     end
     method

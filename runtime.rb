@@ -1,6 +1,6 @@
 # Include all the files from the runtime directory
-require "runtime/object"
-require "runtime/class"
-require "runtime/method"
-require "runtime/context"
-require "runtime/bootstrap"
+require "runtime/object.rb"
+require "runtime/class.rb"
+require "runtime/method.rb"
+require "runtime/context.rb"
+require "runtime/bootstrap.rb"

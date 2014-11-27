@@ -2,6 +2,9 @@
 require_relative "interpreter"
 require "readline"
 require 'colorize'
+require 'terminfo'
+
+width = TermInfo.screen_size[1]
 
 interpreter = Interpreter.new
 lexer = false
@@ -29,8 +32,10 @@ if file = ARGV.first
   # Start the REPL, read-eval-print-loop, or interactive interpreter
 else
   n = 1
-  puts "Welcome to the Bike Programming Language REPL! Type :help for help, and :exit to exit.\nFor more information go to the official website at christopherdumas.github.io/Bike, or visit the github project at github.com/christopherdumas/Bike".green
-  puts "\nBy Christopher Dumas in 2014"
+  puts "Bike Programming Language REPL".colorize(:light_black).on_white.center(width) +
+       "              (Type :help for help, and :exit to exit)".center(width) +
+       "              (See LICENSE.md for licensing information)".center(width)
+  puts "By Christopher Dumas in 2014".green.center(width)
   loop do
     line = Readline::readline("[#{n}] >> ".blue)    # 1. Read
     Readline::HISTORY.push(line)
@@ -53,6 +58,7 @@ else
       Readline::HISTORY.to_a.each { |e| puts e }
     elsif line == ":clear"
       system "clear" or system "cls"
+      puts "Bike Programming Language REPL".colorize(:light_black).on_white.center(width)
     elsif line == ":lexer"
       lexer = !lexer
       if lexer

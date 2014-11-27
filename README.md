@@ -61,6 +61,9 @@ In the TODO.md file is our roadmap to 1.0. It will be updated every major versio
     $ brew install ruby gem
     $ sudo gem install racc
     $ sudo gem install colorize
+    $ sudo gem install ruby-terminfo
+    $ sudo gem install irbtools
+    $ sudo gem install terminal-notifier
     $ git clone git@github.com:christopherdumas/Bike.git bike
     $ cd bike/
     $ racc grammar.y -o parser.rb

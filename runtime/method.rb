@@ -12,6 +12,7 @@ class BikeMethod
     context = Context.new(receiver)
     @params.each_with_index do |param, index|
       context.locals[param] = arguments[index > 0 ? index-1 : index]
+      puts "\n#{arguments[index > 0 ? index-1 : index].inspect}\n"
       arguments.delete_at(index > 0 ? index-1 : index)
     end
     context.locals[@vararg] = Constants["Array"].new_with_value(arguments)
