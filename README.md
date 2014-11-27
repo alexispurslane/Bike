@@ -1,6 +1,4 @@
 #The Bike programming language
-[Official Website](christopherdumas.github.io/Bike)
-
 
 [Contact author](mailto:christopherdumas@me.com) or @christopherdumas
 

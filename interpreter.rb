@@ -225,7 +225,7 @@ end
 # Defining a method, using the +def+ keyword, is done by adding a method to the current class.
 class DefNode
   def eval(context)
-    method = BikeMethod.new(params, body, context.current_class, vararg)
+    method = BikeMethod.new(params, body, context, vararg)
     context.current_class.runtime_methods[name] = method
   end
 end
@@ -257,6 +257,9 @@ class ClassNode
     
     class_context = Context.new(bike_class, bike_class)
     class_context.locals["self"] = bike_class
+    RootContext.locals.each do |name, value| 
+      class_context.locals[name] = value
+    end
     body.eval(class_context)
     
     bike_class
