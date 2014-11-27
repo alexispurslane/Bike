@@ -20,7 +20,7 @@
  - [ ]  private and public modifiers
  - [ ]  Sets
  - [ ]  array comprehenson
- - [ ]  `for-of` for hashes
+ - [ ]  `for-of`
  - [ ]  Closures
 
 ##TODO for Beta 5:
