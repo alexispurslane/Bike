@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>BikeClass</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <link href='../css/style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>
+          <span class='type'>class</span>
+          BikeClass
+        </h1>
+        <ol class='paths'>
+          <li>
+            <a target="docwin" href="../files/runtime/class_rb.html">runtime/class.rb</a>
+          </li>
+        </ol>
+        <div class='parent'>
+          Superclass:
+          <strong><a target="docwin" href="BikeObject.html">BikeObject</a></strong>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'>
+            
+            <p>Classes are objects in Bike so they inherit from <a
+            href="BikeObject.html">BikeObject</a>. <a
+            href="BikeClass.html">BikeClass</a> is the way of representing Bike Classes
+            that are initialized or not initialized. There are no properties in bike
+            classes, only methods, which is conveiniently simple for syntax and code.</p>
+          </div>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>Public Class</h3>
+            <ol>
+              <li><a target="docwin" href="#method-c-new">new</a></li>
+            </ol>
+            <h3>Public Instance</h3>
+            <ol>
+              <li><a target="docwin" href="#method-i-def">def</a></li>
+              <li><a target="docwin" href="#method-i-lookup">lookup</a></li>
+              <li><a target="docwin" href="#method-i-new">new</a></li>
+              <li><a target="docwin" href="#method-i-new_with_value">new_with_value</a></li>
+              <li><a target="docwin" href="#attribute-i-ruby_value">ruby_value</a></li>
+              <li><a target="docwin" href="#attribute-i-runtime_methods">runtime_methods</a></li>
+              <li><a target="docwin" href="#attribute-i-runtime_mixins">runtime_mixins</a></li>
+              <li><a target="docwin" href="#attribute-i-runtime_superclass">runtime_superclass</a></li>
+            </ol>
+          </div>
+          <div id='context'>
+          </div>
+          <div id='section'>
+            <div id='attribute-list'>
+              <h2 class='section-bar'>Attributes</h2>
+              <div class='name-list'>
+                <table>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>
+                      <a name='attribute-i-ruby_value'>ruby_value</a>
+                    </td>
+                    <td class='context-item-value'>[R]</td>
+                    <td class='context-item-desc'>
+                      
+                      <p><code>ruby_value</code> is a dummy value
+                      <code>&quot;&lt;class&gt;&quot;</code></p>
+                    </td>
+                  </tr>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>
+                      <a name='attribute-i-runtime_methods'>runtime_methods</a>
+                    </td>
+                    <td class='context-item-value'>[R]</td>
+                    <td class='context-item-desc'>
+                      
+                      <p><code>runtime_methods</code> is the property that holds all of the
+                      instances methods. It does not hold any of the super-classes methods, but
+                      all mixin methods are copied into it.</p>
+                    </td>
+                  </tr>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>
+                      <a name='attribute-i-runtime_mixins'>runtime_mixins</a>
+                    </td>
+                    <td class='context-item-value'>[R]</td>
+                    <td class='context-item-desc'>
+                      
+                      <p><code>runtime_mixins</code> is a referance to all of the mixins this object
+                      uses. It can be added to, and the list of methods that the class has will
+                      be updated. (<strong>That last funcitonality is in the future.</strong>)</p>
+                    </td>
+                  </tr>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>
+                      <a name='attribute-i-runtime_superclass'>runtime_superclass</a>
+                    </td>
+                    <td class='context-item-value'>[R]</td>
+                    <td class='context-item-desc'>
+                      
+                      <p><code>runtime_superclass</code> holds the <a
+                      href="BikeClass.html">BikeClass</a> for the superclass of this object.
+                      <code>Object</code> is the great-grandsuperclass of everything.</p>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div id='methods'>
+              <h2>Public Class methods</h2>
+              <div class='method public-class' id='method-method-c-new'>
+                <a name='method-c-new'></a>
+                <div class='synopsis'>
+                  <span class='name'>new</span>
+                  <span class='arguments'>(superclass="Object", mixins=[])</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>The initialization is basicly getting the superclass from constants,
+                  copying all of the methods from all of the mixins into the
+                  <code>runtime_methods</code> property and then returning.</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-c-new-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-c-new-source'><span class="ruby-comment"># File runtime/class.rb, line 13</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">superclass</span>=<span class="ruby-string">&quot;Object&quot;</span>, <span class="ruby-identifier">mixins</span>=[])&#x000A;  <span class="ruby-ivar">@runtime_mixins</span> = <span class="ruby-identifier">mixins</span>&#x000A;  <span class="ruby-ivar">@runtime_methods</span> = {}&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-identifier">mixins</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>&#x000A;    <span class="ruby-identifier">mixins</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>&#x000A;      <span class="ruby-constant">Constants</span>[<span class="ruby-identifier">e</span>].<span class="ruby-identifier">runtime_methods</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">method</span><span class="ruby-operator">|</span> &#x000A;        <span class="ruby-ivar">@runtime_methods</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">method</span>&#x000A;      <span class="ruby-keyword">end</span>&#x000A;    <span class="ruby-keyword">end</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;  <span class="ruby-ivar">@runtime_class</span> = <span class="ruby-constant">Constants</span>[<span class="ruby-string">&quot;Class&quot;</span>]&#x000A;  <span class="ruby-ivar">@runtime_superclass</span> = <span class="ruby-constant">Constants</span>[<span class="ruby-identifier">superclass</span>]&#x000A;  <span class="ruby-ivar">@ruby_value</span> = <span class="ruby-string">&quot;&lt;class&gt;&quot;</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <h2>Public Instance methods</h2>
+              <div class='method public-instance' id='method-method-i-def'>
+                <a name='method-i-def'></a>
+                <div class='synopsis'>
+                  <span class='name'>def</span>
+                  <span class='arguments'>(name, &block)</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Helper method to define a method on this class from Ruby. <strong>Only use
+                  this in bootstrap.rb to keep the code organized</strong></p>
+                  
+                  <pre>def :method_name, { |receiver, arguments| ...body... }</pre>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-def-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-def-source'><span class="ruby-comment"># File runtime/class.rb, line 44</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-keyword">def</span>(<span class="ruby-identifier">name</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)&#x000A;  <span class="ruby-ivar">@runtime_methods</span>[<span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>] = <span class="ruby-identifier">block</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-lookup'>
+                <a name='method-i-lookup'></a>
+                <div class='synopsis'>
+                  <span class='name'>lookup</span>
+                  <span class='arguments'>(method_name)</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Lookup a method and return it. Looks through all of the
+                  <code>runtime_methods</code> all the way up the superclass chain.</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-lookup-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-lookup-source'><span class="ruby-comment"># File runtime/class.rb, line 29</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">lookup</span>(<span class="ruby-identifier">method_name</span>)&#x000A;  <span class="ruby-identifier">method</span> = <span class="ruby-ivar">@runtime_methods</span>[<span class="ruby-identifier">method_name</span>]&#x000A;  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">method</span>&#x000A;    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@runtime_superclass</span>&#x000A;      <span class="ruby-identifier">method</span> = <span class="ruby-ivar">@runtime_superclass</span>.<span class="ruby-identifier">lookup</span>(<span class="ruby-identifier">method_name</span>)&#x000A;    <span class="ruby-keyword">else</span>&#x000A;      <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Method not found: #{method_name} of #{@runtime_superclass}&quot;</span>&#x000A;    <span class="ruby-keyword">end</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;  <span class="ruby-identifier">method</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-new'>
+                <a name='method-i-new'></a>
+                <div class='synopsis'>
+                  <span class='name'>new</span>
+                  <span class='arguments'>()</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Create a new instance of this class</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-new-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-new-source'><span class="ruby-comment"># File runtime/class.rb, line 49</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">new</span>&#x000A;  <span class="ruby-constant">BikeObject</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+              <div class='method public-instance' id='method-method-i-new_with_value'>
+                <a name='method-i-new_with_value'></a>
+                <div class='synopsis'>
+                  <span class='name'>new_with_value</span>
+                  <span class='arguments'>(value)</span>
+                </div>
+                <div class='description'>
+                  
+                  <p>Create an instance of this Bike class that holds a Ruby value. Like a
+                  String, Number or true.</p>
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-new_with_value-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-new_with_value-source'><span class="ruby-comment"># File runtime/class.rb, line 55</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">new_with_value</span>(<span class="ruby-identifier">value</span>)&#x000A;  <span class="ruby-constant">BikeObject</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">value</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a target="docwin" href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>

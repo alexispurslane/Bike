@@ -60,6 +60,7 @@ In the TODO.md file is our roadmap to 1.0. It will be updated every major versio
     $ sudo chown -R `whoami` /usr/local
     $ brew install ruby gem
     $ sudo gem install racc
+    $ sudo gem install hanna-nouveau
     $ sudo gem install colorize
     $ sudo gem install ruby-terminfo
     $ sudo gem install irbtools

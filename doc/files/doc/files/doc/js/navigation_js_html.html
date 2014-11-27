@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>navigation_js.html</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <link href='../../../../../css/style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='file' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>navigation_js.html</h1>
+        <div class='paths'>
+          doc/files/doc/js/navigation_js.html
+        </div>
+        <div class='last-update'>
+          Last Update:
+          <span class='datetime'>2014-11-27 06:57:56 -0800</span>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'>
+            
+            <p>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD HTML 4.01//EN” “<a
+            href="http://www.w3.org/TR/html4/strict.dtd">www.w3.org/TR/html4/strict.dtd</a>”&gt;
+            &lt;html lang=&#39;en&#39;&gt;</p>
+            
+            <pre>&lt;head&gt;&#x000A;  &lt;title&gt;navigation.js&lt;/title&gt;&#x000A;  &lt;meta content=&#39;text/html; charset=UTF-8&#39; http-equiv=&#39;Content-Type&#39;&gt;&#x000A;  &lt;link href=&#39;../../../css/style.css&#39; media=&#39;screen&#39; rel=&#39;stylesheet&#39; type=&#39;text/css&#39;&gt;&#x000A;  &lt;script type=&#39;text/javascript&#39;&gt;&#x000A;    //&lt;![CDATA[&#x000A;      function popupCode(url) {&#x000A;        window.open(url, &quot;Code&quot;, &quot;resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400&quot;)&#x000A;      }&#x000A;      function toggleCode(id) {&#x000A;        var code = document.getElementById(id)&#x000A;&#x000A;        code.style.display = code.style.display != &#39;block&#39; ? &#39;block&#39; : &#39;none&#39;&#x000A;        return true&#x000A;      }&#x000A;&#x000A;      // Make codeblocks hidden by default&#x000A;      document.writeln(&#39;&lt;&#39; + &#39;style type=&quot;text/css&quot;&gt;.method .source pre { display: none }&lt;\/style&gt;&#39;)&#x000A;    //]]&gt;&#x000A;  &lt;/script&gt;&#x000A;&lt;/head&gt;&#x000A;&lt;body class=&#39;page&#39;&gt;&#x000A;  &lt;div class=&#39;file&#39; id=&#39;wrapper&#39;&gt;&#x000A;    &lt;div class=&#39;header&#39;&gt;&#x000A;      &lt;h1 class=&#39;name&#39;&gt;navigation.js&lt;/h1&gt;&#x000A;      &lt;div class=&#39;paths&#39;&gt;&#x000A;        doc/js/navigation.js&#x000A;      &lt;/div&gt;&#x000A;      &lt;div class=&#39;last-update&#39;&gt;&#x000A;        Last Update:&#x000A;        &lt;span class=&#39;datetime&#39;&gt;2014-11-26 18:44:11 -0800&lt;/span&gt;&#x000A;      &lt;/div&gt;&#x000A;    &lt;/div&gt;&#x000A;    &lt;div id=&#39;content&#39;&gt;&#x000A;      &lt;div id=&#39;text&#39;&gt;&#x000A;        &lt;div id=&#39;description&#39;&gt;&#x000A;&#x000A;          &lt;pre&gt;Navigation allows movement using the arrow keys through the search results.&amp;#x000A;When using this library you will need to set scrollIntoView to the&amp;#x000A;appropriate function for your layout.  Use scrollInWindow if the container&amp;#x000A;is not scrollable and scrollInElement if the container is a separate&amp;#x000A;scrolling region.&lt;/pre&gt;&#x000A;&#x000A;          &lt;p&gt;Navigation = new function() {&lt;/p&gt;&#x000A;&#x000A;          &lt;pre&gt;this.initNavigation = function() {&amp;#x000A;  var _this = this;&amp;#x000A;  $(document).keydown(function(e) {&amp;#x000A;    _this.onkeydown(e);&amp;#x000A;  }).keyup(function(e) {&amp;#x000A;    _this.onkeyup(e);&amp;#x000A;  });&amp;#x000A;&amp;#x000A;  this.navigationActive = true;&amp;#x000A;}&amp;#x000A;&amp;#x000A;this.setNavigationActive = function(state) {&amp;#x000A;  this.navigationActive = state;&amp;#x000A;  this.clearMoveTimeout();&amp;#x000A;}&amp;#x000A;&amp;#x000A;this.onkeyup = function(e) {&amp;#x000A;  if (!this.navigationActive) return;&amp;#x000A;&amp;#x000A;  switch(e.keyCode) {&amp;#x000A;    case 37: //Event.KEY_LEFT:&amp;#x000A;    case 38: //Event.KEY_UP:&amp;#x000A;    case 39: //Event.KEY_RIGHT:&amp;#x000A;    case 40: //Event.KEY_DOWN:&amp;#x000A;      this.clearMoveTimeout();&amp;#x000A;      break;&amp;#x000A;  }&amp;#x000A;}&amp;#x000A;&amp;#x000A;this.onkeydown = function(e) {&amp;#x000A;  if (!this.navigationActive) return;&amp;#x000A;  switch(e.keyCode) {&amp;#x000A;    case 37: //Event.KEY_LEFT:&amp;#x000A;      if (this.moveLeft()) e.preventDefault();&amp;#x000A;      break;&amp;#x000A;    case 38: //Event.KEY_UP:&amp;#x000A;      if (e.keyCode == 38 || e.ctrlKey) {&amp;#x000A;        if (this.moveUp()) e.preventDefault();&amp;#x000A;        this.startMoveTimeout(false);&amp;#x000A;      }&amp;#x000A;      break;&amp;#x000A;    case 39: //Event.KEY_RIGHT:&amp;#x000A;      if (this.moveRight()) e.preventDefault();&amp;#x000A;      break;&amp;#x000A;    case 40: //Event.KEY_DOWN:&amp;#x000A;      if (e.keyCode == 40 || e.ctrlKey) {&amp;#x000A;        if (this.moveDown()) e.preventDefault();&amp;#x000A;        this.startMoveTimeout(true);&amp;#x000A;      }&amp;#x000A;      break;&amp;#x000A;    case 13: //Event.KEY_RETURN:&amp;#x000A;      if (this.$current)&amp;#x000A;        e.preventDefault();&amp;#x000A;        this.select(this.$current);&amp;#x000A;      break;&amp;#x000A;  }&amp;#x000A;  if (e.ctrlKey &amp;amp;&amp;amp; e.shiftKey) this.select(this.$current);&amp;#x000A;}&amp;#x000A;&amp;#x000A;this.clearMoveTimeout = function() {&amp;#x000A;  clearTimeout(this.moveTimeout);&amp;#x000A;  this.moveTimeout = null;&amp;#x000A;}&amp;#x000A;&amp;#x000A;this.startMoveTimeout = function(isDown) {&amp;#x000A;  if (!$.browser.mozilla &amp;amp;&amp;amp; !$.browser.opera) return;&amp;#x000A;  if (this.moveTimeout) this.clearMoveTimeout();&amp;#x000A;  var _this = this;&amp;#x000A;&amp;#x000A;  var go = function() {&amp;#x000A;    if (!_this.moveTimeout) return;&amp;#x000A;    _this[isDown ? &amp;#39;moveDown&amp;#39; : &amp;#39;moveUp&amp;#39;]();&amp;#x000A;    _this.moveTimout = setTimeout(go, 100);&amp;#x000A;  }&amp;#x000A;  this.moveTimeout = setTimeout(go, 200);&amp;#x000A;}&amp;#x000A;&amp;#x000A;this.moveRight = function() {&amp;#x000A;}&amp;#x000A;&amp;#x000A;this.moveLeft = function() {&amp;#x000A;}&amp;#x000A;&amp;#x000A;this.move = function(isDown) {&amp;#x000A;}&amp;#x000A;&amp;#x000A;this.moveUp = function() {&amp;#x000A;  return this.move(false);&amp;#x000A;}&amp;#x000A;&amp;#x000A;this.moveDown = function() {&amp;#x000A;  return this.move(true);&amp;#x000A;}&amp;#x000A;&amp;#x000A;/*&amp;#x000A;   Scrolls to the given element in the scrollable element view.&amp;#x000A;  /&amp;#x000A;this.scrollInElement = function(element, view) {&amp;#x000A;  var offset, viewHeight, viewScroll, height;&amp;#x000A;  offset = element.offsetTop;&amp;#x000A;  height = element.offsetHeight;&amp;#x000A;  viewHeight = view.offsetHeight;&amp;#x000A;  viewScroll = view.scrollTop;&amp;#x000A;&amp;#x000A;  if (offset - viewScroll + height &amp;gt; viewHeight) {&amp;#x000A;    view.scrollTop = offset - viewHeight + height;&amp;#x000A;  }&amp;#x000A;  if (offset &amp;lt; viewScroll) {&amp;#x000A;    view.scrollTop = offset;&amp;#x000A;  }&amp;#x000A;}&amp;#x000A;&amp;#x000A;/*&amp;#x000A;   Scrolls to the given element in the window.  The second argument is&amp;#x000A;   ignored&amp;#x000A;  /&amp;#x000A;this.scrollInWindow = function(element, ignored) {&amp;#x000A;  var offset, viewHeight, viewScroll, height;&amp;#x000A;  offset = element.offsetTop;&amp;#x000A;  height = element.offsetHeight;&amp;#x000A;  viewHeight = window.innerHeight;&amp;#x000A;  viewScroll = window.scrollY;&amp;#x000A;&amp;#x000A;  if (offset - viewScroll + height &amp;gt; viewHeight) {&amp;#x000A;    window.scrollTo(window.scrollX, offset - viewHeight + height);&amp;#x000A;  }&amp;#x000A;  if (offset &amp;lt; viewScroll) {&amp;#x000A;    window.scrollTo(window.scrollX, offset);&amp;#x000A;  }&amp;#x000A;}&lt;/pre&gt;&#x000A;&#x000A;          &lt;p&gt;}&lt;/p&gt;&#x000A;        &lt;/div&gt;&#x000A;        &lt;div id=&#39;context&#39;&gt;&#x000A;        &lt;/div&gt;&#x000A;      &lt;/div&gt;&#x000A;    &lt;/div&gt;&#x000A;    &lt;div id=&#39;footer-push&#39;&gt;&lt;/div&gt;&#x000A;  &lt;/div&gt;&#x000A;  &lt;div id=&#39;footer&#39;&gt;&#x000A;    &lt;a target=&quot;docwin&quot; href=&quot;http://github.com/mislav/hanna/tree/master&quot;&gt;&lt;strong&gt;Hanna&lt;/strong&gt; RDoc template&lt;/a&gt;&#x000A;  &lt;/div&gt;&#x000A;&lt;/body&gt;</pre>
+            
+            <p>&lt;/html&gt;</p>
+          </div>
+          <div id='context'>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a target="docwin" href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>

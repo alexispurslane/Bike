@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>Parser</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <link href='../css/style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='class' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>
+          <span class='type'>class</span>
+          Parser
+        </h1>
+        <ol class='paths'>
+          <li>
+            <a target="docwin" href="../files/parser_rb.html">parser.rb</a>
+          </li>
+        </ol>
+        <div class='parent'>
+          Superclass:
+          <strong>Racc::Parser</strong>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'></div>
+          <div id='method-list'>
+            <h2>Methods</h2>
+            <h3>Public Instance</h3>
+            <ol>
+              <li><a target="docwin" href="#method-i-_reduce_none">_reduce_none</a></li>
+            </ol>
+          </div>
+          <div id='context'>
+          </div>
+          <div id='section'>
+            <div id='constants-list'>
+              <h2>Constants</h2>
+              <div class='name-list'>
+                <table summary='Constants'>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>Racc_arg</td>
+                    <td>=</td>
+                    <td class='context-item-value'>
+                      [
+                      racc_action_table,
+                      racc_action_check,
+                      racc_action_default,
+                      racc_action_pointer,
+                      racc_goto_table,
+                      racc_goto_check,
+                      racc_goto_default,
+                      racc_goto_pointer,
+                      racc_nt_base,
+                      racc_reduce_table,
+                      racc_token_table,
+                      racc_shift_n,
+                      racc_reduce_n,
+                      racc_use_result_var ]
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class='context-item-desc'></td>
+                  </tr>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>Racc_debug_parser</td>
+                    <td>=</td>
+                    <td class='context-item-value'>false</td>
+                    <td>&nbsp;</td>
+                    <td class='context-item-desc'></td>
+                  </tr>
+                  <tr class='top-aligned-row context-row'>
+                    <td class='context-item-name'>Racc_token_to_s_table</td>
+                    <td>=</td>
+                    <td class='context-item-value'>
+                      [
+                      "$end",
+                      "error",
+                      "IF",
+                      "ELSE",
+                      "UNLESS",
+                      "WHILE",
+                      "IMPORT",
+                      "INTO",
+                      "CLASS",
+                      "HASH",
+                      "ROCKET",
+                      "WITH",
+                      "MIXIN",
+                      "PACKAGE",
+                      "EXTENDS",
+                      "DEF",
+                      "ARROW",
+                      "SLASH",
+                      "APPLY",
+                      "LET",
+                      "VAR",
+                      "NUMBER",
+                      "STRING",
+                      "SYMBOL",
+                      "TRUE",
+                      "FALSE",
+                      "NIL",
+                      "IDENTIFIER",
+                      "CONSTANT",
+                      "NEWLINE",
+                      "\".\"",
+                      "\"not\"",
+                      "\"*\"",
+                      "\"/\"",
+                      "\"+\"",
+                      "\"-\"",
+                      "\">\"",
+                      "\">=\"",
+                      "\"<\"",
+                      "\"<=\"",
+                      "\"is\"",
+                      "\"isnt\"",
+                      "\"and\"",
+                      "\"or\"",
+                      "\"=\"",
+                      "\",\"",
+                      "\"(\"",
+                      "\")\"",
+                      "\";\"",
+                      "\"[\"",
+                      "\"]\"",
+                      "\"{\"",
+                      "\"}\"",
+                      "$start",
+                      "Program",
+                      "Expressions",
+                      "Expression",
+                      "Terminator",
+                      "Literal",
+                      "Call",
+                      "Import",
+                      "Apply",
+                      "Operator",
+                      "GetLocal",
+                      "SetLocal",
+                      "Arrow",
+                      "Def",
+                      "Class",
+                      "Hash",
+                      "Mixin",
+                      "Package",
+                      "If",
+                      "While",
+                      "Unless",
+                      "Array",
+                      "Arguments",
+                      "ArgList",
+                      "LitArray",
+                      "ParamList",
+                      "Block",
+                      "Mixins",
+                      "KeyVal" ]
+                    </td>
+                    <td>&nbsp;</td>
+                    <td class='context-item-desc'></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div id='methods'>
+              <h2>Public Instance methods</h2>
+              <div class='method public-instance' id='method-method-i-_reduce_none'>
+                <a name='method-i-_reduce_none'></a>
+                <div class='synopsis'>
+                  <span class='name'>_reduce_none</span>
+                  <span class='arguments'>(val, _values, result)</span>
+                </div>
+                <div class='description'>
+                  
+                </div>
+                <div class='source'>
+                  <a class='source-toggle' href='#' onclick="toggleCode('method-i-_reduce_none-source'); return false">
+                    [show source]
+                  </a>
+                  <pre id='method-i-_reduce_none-source'><span class="ruby-comment"># File parser.rb, line 1414</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier">_reduce_none</span>(<span class="ruby-identifier">val</span>, <span class="ruby-identifier">_values</span>, <span class="ruby-identifier">result</span>)&#x000A;  <span class="ruby-identifier">val</span>[<span class="ruby-value">0</span>]&#x000A;<span class="ruby-keyword">end</span></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a target="docwin" href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>

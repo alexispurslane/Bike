@@ -1,5 +1,18 @@
+#BikeMethod represents a method (also a function and lambda) in Bike.
+#Example of usage:
+#
+#     BikeMethod.new(["a", "b"], ..., ..., ...)
+#
+#This class is not meant to be directly used with its own instances of body, context, and vararg, becouse that is done in DefNode and LambdaNode and most of the instances for body, etc. are done by the parser
+#<b>You should rarely need to worry about this class</b>
 class BikeMethod
-  attr_accessor :ruby_value, :context
+  # The actual value that any internal bike object carries. In this case, it is <tt>"def (#{@params.join(', ')}#{@vararg ? " ...#{@vararg}" : ""}) { ... }"</tt> just to make it so that there is something to see on the repl.
+  attr_reader :ruby_value
+
+  # The context that the method (or function) was created in. <b>THIS IS NOT BEING USED FOR CLOSURES OR ANYTHING YET. IT DOES NOT WORK</b>
+  attr_reader :context
+ 
+  # This method just sets the corresponding arguments onto properties of the same name and returns the new object. The only special thing it does is doctor up a +ruby_value+ based on these properties.
   def initialize(params, body, context, vararg)
     @params = params
     @body = body
@@ -8,11 +21,11 @@ class BikeMethod
     @ruby_value = "def (#{@params.join(', ')}#{@vararg ? " ...#{@vararg}" : ""}) { ... }"
   end
   
+  # The +call+ method takes the reciever (normally the global instance of Object, unless the function is called using dot-notation) and creates a new context based on the reciever. It also takes a ruby array of all the arguments that were passed in, and maps them to the parameters, deleting them as they go. If there is a vararg, it gets assigned to any arguments that were left over.
   def call (receiver, arguments)
     context = Context.new(receiver)
     @params.each_with_index do |param, index|
       context.locals[param] = arguments[index > 0 ? index-1 : index]
-      puts "\n#{arguments[index > 0 ? index-1 : index].inspect}\n"
       arguments.delete_at(index > 0 ? index-1 : index)
     end
     context.locals[@vararg] = Constants["Array"].new_with_value(arguments)
@@ -20,4 +33,3 @@ class BikeMethod
     @body.eval(context)
   end
 end
-

@@ -131,9 +131,8 @@ rule
   # Literals are the hard-coded values inside the program. If you want to add support
   # for other literal types, such as arrays or hashes, this it where you'd do it.
   Literal:
-    NUMBER                        { result = NumberNode.new(val[0]) }
-  | STRING                        { result = StringNode.new(val[0]) }
-  | SYMBOL                        { result = SymbolNode.new(val[0]) }
+    NUMBER                        { result = NumberNode.new(val[0], "Number") }
+  | STRING                        { result = StringNode.new(val[0], "String") }
   | TRUE                          { result = TrueNode.new }
   | FALSE                         { result = FalseNode.new }
   | NIL                           { result = NilNode.new }

@@ -11,7 +11,7 @@ def gensym (base="AnonymousClass_")
 end
 
 # First, we create an simple wrapper class to encapsulate the interpretation process.
-# All this does is parse the code and call `eval` on the node at the top of the AST.
+# All this does is parse the code and call eval on the node at the top of the AST.
 class Interpreter
   def initialize
     @parser = Parser.new
@@ -21,12 +21,12 @@ class Interpreter
     @parser.parse(code).eval(RootContext)
   end
 end
-# The `Nodes` class will always be at the top of the AST. Its only purpose it to
+# The Nodes class will always be at the top of the AST. Its only purpose it to
 # contain other nodes. It correspond to a block of code or a series of expressions.
 # 
-# The `eval` method of every node is the "interpreter" part of our language.
+# The eval method of every node is the "interpreter" part of our language.
 # All nodes know how to evalualte themselves and return the result of their evaluation.
-# The `context` variable is the `Context` in which the node is evaluated (local
+# The context variable is the Context in which the node is evaluated (local
 # variables, current self and current class).
 class Nodes
   def eval(context)
@@ -38,10 +38,10 @@ class Nodes
   end
 end
 
-# We're using `Constants` that we created before when bootstrapping the runtime to access
+# We're using Constants that we created before when bootstrapping the runtime to access
 # the objects and classes from inside the runtime.
 #
-# Next, we implement `eval` on other node types. Think of that `eval` method as how the
+# Next, we implement eval on other node types. Think of that eval method as how the
 # node bring itself to life inside the runtime.
 class NumberNode
   def eval(context)
@@ -59,7 +59,7 @@ class ArrayListNode
   def eval(context)
     new_value = []
     value.each do |e|
-      new_value << BikeClass.new.new_with_value(e.value)
+      new_value << Constants[e.type].new_with_value(e.value)
     end
     Constants["Array"].new_with_value(new_value)
   end
@@ -110,7 +110,7 @@ class ImportNode
   end
 end
 
-# When setting the value of a constant or a local variable, the `value` attribute
+# When setting the value of a constant or a local variable, the value attribute
 # is a node, created by the parser. We need to evaluate the node first, to convert
 # it to an object, before storing it into a variable or constant.
 class SetConstantNode
@@ -182,14 +182,14 @@ end
 
 
 
-# The `CallNode` for calling a method is a little more complex. It needs to set the receiver
-# first and then evaluate the arguments before calling the method.
+# The CallNode for calling a method is a little more complex. It needs to set the +receiver+
+# first and then evaluate the +arguments+ before calling the method.
 class CallNode
   def eval(context)
     if receiver
       value = receiver.eval(context)
     else
-      value = context.current_self # Default to `self` if no receiver.
+      value = context.current_self # Default to self if no receiver.
     end
     if !value
       raise "Receiver cannot be resolved by either getting current context, or through dot notation!"
@@ -222,7 +222,7 @@ class ApplyNode
   end
 end
 
-# Defining a method, using the `def` keyword, is done by adding a method to the current class.
+# Defining a method, using the +def+ keyword, is done by adding a method to the current class.
 class DefNode
   def eval(context)
     method = BikeMethod.new(params, body, context.current_class, vararg)
@@ -238,11 +238,11 @@ end
 # Defining a class is done in three steps:
 #
 # 1. Reopen or define the class.
-# 2. Create a special context of evaluation (set `current_self` and `current_class` to the new class).
+# 2. Create a special context of evaluation (set current_self and current_class to the new class).
 # 3. Evaluate the body of the class inside that context.
 #
-# Check back how `DefNode` was implemented, adding methods to `context.current_class`. Here is
-# where we set the value of `current_class`.
+# Check back how DefNode was implemented, adding methods to context.current_class. Here is
+# where we set the value of current_class.
 class ClassNode
   def eval(context)
     classname = name || gensym()
@@ -290,8 +290,8 @@ class PackageNode
   end
 end
 
-# Finally, to implement `if` in our language,
-# we turn the condition node into a Ruby value to use Ruby's `if`.
+# Finally, to implement if in our language,
+# we turn the condition node into a Ruby value to use Ruby's if.
 class IfNode
   def eval(context)
     if condition.eval(context).ruby_value

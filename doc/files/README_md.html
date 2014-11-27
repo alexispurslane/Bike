@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>README.md</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <link href='../css/style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='file' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>README.md</h1>
+        <div class='paths'>
+          README.md
+        </div>
+        <div class='last-update'>
+          Last Update:
+          <span class='datetime'>2014-11-27 06:26:29 -0800</span>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'>
+            
+            <h1 id="label-The+Bike+programming+language">The Bike programming language<span><a href="#label-The+Bike+programming+language">&para;</a> <a href="#documentation">&uarr;</a></span></h1>
+            
+            <p><a href="christopherdumas.github.io/Bike">Official Website</a></p>
+            
+            <p><a href="mailto:christopherdumas@me.com">Contact author</a> or
+            @christopherdumas</p>
+            
+            <p>The Bike programming language is a programming language that combines
+            Haskell&#39;s currying, function composition, anonymous functions, and
+            array comprehension, with Scala&#39;s packages, classes, and traits,
+            Python&#39;s <code>is</code> and <code>isnt</code> style operators,
+            Scheme&#39;s everything is an expression idea, Ruby&#39;s
+            everything-is-an-object philosophy, and Go&#39;s no paren control
+            structures, with Coffeescript&#39;s infix <code>if</code> and
+            <code>unless</code>. It also has optional no-paren function calls, and
+            immutable arrays are also present. This is mixed in with mixins and
+            Java&#39;s ananymous Classes, as well as JavaScript&#39;s Objects (called
+            hashes) and ES6&#39;s destructuring assignment. It is immutable in
+            everything by default, but in a way that makes it fairly painless to use.</p>
+            
+            <p>Bike&#39;s motto is:</p>
+            
+            <blockquote>
+            <p>Not a lot of syntax, but a lot more sugar.</p>
+            </blockquote>
+            
+            <p>Some code samples are in order:</p>
+            
+            <pre>class Animal {&#x000A;  def sound = &quot;some strange animal sound&quot; # define function that returns a string. This gets you computed properties and getters for free!&#x000A;  def name = &quot;some strange animal&quot;&#x000A;  def make_sound (n) {&#x000A;    let result = flatten repeat -&gt; {&#x000A;      name .. &quot; makes &quot; .. sound # Return doctored-up string&#x000A;    }, n #!ALL WHEELS STDLIB FUNCTIONS ARE WRITTEN FOR USE IN CONTIUATION-PASSING STYLE! &#x000A;  }&#x000A;}&#x000A;class Dog extends Animal {&#x000A;  def sound = &quot;Bark!&quot; # override some stuff&#x000A;  def name = &quot;Doggie&quot;&#x000A;  def init { # Add an init method&#x000A;    println &quot;Initialized!&quot;&#x000A;  }&#x000A;}&#x000A;let mutatedDog = class with Animal&#x000A;let dog = Dog.new # You could also use `let var` if you wanted the variable to be mutable&#x000A;dog.make_sound 3 + 2  &#x000A;let array = [1, 2, 3, 4, 5, 99] unless false # Another way to write this is: `flatten [1..5, 99]`&#x000A;let fixed_count_array = (array.set 6, 6) if true&#x000A;if array isnt fixed_count_array {&#x000A;  println &quot;Ok!&quot;&#x000A;} else {&#x000A;  println &quot;Run for the hills!!!!&quot;&#x000A;}&#x000A;let foo = object {&#x000A;  bar =&gt; &quot;baz&quot;&#x000A;  boo =&gt; &quot;bar&quot;&#x000A;}&#x000A;let var {bar, boo} = foo</pre>
+            
+            <h2 id="label-Roadmap">Roadmap<span><a href="#label-Roadmap">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+            
+            <p>In the <a href="TODO_md.html">TODO.md</a> file is our roadmap to 1.0. It
+            will be updated every major version release. Our versioning system is like
+            this: The whole number (the 1 in 1.0) is incremented each major, or
+            breaking version. The decimal point is incremented by five, and normally
+            for big, but not breaking changes, like adding new operators or shorthand
+            syntax. The Beta version (indicated by <code>+b&lt;number&gt;</code>) is
+            incremented every time a bug is fixed, or a change is being contemplated
+            but I have not fully committed to it.</p>
+            
+            <h2 id="label-Development">Development<span><a href="#label-Development">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+            
+            <h3 id="label-Setting+up+your+development+environment">Setting up your development environment<span><a href="#label-Setting+up+your+development+environment">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+            
+            <pre>$ ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot; # get homebrew&#x000A;$ sudo mkdir /usr/local/Cellar&#x000A;$ sudo chown -R `whoami` /usr/local&#x000A;$ brew install ruby gem&#x000A;$ sudo gem install racc&#x000A;$ sudo gem install colorize&#x000A;$ sudo gem install ruby-terminfo&#x000A;$ sudo gem install irbtools&#x000A;$ sudo gem install terminal-notifier&#x000A;$ git clone git@github.com:christopherdumas/Bike.git bike&#x000A;$ cd bike/&#x000A;$ racc grammar.y -o parser.rb&#x000A;$ # have fun!!!!</pre>
+            
+            <h2 id="label-Contribution">Contribution<span><a href="#label-Contribution">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+            
+            <h3 id="label-Issues">Issues<span><a href="#label-Issues">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+            
+            <p>Please keep issues short and to the point. Please no flaming, or arguments
+            over preferences over syntax. If you make any changes to the syntax, check
+            them with the author first, over email. Also, avoid adding syntax that uses
+            obscure symbols. Also, please no OOP vs. Functional debates. Bike is
+            supposed to make OOP and FP live together. Any debates about them should be
+            about how to make them work together.</p>
+            
+            <h3 id="label-Emails+to+author">Emails to author<span><a href="#label-Emails+to+author">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+            
+            <p>Please keep emails to a minimum, only when concerning major changes/bugs.</p>
+            
+            <h3 id="label-Code+Style">Code Style<span><a href="#label-Code+Style">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+            
+            <p>Please use CamelCase for classes and grammar rules, snake_case for
+            variables, and CAPS_SNAKE_CASE for symbols related to keywords or literals.
+            Please unit test any changes made to the <a
+            href="../classes/Interpreter.html">Interpreter</a> class or <a
+            href="../classes/Lexer.html">Lexer</a> class. Also, only comment where
+            things are non-obvous</p>
+            
+            <h3 id="label-Commits">Commits<span><a href="#label-Commits">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+            
+            <p>Please use descriptive commits, but under 80 characters. Always use emoji.</p>
+            
+            <p>| Type of Commit | emoji | | ————- | ————- | | Bug fix | :bug: :collision:
+            | | Major change | :sparkles: | | code refactor | :angel: | | documentation
+            | :notebook: | | Partial fix/temporary hack | :lipstick: :pig: | |
+            Backwards compatability | :trollface: |</p>
+          </div>
+          <div id='context'>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a target="docwin" href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>

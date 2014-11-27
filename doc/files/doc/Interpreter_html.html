@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>Interpreter.html</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <link href='../../css/style.css' media='screen' rel='stylesheet' type='text/css'>
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='file' id='wrapper'>
+      <div class='header'>
+        <h1 class='name'>Interpreter.html</h1>
+        <div class='paths'>
+          doc/Interpreter.html
+        </div>
+        <div class='last-update'>
+          Last Update:
+          <span class='datetime'>2014-11-27 06:45:07 -0800</span>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'>
+            
+            <p>&lt;!DOCTYPE html&gt;</p>
+            
+            <p>&lt;html&gt; &lt;head&gt; &lt;meta charset=“UTF-8”&gt;</p>
+            
+            <p>&lt;title&gt;class <a href="../../classes/Interpreter.html">Interpreter</a>
+            - RDoc Documentation&lt;/title&gt;</p>
+            
+            <p>&lt;link href=“./fonts.css” rel=“stylesheet”&gt; &lt;link href=“./rdoc.css”
+            rel=“stylesheet”&gt;</p>
+            
+            <p>&lt;script type=“text/javascript”&gt;</p>
+            
+            <pre class="ruby"><span class="ruby-identifier">var</span> <span class="ruby-identifier">rdoc_rel_prefix</span> = <span class="ruby-string">&quot;./&quot;</span>;</pre>
+            
+            <p>&lt;/script&gt;</p>
+            
+            <p>&lt;script src=“./js/jquery.js”&gt;&lt;/script&gt; &lt;script
+            src=“./js/navigation.js”&gt;&lt;/script&gt; &lt;script
+            src=“./js/search_index.js”&gt;&lt;/script&gt; &lt;script
+            src=“./js/search.js”&gt;&lt;/script&gt; &lt;script
+            src=“./js/searcher.js”&gt;&lt;/script&gt; &lt;script
+            src=“./js/darkfish.js”&gt;&lt;/script&gt;</p>
+            
+            <p>&lt;body id=“top” role=“document” class=“class”&gt; &lt;nav
+            role=“navigation”&gt;</p>
+            
+            <pre>&lt;div id=&quot;project-navigation&quot;&gt;&#x000A;  &lt;div id=&quot;home-section&quot; role=&quot;region&quot; title=&quot;Quick navigation&quot; class=&quot;nav-section&quot;&gt;&#x000A;&lt;h2&gt;&#x000A;  &lt;a href=&quot;./index.html&quot; rel=&quot;home&quot;&gt;Home&lt;/a&gt;&#x000A;&lt;/h2&gt;&#x000A;&lt;div id=&quot;table-of-contents-navigation&quot;&gt;&#x000A;  &lt;a href=&quot;./table_of_contents.html#pages&quot;&gt;Pages&lt;/a&gt;&#x000A;  &lt;a href=&quot;./table_of_contents.html#classes&quot;&gt;Classes&lt;/a&gt;&#x000A;  &lt;a href=&quot;./table_of_contents.html#methods&quot;&gt;Methods&lt;/a&gt;&#x000A;&lt;/div&gt;</pre>
+            
+            <p>&lt;/div&gt;</p>
+            
+            <pre>  &lt;div id=&quot;search-section&quot; role=&quot;search&quot; class=&quot;project-section initially-hidden&quot;&gt;&#x000A;&lt;form action=&quot;#&quot; method=&quot;get&quot; accept-charset=&quot;utf-8&quot;&gt;&#x000A;  &lt;div id=&quot;search-field-wrapper&quot;&gt;&#x000A;    &lt;input id=&quot;search-field&quot; role=&quot;combobox&quot; aria-label=&quot;Search&quot;&#x000A;           aria-autocomplete=&quot;list&quot; aria-controls=&quot;search-results&quot;&#x000A;           type=&quot;text&quot; name=&quot;search&quot; placeholder=&quot;Search&quot; spellcheck=&quot;false&quot;&#x000A;           title=&quot;Type to search, Up and Down to navigate, Enter to load&quot;&gt;&#x000A;  &lt;/div&gt;&#x000A;  &lt;ul id=&quot;search-results&quot; aria-label=&quot;Search Results&quot;&#x000A;      aria-busy=&quot;false&quot; aria-expanded=&quot;false&quot;&#x000A;      aria-atomic=&quot;false&quot; class=&quot;initially-hidden&quot;&gt;&lt;/ul&gt;&#x000A;&lt;/form&gt;</pre>
+            
+            <p>&lt;/div&gt;</p>
+            
+            <pre>&lt;/div&gt;&#x000A;&lt;div id=&quot;class-metadata&quot;&gt;&#x000A;&#x000A;  &lt;div id=&quot;parent-class-section&quot; class=&quot;nav-section&quot;&gt;&#x000A;&lt;h3&gt;Parent&lt;/h3&gt;&#x000A;&#x000A;&lt;p class=&quot;link&quot;&gt;&lt;a href=&quot;Object.html&quot;&gt;Object&lt;/a&gt;</pre>
+            
+            <p>&lt;/div&gt;</p>
+            
+            <pre>&lt;!-- Method Quickref --&gt;</pre>
+            
+            <p>&lt;div id=“method-list-section” class=“nav-section”&gt;</p>
+            
+            <pre>&lt;h3&gt;Methods&lt;/h3&gt;&#x000A;&lt;ul class=&quot;link-list&quot; role=&quot;directory&quot;&gt;&#x000A;&#x000A;  &lt;li &gt;&lt;a href=&quot;#method-c-new&quot;&gt;::new&lt;/a&gt;&#x000A;&#x000A;  &lt;li &gt;&lt;a href=&quot;#method-i-eval&quot;&gt;#eval&lt;/a&gt;&#x000A;&#x000A;&lt;/ul&gt;</pre>
+            
+            <p>&lt;/div&gt;</p>
+            
+            <pre>&lt;/div&gt;</pre>
+            
+            <p>&lt;/nav&gt;</p>
+            
+            <p>&lt;main role=“main” aria-labelledby=“class-Interpreter”&gt;</p>
+            
+            <pre>&lt;h1 id=&quot;class-Interpreter&quot; class=&quot;class&quot;&gt;&#x000A;  class Interpreter&#x000A;&lt;/h1&gt;&#x000A;&lt;section class=&quot;description&quot;&gt;</pre>
+            
+            <p>&lt;p&gt;First, we create an simple wrapper class to encapsulate the
+            interpretation process. All this does is parse the code and call `eval` on
+            the node at the top of the AST.&lt;/p&gt;</p>
+            
+            <pre>&lt;/section&gt;&#x000A;&lt;section id=&quot;5Buntitled-5D&quot; class=&quot;documentation-section&quot;&gt;&#x000A;&#x000A;   &lt;section id=&quot;public-class-5Buntitled-5D-method-details&quot; class=&quot;method-section&quot;&gt;&#x000A;     &lt;header&gt;&#x000A;       &lt;h3&gt;Public Class Methods&lt;/h3&gt;&#x000A;     &lt;/header&gt;&#x000A;&#x000A;    &lt;div id=&quot;method-c-new&quot; class=&quot;method-detail &quot;&gt;&#x000A;&#x000A;      &lt;div class=&quot;method-heading&quot;&gt;&#x000A;        &lt;span class=&quot;method-name&quot;&gt;new&lt;/span&gt;&lt;span&#x000A;          class=&quot;method-args&quot;&gt;()&lt;/span&gt;&#x000A;&#x000A;        &lt;span class=&quot;method-click-advice&quot;&gt;click to toggle source&lt;/span&gt;&#x000A;&#x000A;      &lt;/div&gt;&#x000A;&#x000A;      &lt;div class=&quot;method-description&quot;&gt;&#x000A;&#x000A;        &lt;div class=&quot;method-source-code&quot; id=&quot;new-source&quot;&gt;&#x000A;          &lt;pre&gt;&lt;span class=&quot;ruby-comment&quot;&gt;# File interpreter.rb, line 16&lt;/span&gt;</pre>
+            
+            <p>&lt;span class=“ruby-keyword”&gt;def&lt;/span&gt; &lt;span
+            class=“ruby-identifier”&gt;initialize&lt;/span&gt;</p>
+            
+            <pre>&lt;span class=&quot;ruby-ivar&quot;&gt;@parser&lt;/span&gt; = &lt;span class=&quot;ruby-constant&quot;&gt;Parser&lt;/span&gt;.&lt;span class=&quot;ruby-identifier&quot;&gt;new&lt;/span&gt;</pre>
+            
+            <p>&lt;span class=“ruby-keyword”&gt;end&lt;/span&gt;&lt;/pre&gt;</p>
+            
+            <pre>      &lt;/div&gt;&#x000A;    &lt;/div&gt;&#x000A;&#x000A;  &lt;/div&gt;&#x000A;&#x000A;&lt;/section&gt;&#x000A;&#x000A; &lt;section id=&quot;public-instance-5Buntitled-5D-method-details&quot; class=&quot;method-section&quot;&gt;&#x000A;   &lt;header&gt;&#x000A;     &lt;h3&gt;Public Instance Methods&lt;/h3&gt;&#x000A;   &lt;/header&gt;&#x000A;&#x000A;  &lt;div id=&quot;method-i-eval&quot; class=&quot;method-detail &quot;&gt;&#x000A;&#x000A;    &lt;div class=&quot;method-heading&quot;&gt;&#x000A;      &lt;span class=&quot;method-name&quot;&gt;eval&lt;/span&gt;&lt;span&#x000A;        class=&quot;method-args&quot;&gt;(code)&lt;/span&gt;&#x000A;&#x000A;      &lt;span class=&quot;method-click-advice&quot;&gt;click to toggle source&lt;/span&gt;&#x000A;&#x000A;    &lt;/div&gt;&#x000A;&#x000A;    &lt;div class=&quot;method-description&quot;&gt;&#x000A;&#x000A;      &lt;div class=&quot;method-source-code&quot; id=&quot;eval-source&quot;&gt;&#x000A;        &lt;pre&gt;&lt;span class=&quot;ruby-comment&quot;&gt;# File interpreter.rb, line 20&lt;/span&gt;</pre>
+            
+            <p>&lt;span class=“ruby-keyword”&gt;def&lt;/span&gt; &lt;span
+            class=“ruby-identifier”&gt;eval&lt;/span&gt;(&lt;span
+            class=“ruby-identifier”&gt;code&lt;/span&gt;)</p>
+            
+            <pre>&lt;span class=&quot;ruby-ivar&quot;&gt;@parser&lt;/span&gt;.&lt;span class=&quot;ruby-identifier&quot;&gt;parse&lt;/span&gt;(&lt;span class=&quot;ruby-identifier&quot;&gt;code&lt;/span&gt;).&lt;span class=&quot;ruby-identifier&quot;&gt;eval&lt;/span&gt;(&lt;span class=&quot;ruby-constant&quot;&gt;RootContext&lt;/span&gt;)</pre>
+            
+            <p>&lt;span class=“ruby-keyword”&gt;end&lt;/span&gt;&lt;/pre&gt;</p>
+            
+            <pre>        &lt;/div&gt;&#x000A;      &lt;/div&gt;&#x000A;&#x000A;    &lt;/div&gt;&#x000A;&#x000A;  &lt;/section&gt;&#x000A;&#x000A;&lt;/section&gt;</pre>
+            
+            <p>&lt;/main&gt;</p>
+            
+            <p>&lt;footer id=“validator-badges” role=“contentinfo”&gt;</p>
+            
+            <pre>&lt;p&gt;&lt;a href=&quot;http://validator.w3.org/check/referer&quot;&gt;Validate&lt;/a&gt;&#x000A;&lt;p&gt;Generated by &lt;a href=&quot;http://rdoc.rubyforge.org&quot;&gt;RDoc&lt;/a&gt; 4.1.1.&#x000A;&lt;p&gt;Based on &lt;a href=&quot;http://deveiate.org/projects/Darkfish-Rdoc/&quot;&gt;Darkfish&lt;/a&gt; by &lt;a href=&quot;http://deveiate.org&quot;&gt;Michael Granger&lt;/a&gt;.</pre>
+            
+            <p>&lt;/footer&gt;</p>
+          </div>
+          <div id='context'>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a target="docwin" href="http://github.com/mislav/hanna/tree/master"><strong>Hanna</strong> RDoc template</a>
+    </div>
+  </body>
+</html>

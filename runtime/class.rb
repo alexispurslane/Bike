@@ -1,6 +1,15 @@
+# Classes are objects in Bike so they inherit from BikeObject. BikeClass is the way of representing Bike Classes that are initialized or not initialized. There are no properties in bike classes, only methods, which is conveiniently simple for syntax and code.
 class BikeClass < BikeObject
-  # Classes are objects in Bike so they inherit from BikeObject.
-  attr_reader :runtime_methods, :runtime_superclass, :runtime_mixins, :ruby_value
+  # +runtime_methods+ is the property that holds all of the instances methods. It does not hold any of the super-classes methods, but all mixin methods are copied into it.
+  attr_reader :runtime_methods
+  # +runtime_superclass+ holds the BikeClass for the superclass of this object. +Object+ is the great-grandsuperclass of everything.
+  attr_reader :runtime_superclass
+  # +runtime_mixins+ is a referance to all of the mixins this object uses. It can be added to, and the list of methods that the class has will be updated. (<b>That last funcitonality is in the future.</b>)
+  attr_reader :runtime_mixins
+  # +ruby_value+ is a dummy value <tt>"<class>"</tt>
+  attr_reader :ruby_value
+
+  # The initialization is basicly getting the superclass from constants, copying all of the methods from all of the mixins into the +runtime_methods+ property and then returning.
   def initialize(superclass="Object", mixins=[])
     @runtime_mixins = mixins
     @runtime_methods = {}
@@ -15,7 +24,8 @@ class BikeClass < BikeObject
     @runtime_superclass = Constants[superclass]
     @ruby_value = "<class>"
   end
-  # Lookup a method
+
+  # Lookup a method and return it. Looks through all of the +runtime_methods+ all the way up the superclass chain.
   def lookup(method_name)
     method = @runtime_methods[method_name]
     unless method
@@ -27,14 +37,19 @@ class BikeClass < BikeObject
     end
     method
   end
-  # Helper method to define a method on this class from Ruby.
+  # Helper method to define a method on this class from Ruby. <b>Only use this in bootstrap.rb to keep the code organized</b>
+  #
+  #     def :method_name, { |receiver, arguments| ...body... }
+  #
   def def(name, &block)
     @runtime_methods[name.to_s] = block
   end
+
   # Create a new instance of this class
   def new
     BikeObject.new(self)
   end
+
   # Create an instance of this Bike class that holds a Ruby value. Like a String,
   # Number or true.
   def new_with_value(value)
