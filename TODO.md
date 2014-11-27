@@ -12,8 +12,8 @@
  - [X]  Ananymos Classes
  - [X]  Hashes
  - [X]  Rest Arguments
- - [ ]  Document Source
- - [ ]  Splat arguments for functions
+ - [X]  Document Source
+ - [X]  Splat arguments for functions
 
 ##TODO for Beta 4:
  - [ ]  Observers
