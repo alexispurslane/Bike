@@ -12,11 +12,13 @@ class Lexer
     while i < code.size
       chunk = code[i..-1]
 
-      if operator = chunk[/\A(@|=@|isnt|or|and|not|is|<=|>=|->|=>|\\|\$)/, 1]
+      if operator = chunk[/\A(#|@|=@|isnt|or|and|not|is|<=|>=|->|=>|\\|\$)/, 1]
         if operator == "->"
           tokens << [:ARROW, "arrow"]
         elsif operator == "=>"
           tokens << [:ROCKET, "rocket"]
+        elsif operator == "#"
+          tokens << [:HASH, "hash"]
         elsif operator == "=@"
           tokens << ["set", "set"]
         elsif operator == "\\"

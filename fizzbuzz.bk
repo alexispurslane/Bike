@@ -1,0 +1,7 @@
+let var one_to_hundrid = []
+let var i = 0
+while i < 100 {
+  one_to_hundrid = one_to_hundrid + [i]
+  i = i + 1
+}
+println one_to_hundrid 
