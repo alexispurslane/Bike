@@ -26,6 +26,7 @@ Constants["Class"].def :new do |receiver,arguments|
 end
 Constants["Object"].def :println do |receiver, arguments|
   check_all_arguments(arguments)
+  puts arguments[0].ruby_value
   arguments[0] || Constants["nil"] # We always want to return objects from our runtime
 end
 
@@ -57,6 +58,9 @@ Constants["Number"].def :+ do|receiver,arguments|
   check_all_arguments(arguments)
   result = receiver.ruby_value + arguments.first.ruby_value
   Constants["Number"].new_with_value(result)
+end
+Constants["Number"].def :% do |receiver, arguments|
+  Constants["Number"].new_with_value(receiver.ruby_value % arguments.first.ruby_value)
 end
 Constants["Number"].def :- do|receiver,arguments|
   check_all_arguments(arguments)
@@ -142,11 +146,12 @@ def define_or(type)
   end
 end
 
-k = "Object"
-define_is(k)
-define_isnt(k)
-define_and(k)
-define_or(k)
+["Object", "TrueClass", "FalseClass", "Array", "String", "Number", "Class"].each do |k|
+  define_is(k)
+  define_isnt(k)
+  define_and(k)
+  define_or(k)
+end
 Constants["Object"].def :not do|receiver, arguments|
   if !receiver.ruby_value
     Constants["true"]

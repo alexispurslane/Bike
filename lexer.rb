@@ -12,7 +12,7 @@ class Lexer
     while i < code.size
       chunk = code[i..-1]
 
-      if operator = chunk[/\A(#|@|=@|isnt|or|and|not|is|<=|>=|->|=>|\\|\$)/, 1]
+      if operator = chunk[/\A(%|#|@|=@|isnt|or|and|not|is|<=|>=|->|=>|\\|\$)/, 1]
         if operator == "->"
           tokens << [:ARROW, "arrow"]
         elsif operator == "=>"

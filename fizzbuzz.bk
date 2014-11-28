@@ -1,7 +1,17 @@
-let var one_to_hundrid = []
 let var i = 0
 while i < 100 {
-  one_to_hundrid = one_to_hundrid + [i]
+  if (i % 15) is 0 {
+    println "-- FizzBuzz!"
+  } else {
+    if ((i % 3) is 0) {
+      println "Fizz!"
+    } else {
+      if (i % 5) is 0 {
+        println "Buzz!"
+      } else {
+        println i
+      }
+    }
+  }
   i = i + 1
 }
-println one_to_hundrid 

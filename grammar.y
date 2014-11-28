@@ -41,7 +41,7 @@ prechigh
   left  '.'
   right 'not'
   left  '*' '/' 
-  left  '+' '-'
+  left  '+' '-' '%'
   left  '>' '>=' '<' '<='
   left  'is' 'isnt' '@' 'set'
   left  'and'
@@ -127,7 +127,6 @@ rule
     NEWLINE
   | ";"
   ;
-  
   # Literals are the hard-coded values inside the program. If you want to add support
   # for other literal types, such as arrays or hashes, this it where you'd do it.
   Literal:
@@ -137,7 +136,6 @@ rule
   | FALSE                         { result = FalseNode.new }
   | NIL                           { result = NilNode.new }
   ;
-  
   # Method calls can take three forms:
   #
   # * Without a receiver (+self+ is assumed): +method(arguments)+.
@@ -147,27 +145,27 @@ rule
   #
   # Each one of those is handled by the following rule.
   Call:
-    IDENTIFIER Arguments          { result = CallNode.new(nil, val[0], val[1], false) }
+    IDENTIFIER Arguments                      { result = CallNode.new(nil, val[0], val[1], false) }
   | Expression "." IDENTIFIER
-      Arguments                   { result = CallNode.new(val[0], val[2], val[3], false) }
-  | Expression "." IDENTIFIER     { result = CallNode.new(val[0], val[2], [], false) }
+      Arguments                               { result = CallNode.new(val[0], val[2], val[3], false) }
+  | Expression "." IDENTIFIER                 { result = CallNode.new(val[0], val[2], [], false) }
   | Expression "." IDENTIFIER
       IDENTIFIER "." "." "."                  { result = CallNode.new(val[0], val[2], val[3], true) }
   | Expression "." IDENTIFIER
-      "(" IDENTIFIER "." "." "." ")"                  { result = CallNode.new(val[0], val[2], val[4], true) }
+      "(" IDENTIFIER "." "." "." ")"          { result = CallNode.new(val[0], val[2], val[4], true) }
 
-  | IDENTIFIER IDENTIFIER "." "." "."          { result = CallNode.new(nil, val[0], val[1], true) }
-  | IDENTIFIER "(" IDENTIFIER "." "." "." ")"          { result = CallNode.new(nil, val[0], val[2], true) }
-  | Expression "." IDENTIFIER "=" Expression     { result = CallNode.new(val[0], val[2] + "=", [val[4]], false) }
+  | IDENTIFIER IDENTIFIER "." "." "."         { result = CallNode.new(nil, val[0], val[1], true) }
+  | IDENTIFIER "(" IDENTIFIER "." "." "." ")" { result = CallNode.new(nil, val[0], val[2], true) }
+  | Expression "." IDENTIFIER "=" Expression  { result = CallNode.new(val[0], val[2] + "=", [val[4]], false) }
   ;
 
   Apply:
-    IDENTIFIER APPLY Arguments     { result = ApplyNode.new(nil, val[0], val[2]) }
-  | IDENTIFIER APPLY               { result = ApplyNode.new(nil, val[0], []) }
+    IDENTIFIER APPLY Arguments        { result = ApplyNode.new(nil, val[0], val[2]) }
+  | IDENTIFIER APPLY                  { result = ApplyNode.new(nil, val[0], []) }
   ;
   Import:
-    IMPORT IDENTIFIER                              { result = ImportNode.new(nil, "#{val[1]}.bk") }
-  | IMPORT IDENTIFIER INTO IDENTIFIER              { result = ImportNode.new(val[3], "#{val[1]}.bk") }
+    IMPORT IDENTIFIER                 { result = ImportNode.new(nil, "#{val[1]}.bk") }
+  | IMPORT IDENTIFIER INTO IDENTIFIER { result = ImportNode.new(val[3], "#{val[1]}.bk") }
   ;
 
   Arguments:
@@ -175,22 +173,20 @@ rule
   | "(" ArgList ")"               { result = val[1] }
   | ArgList                       { result = val[0] }
   ;
-  
   Array:
-    "[" "]"                       { result = [] }
-  | "[" LitArray "]"              { result = ArrayListNode.new(val[1]) }
+    "[" "]"           { result = [] }
+  | "[" ListArray "]" { result = ArrayListNode.new(val[1]) }
   ;
 
-  LitArray:
-    Expression                    { result = val }
-  | LitArray "," Expression    { result = val[0] << val[2] }
+  ListArray:
+    Expression               { result = val }
+  | ListArray "," Expression { result = val[0] << val[2] }
   ;
 
   ArgList:
     Expression                    { result = val }
   | ArgList "," Expression        { result = val[0] << val[2] }
   ;
-  
 
   Arrow:
     SLASH ParamList ARROW Expression    { result = LambdaNode.new(val[1], val[3]) }
@@ -206,21 +202,22 @@ rule
   # Operators need to be defined individually for the Operator Precedence Table to take
   # action.
   Operator:
-    Expression 'or' Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression 'and' Expression   { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression 'is' Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression '@' Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression 'set' Expression Expression    { result = CallNode.new(val[0], val[1], [val[2], val[3]]) }
-  | Expression 'isnt' Expression  { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | 'not' Expression              { result = CallNode.new(val[1], val[0], []) }
-  | Expression '>'  Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression '>=' Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression '<'  Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression '<=' Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression '+'  Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression '-'  Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression '*'  Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression '/'  Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
+    Expression 'or' Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
+  | Expression 'and' Expression            { result = CallNode.new(val[0], val[1], [val[2]]) }
+  | Expression 'is' Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
+  | Expression '@' Expression              { result = CallNode.new(val[0], val[1], [val[2]]) }
+  | Expression 'set' Expression Expression { result = CallNode.new(val[0], val[1], [val[2], val[3]]) }
+  | Expression 'isnt' Expression           { result = CallNode.new(val[0], val[1], [val[2]]) }
+  | 'not' Expression                       { result = CallNode.new(val[1], val[0], []) }
+  | Expression '>'  Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
+  | Expression '>=' Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
+  | Expression '<'  Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
+  | Expression '<=' Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
+  | Expression '+'  Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
+  | Expression '%'  Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
+  | Expression '-'  Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
+  | Expression '*'  Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
+  | Expression '/'  Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
   ;
   
   GetLocal:
@@ -295,7 +292,7 @@ rule
   KeyVal:
     /* nothing */                                  { result = [] }
   | IDENTIFIER ROCKET Expression                   { result = [[val[0], val[2]]] }
-  | KeyVal Terminator IDENTIFIER ROCKET Expression        { result = val[0] << [val[2], val[4]] }
+  | KeyVal Terminator IDENTIFIER ROCKET Expression { result = val[0] << [val[2], val[4]] }
   ;
 
 
@@ -315,7 +312,7 @@ rule
   # Finally, +if+ is similar to +class+ but receives a *condition*.
   If:
     IF Expression Block            { result = IfNode.new(val[1], val[2], nil) }
-  | IF Expression Block ELSE Block { result = IfNode.new(val[1], val[2], val[3]) }
+  | IF Expression Block ELSE Block { result = IfNode.new(val[1], val[2], val[4]) }
   | Expression IF Expression       { result = IfNode.new(val[2], val[0], nil) }
   ;
   Unless:
