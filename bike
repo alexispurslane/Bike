@@ -26,6 +26,12 @@ comp = proc { |s| LIST.grep( /^#{Regexp.escape(s)}/ ) }
 
 Readline.completion_append_character = " "
 Readline.completion_proc = comp
+n = 1
+PROMPT_1 = "[#{n}] >> ";
+PROMPT_2 = "| ";
+continue = false
+code = ""
+line = ""
 
 # If a file is given we eval it.
 if file = ARGV.first
@@ -33,13 +39,24 @@ if file = ARGV.first
 
   # Start the REPL, read-eval-print-loop, or interactive interpreter
 else
-  n = 1
   puts "Bike Programming Language REPL".colorize(:light_black).on_white.center(width) +
        "              (Type :help for help, and :exit to exit)".center(width) +
        "              (See LICENSE.md for licensing information)".center(width)
   puts "By Christopher Dumas in 2014".green.center(width)
   loop do
-    line = Readline::readline("[#{n}] >> ".blue)    # 1. Read
+    if !continue
+      line = Readline::readline(PROMPT_1.blue)    # 1. Read
+      code = line
+
+      continue = !code.valid_code?
+      while continue
+        line = Readline::readline(PROMPT_2.blue)    # 1. Read
+        code += "\n#{line}"
+
+        continue = !code.valid_code?
+        line = code if !continue
+      end
+    end
     Readline::HISTORY.push(line)
     n += 1
     line = line.strip
