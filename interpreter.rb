@@ -59,7 +59,8 @@ class ArrayListNode
   def eval(context)
     new_value = []
     value.each do |e|
-      new_value << Constants[e.type].new_with_value(e.value)
+      e = e.eval(context)
+      new_value << e
     end
     Constants["Array"].new_with_value(new_value)
   end
