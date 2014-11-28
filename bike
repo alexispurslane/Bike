@@ -28,10 +28,11 @@ Readline.completion_append_character = " "
 Readline.completion_proc = comp
 n = 1
 PROMPT_1 = "[#{n}] >> ";
-PROMPT_2 = "| ";
+PROMPT_2 = "  ...| ";
 continue = false
 code = ""
 line = ""
+history = ""
 
 # If a file is given we eval it.
 if file = ARGV.first
@@ -39,10 +40,10 @@ if file = ARGV.first
 
   # Start the REPL, read-eval-print-loop, or interactive interpreter
 else
-  puts "Bike Programming Language REPL".colorize(:light_black).on_white.center(width) +
-       "              (Type :help for help, and :exit to exit)".center(width) +
-       "              (See LICENSE.md for licensing information)".center(width)
-  puts "By Christopher Dumas in 2014".green.center(width)
+  puts "Bike Programming Language REPL\n" +
+       "(Type :help for help, and :exit to exit)\n" +
+       "(See LICENSE.md for licensing information)"
+  puts "By Christopher Dumas in 2014".green
   loop do
     if !continue
       line = Readline::readline(PROMPT_1.blue)    # 1. Read
@@ -50,13 +51,15 @@ else
 
       continue = !code.valid_code?
       while continue
-        line = Readline::readline(PROMPT_2.blue)    # 1. Read
+        line = Readline::readline(PROMPT_2.red)    # 1. Read
         code += "\n#{line}"
+        history += "\n#{line}"
 
         continue = !code.valid_code?
         line = code if !continue
       end
     end
+    history += "\n#{line}"
     Readline::HISTORY.push(line)
     n += 1
     line = line.strip
@@ -78,20 +81,24 @@ else
       Readline::HISTORY.to_a.each { |e| puts e }
     elsif line == ":clear"
       system "clear" or system "cls"
-      puts "Bike Programming Language REPL".colorize(:light_black).on_white.center(width)
+    elsif line == ":save"
+      File.open('repl_save.bk', 'w') do |file|
+        file.write(history)
+      end
+      puts "Successfully saved code to 'repl_save.bk'".green
     elsif line == ":lexer"
       lexer = !lexer
       if lexer
         puts "Entering Lexer mode. To go back to normal mode, type :lexer again.".red
       else
-        puts "Leaving Lexer mode now.".blue
+        puts "Leaving Lexer mode now.".green
       end
     elsif line == ":parser"
       parser = !parser
       if parser
         puts "Entering Parser mode. To go back to normal mode, type :parser again.".red
       else
-        puts "Leaving Parser mode now.".blue
+        puts "Leaving Parser mode now.".green
       end
     else
       if lexer
@@ -101,12 +108,12 @@ else
         value = Parser.new.parse(line)
         puts "#{value.inspect}"     # 3. Print
       else
-#       begin
+#      begin
           value = interpreter.eval(line) # 4. Eval
-#       rescue => e
-#         puts "[ERROR]: ".red.gsub("\n", '') + e.message.yellow.gsub(/\(.*\)/, '').gsub("\n", '')
-#         value = interpreter.eval('nil')
-#       end
+#      rescue => e
+#        puts "[ERROR]: ".red.gsub("\n", '') + e.message.yellow.gsub(/\(.*\)/, '').gsub("\n", '')
+#        value = interpreter.eval('nil')
+#      end
 
         if value.ruby_value.is_a?(Array)
           print "<= [".light_white

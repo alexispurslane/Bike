@@ -6,8 +6,8 @@ class BikeObject
     @ruby_value = ruby_value
   end
   # Calls a runtime method.
-  def call(method, arguments=[])
-    @runtime_class.lookup(method).call(self, arguments)
+  def call(method, arguments=[], context=nil)
+    @runtime_class.lookup(method).call(self, arguments, context)
   end
   # Calls a method that has been stored as a variable (like calling a lambda that was passed into a function.) In Bike this is done using the +$+ operator.
   def apply(context, closure, method, arguments=[])

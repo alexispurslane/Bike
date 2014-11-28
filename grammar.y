@@ -96,6 +96,7 @@ rule
   Expression:
     Literal
   | Call
+  | NEWLINE
   | Import
   | Apply
   | Operator
