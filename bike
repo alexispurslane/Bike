@@ -84,12 +84,12 @@ else
         value = Parser.new.parse(line)
         puts "#{value.inspect}"     # 3. Print
       else
-        begin
+#       begin
           value = interpreter.eval(line) # 4. Eval
-        rescue => e
-          puts "[ERROR]: ".red.gsub("\n", '') + e.message.yellow.gsub(/\(.*\)/, '').gsub("\n", '')
-          value = interpreter.eval('nil')
-        end
+#       rescue => e
+#         puts "[ERROR]: ".red.gsub("\n", '') + e.message.yellow.gsub(/\(.*\)/, '').gsub("\n", '')
+#         value = interpreter.eval('nil')
+#       end
 
         if value.ruby_value.is_a?(Array)
           print "<= [".light_white

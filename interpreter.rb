@@ -2,6 +2,7 @@ require_relative "parser"
 require_relative "runtime"
 
 $gc = 0
+$is_set = {}
 
 def gensym (base="AnonymousClass_")
   $gc += 1
@@ -121,11 +122,10 @@ class SetConstantNode
 end
 
 class SetLocalNode
-  @@is_set = {}
   def eval(context)
-    if !@@is_set[name]
+    if !$is_set[name]
       context.locals[name] = value.eval(context)
-      @@is_set[name] = true
+      $is_set[name] = true
       context.locals[name]
     else
       raise "Attemt to re-assign variable using normal variable."
