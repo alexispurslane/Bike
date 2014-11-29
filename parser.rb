@@ -1268,14 +1268,14 @@ module_eval(<<'.,.,', 'grammar.y', 258)
 
 module_eval(<<'.,.,', 'grammar.y', 259)
   def _reduce_90(val, _values, result)
-     result = DefNode.new(val[1], val[3], val[10], vararg: val[7]) 
+     result = DefNode.new(val[1], val[3], val[10], val[7]) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 260)
   def _reduce_91(val, _values, result)
-     result = DefNode.new(val[1], [], val[9], vararg: val[6]) 
+     result = DefNode.new(val[1], [], val[9], val[6]) 
     result
   end
 .,.,
@@ -1289,63 +1289,63 @@ module_eval(<<'.,.,', 'grammar.y', 262)
 
 module_eval(<<'.,.,', 'grammar.y', 264)
   def _reduce_93(val, _values, result)
-     result = DefNode.new(val[1], val[3], val[9], vararg: val[7]) 
+     result = DefNode.new(val[1], val[3], val[9], val[7]) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 266)
   def _reduce_94(val, _values, result)
-     result = DefNode.new(val[1], [], val[8], vararg: val[6]) 
+     result = DefNode.new(val[1], [], val[8], val[6]) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 268)
   def _reduce_95(val, _values, result)
-     result = DefNode.new(val[2], [], val[4], private: true) 
+     result = DefNode.new(val[2], [], val[4], nil, true) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 269)
   def _reduce_96(val, _values, result)
-     result = DefNode.new(val[2], val[4], val[7], private: true) 
+     result = DefNode.new(val[2], val[4], val[7], nil, true) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 270)
   def _reduce_97(val, _values, result)
-     result = DefNode.new(val[2], val[4], val[11], vararg: val[8], private: true) 
+     result = DefNode.new(val[2], val[4], val[11], val[8], true) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 271)
   def _reduce_98(val, _values, result)
-     result = DefNode.new(val[2], [], val[10], vararg: val[7], private: true) 
+     result = DefNode.new(val[2], [], val[10], val[7], true) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 273)
   def _reduce_99(val, _values, result)
-     result = DefNode.new(val[2], val[4], val[6], private: true) 
+     result = DefNode.new(val[2], val[4], val[6], nil, true) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 275)
   def _reduce_100(val, _values, result)
-     result = DefNode.new(val[2], val[4], val[10], vararg: val[8], private: true) 
+     result = DefNode.new(val[2], val[4], val[10], val[8], true) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 277)
   def _reduce_101(val, _values, result)
-     result = DefNode.new(val[2], [], val[9], vararg: val[7], private: true) 
+     result = DefNode.new(val[2], [], val[9], val[7], true) 
     result
   end
 .,.,
