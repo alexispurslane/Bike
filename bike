@@ -59,7 +59,6 @@ else
         line = code if !continue
       end
     end
-    history += "\n#{line}"
     Readline::HISTORY.push(line)
     n += 1
     line = line.strip
@@ -108,12 +107,13 @@ else
         value = Parser.new.parse(line)
         puts "#{value.inspect}"     # 3. Print
       else
-#      begin
+        history += "\n#{line}"
+      begin
           value = interpreter.eval(line) # 4. Eval
-#      rescue => e
-#        puts "[ERROR]: ".red.gsub("\n", '') + e.message.yellow.gsub(/\(.*\)/, '').gsub("\n", '')
-#        value = interpreter.eval('nil')
-#      end
+      rescue => e
+        puts "[ERROR]: ".red.gsub("\n", '') + e.message.yellow.gsub(/\(.*\)/, '').gsub("\n", '')
+        value = interpreter.eval('nil')
+      end
 
         if value.ruby_value.is_a?(Array)
           print "<= [".light_white

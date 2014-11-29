@@ -539,7 +539,6 @@ method is called, the method name and its arguments, which are other nodes.</p>
       <pre class="lines">
 
 
-188
 189
 190
 191
@@ -561,10 +560,11 @@ method is called, the method name and its arguments, which are other nodes.</p>
 207
 208
 209
-210</pre>
+210
+211</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'interpreter.rb', line 188</span>
+      <pre class="code"><span class="info file"># File 'interpreter.rb', line 189</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_eval'>eval</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_receiver'>receiver</span>
@@ -575,7 +575,7 @@ method is called, the method name and its arguments, which are other nodes.</p>
   <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_value'>value</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Receiver cannot be resolved by either getting current context, or through dot notation!</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
-  
+
   <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_is_splat'>is_splat</span>
     <span class='id identifier rubyid_evaluated_arguments'>evaluated_arguments</span> <span class='op'>=</span> <span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_arg'>arg</span><span class='op'>|</span> <span class='id identifier rubyid_arg'>arg</span><span class='period'>.</span><span class='id identifier rubyid_eval'>eval</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='kw'>else</span>
@@ -587,7 +587,7 @@ method is called, the method name and its arguments, which are other nodes.</p>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='comma'>,</span> <span class='id identifier rubyid_evaluated_arguments'>evaluated_arguments</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='comma'>,</span> <span class='id identifier rubyid_evaluated_arguments'>evaluated_arguments</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -599,7 +599,7 @@ method is called, the method name and its arguments, which are other nodes.</p>
 </div>
 
     <div id="footer">
-  Generated on Thu Nov 27 12:18:20 2014 by
+  Generated on Fri Nov 28 16:07:49 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.0.0).
 </div>

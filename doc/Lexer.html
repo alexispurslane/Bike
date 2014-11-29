@@ -234,7 +234,9 @@
 66
 67
 68
-69</pre>
+69
+70
+71</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lexer.rb', line 7</span>
@@ -247,11 +249,13 @@
   <span class='kw'>while</span> <span class='id identifier rubyid_i'>i</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_code'>code</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span>
     <span class='id identifier rubyid_chunk'>chunk</span> <span class='op'>=</span> <span class='id identifier rubyid_code'>code</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span>
 
-    <span class='kw'>if</span> <span class='id identifier rubyid_operator'>operator</span> <span class='op'>=</span> <span class='id identifier rubyid_chunk'>chunk</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\A(@|=@|isnt|or|and|not|is|&lt;=|&gt;=|-&gt;|=&gt;|\\|\$)</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_operator'>operator</span> <span class='op'>=</span> <span class='id identifier rubyid_chunk'>chunk</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\A(%|#|@|=@|isnt|or|and|not|is|&lt;=|&gt;=|-&gt;|=&gt;|\\|\$)</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span>
       <span class='kw'>if</span> <span class='id identifier rubyid_operator'>operator</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-&gt;</span><span class='tstring_end'>&quot;</span></span>
         <span class='id identifier rubyid_tokens'>tokens</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='symbol'>:ARROW</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>arrow</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
       <span class='kw'>elsif</span> <span class='id identifier rubyid_operator'>operator</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>=&gt;</span><span class='tstring_end'>&quot;</span></span>
         <span class='id identifier rubyid_tokens'>tokens</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='symbol'>:ROCKET</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rocket</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+      <span class='kw'>elsif</span> <span class='id identifier rubyid_operator'>operator</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#</span><span class='tstring_end'>&quot;</span></span>
+        <span class='id identifier rubyid_tokens'>tokens</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='symbol'>:HASH</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hash</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
       <span class='kw'>elsif</span> <span class='id identifier rubyid_operator'>operator</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>=@</span><span class='tstring_end'>&quot;</span></span>
         <span class='id identifier rubyid_tokens'>tokens</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>set</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>set</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
       <span class='kw'>elsif</span> <span class='id identifier rubyid_operator'>operator</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\</span><span class='tstring_end'>&quot;</span></span>
@@ -312,7 +316,7 @@
 </div>
 
     <div id="footer">
-  Generated on Thu Nov 27 12:18:21 2014 by
+  Generated on Fri Nov 28 16:07:50 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.0.0).
 </div>

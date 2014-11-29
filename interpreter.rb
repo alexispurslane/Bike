@@ -207,7 +207,7 @@ class CallNode
       end
     end
 
-    value.call(method, evaluated_arguments, context)
+    value.call(method, evaluated_arguments)
   end
 end
 
