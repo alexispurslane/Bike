@@ -2,6 +2,7 @@ require_relative "parser"
 require_relative "runtime"
 
 $gc = 0
+$is_set = {}
 
 def gensym (base="AnonymousClass_")
   $gc += 1
@@ -121,11 +122,10 @@ class SetConstantNode
 end
 
 class SetLocalNode
-  @@is_set = {}
   def eval(context)
-    if !@@is_set[name]
+    if !$is_set[name]
       context.locals[name] = value.eval(context)
-      @@is_set[name] = true
+      $is_set[name] = true
       context.locals[name]
     else
       raise "Attemt to re-assign variable using normal variable."
@@ -135,9 +135,9 @@ end
 class SetLocalDescNode
   def eval(context)
     name.each do |name|
-      if !@@is_set[name]
+      if !$is_set[name]
         context.locals[name] = value.eval(context).call(name, [])
-        @@is_set[name] = true
+        $is_set[name] = true
       else
         raise "Attemt to re-assign variable using normal variable."
       end
@@ -148,7 +148,7 @@ end
 class SetMutLocalDescNode
   def eval(context)
     name.each do |name|
-      if !@@is_set[name]
+      if !$is_set[name]
         context.locals[name] = value.eval(context).call(name, [])
       else
         raise "Attemt to re-assign variable using mutable variable."
@@ -159,7 +159,7 @@ class SetMutLocalDescNode
 end
 class SSetLocalNode
   def eval(context)
-    if !@@is_set[name]
+    if !$is_set[name]
       if context.locals[name]
         context.locals[name] = value.eval(context)
       else
@@ -173,7 +173,7 @@ class SSetLocalNode
 end
 class SetMutLocalNode
   def eval(context)
-    if !@@is_set[name]
+    if !$is_set[name]
       context.locals[name] = value.eval(context)
     else
       raise "Attemt to re-assign variable using mutable variable."
@@ -195,7 +195,7 @@ class CallNode
     if !value
       raise "Receiver cannot be resolved by either getting current context, or through dot notation!"
     end
-    
+
     if !is_splat
       evaluated_arguments = arguments.map { |arg| arg.eval(context) }
     else
@@ -217,7 +217,7 @@ class ApplyNode
     if !value
       raise "Receiver cannot be resolved by getting current context!"
     end
-    
+
     evaluated_arguments = arguments.map { |arg| arg.eval(context) }
     value.apply(context, context.locals[method].context, method, evaluated_arguments)
   end

@@ -539,7 +539,6 @@ of the class and its body, a tree of nodes.</p>
       <pre class="lines">
 
 
-247
 248
 249
 250
@@ -555,10 +554,14 @@ of the class and its body, a tree of nodes.</p>
 260
 261
 262
-263</pre>
+263
+264
+265
+266
+267</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'interpreter.rb', line 247</span>
+      <pre class="code"><span class="info file"># File 'interpreter.rb', line 248</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_eval'>eval</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_classname'>classname</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>||</span> <span class='id identifier rubyid_gensym'>gensym</span><span class='lparen'>(</span><span class='rparen'>)</span>
@@ -573,6 +576,9 @@ of the class and its body, a tree of nodes.</p>
   
   <span class='id identifier rubyid_class_context'>class_context</span> <span class='op'>=</span> <span class='const'>Context</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_bike_class'>bike_class</span><span class='comma'>,</span> <span class='id identifier rubyid_bike_class'>bike_class</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_class_context'>class_context</span><span class='period'>.</span><span class='id identifier rubyid_locals'>locals</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>self</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_bike_class'>bike_class</span>
+  <span class='const'>RootContext</span><span class='period'>.</span><span class='id identifier rubyid_locals'>locals</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span> 
+    <span class='id identifier rubyid_class_context'>class_context</span><span class='period'>.</span><span class='id identifier rubyid_locals'>locals</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+  <span class='kw'>end</span>
   <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_eval'>eval</span><span class='lparen'>(</span><span class='id identifier rubyid_class_context'>class_context</span><span class='rparen'>)</span>
   
   <span class='id identifier rubyid_bike_class'>bike_class</span>
@@ -587,7 +593,7 @@ of the class and its body, a tree of nodes.</p>
 </div>
 
     <div id="footer">
-  Generated on Thu Nov 27 12:18:20 2014 by
+  Generated on Fri Nov 28 16:07:49 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.0.0).
 </div>

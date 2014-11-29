@@ -199,7 +199,7 @@ should rarely need to worry about this class</strong></p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#call-instance_method" title="#call (instance method)">- (Object) <strong>call</strong>(receiver, arguments) </a>
+      <a href="#call-instance_method" title="#call (instance method)">- (Object) <strong>call</strong>(receiver, arguments, context = Context.new(receiver)) </a>
     
 
     
@@ -411,7 +411,7 @@ so that there is something to see on the repl.</p>
       <div class="method_details first">
   <h3 class="signature first" id="call-instance_method">
   
-    - (<tt>Object</tt>) <strong>call</strong>(receiver, arguments) 
+    - (<tt>Object</tt>) <strong>call</strong>(receiver, arguments, context = Context.new(receiver)) 
   
 
   
@@ -448,20 +448,24 @@ arguments that were left over.</p>
 31
 32
 33
-34</pre>
+34
+35
+36</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'runtime/method.rb', line 25</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span> <span class='lparen'>(</span><span class='id identifier rubyid_receiver'>receiver</span><span class='comma'>,</span> <span class='id identifier rubyid_arguments'>arguments</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_context'>context</span> <span class='op'>=</span> <span class='const'>Context</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_receiver'>receiver</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span> <span class='lparen'>(</span><span class='id identifier rubyid_receiver'>receiver</span><span class='comma'>,</span> <span class='id identifier rubyid_arguments'>arguments</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='op'>=</span><span class='const'>Context</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_receiver'>receiver</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='ivar'>@params</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_param'>param</span><span class='comma'>,</span> <span class='id identifier rubyid_index'>index</span><span class='op'>|</span>
     <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_locals'>locals</span><span class='lbracket'>[</span><span class='id identifier rubyid_param'>param</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_arguments'>arguments</span><span class='lbracket'>[</span><span class='id identifier rubyid_index'>index</span> <span class='op'>&gt;</span> <span class='int'>0</span> <span class='op'>?</span> <span class='id identifier rubyid_index'>index</span><span class='op'>-</span><span class='int'>1</span> <span class='op'>:</span> <span class='id identifier rubyid_index'>index</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_delete_at'>delete_at</span><span class='lparen'>(</span><span class='id identifier rubyid_index'>index</span> <span class='op'>&gt;</span> <span class='int'>0</span> <span class='op'>?</span> <span class='id identifier rubyid_index'>index</span><span class='op'>-</span><span class='int'>1</span> <span class='op'>:</span> <span class='id identifier rubyid_index'>index</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_locals'>locals</span><span class='lbracket'>[</span><span class='ivar'>@vararg</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'>Constants</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Array</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_new_with_value'>new_with_value</span><span class='lparen'>(</span><span class='id identifier rubyid_arguments'>arguments</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_locals'>locals</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>self</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_receiver'>receiver</span>
-  <span class='ivar'>@body</span><span class='period'>.</span><span class='id identifier rubyid_eval'>eval</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_locals'>locals</span> <span class='op'>=</span> <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_locals'>locals</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='ivar'>@context</span><span class='period'>.</span><span class='id identifier rubyid_locals'>locals</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_res'>res</span> <span class='op'>=</span> <span class='ivar'>@body</span><span class='period'>.</span><span class='id identifier rubyid_eval'>eval</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_locals'>locals</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span> <span class='gvar'>$is_set</span><span class='lbracket'>[</span><span class='id identifier rubyid_e'>e</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span>  <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_res'>res</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -473,7 +477,7 @@ arguments that were left over.</p>
 </div>
 
     <div id="footer">
-  Generated on Thu Nov 27 12:18:21 2014 by
+  Generated on Fri Nov 28 16:07:50 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.0.0).
 </div>
