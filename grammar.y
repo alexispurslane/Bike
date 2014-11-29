@@ -259,7 +259,6 @@ rule
   | DEF IDENTIFIER "(" ParamList ")" "=" Expression { result = DefNode.new(val[1], val[3], val[6]) }
   | DEF IDENTIFIER "(" ParamList "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[1], val[3], val[10], val[7]) }
   | DEF IDENTIFIER "(" "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[1], [], val[9], val[6]) }
-
   | DEF IDENTIFIER
       "(" ParamList ")" Block     { result = DefNode.new(val[1], val[3], val[5]) }
   | DEF IDENTIFIER
@@ -267,10 +266,16 @@ rule
   | DEF IDENTIFIER
       "(" "." "." "." IDENTIFIER ")" Block     { result = DefNode.new(val[1], [], val[8], val[6]) }
 
-  | DEF IDENTIFIER "=" Expression { result = DefNode.new(val[1], [], val[3]) }
-  | DEF IDENTIFIER "(" ParamList ")" "=" Expression { result = DefNode.new(val[1], val[3], val[6]) }
-  | DEF IDENTIFIER "(" ParamList "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[1], val[3], val[10], val[7]) }
-  | DEF IDENTIFIER "(" "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[1], [], val[9], val[6]) }
+  | PRIVATE DEF IDENTIFIER "=" Expression { result = DefNode.new(val[2], [], val[4], nil, true) }
+  | PRIVATE DEF IDENTIFIER "(" ParamList ")" "=" Expression { result = DefNode.new(val[2], val[4], val[7], nil, true) }
+  | PRIVATE DEF IDENTIFIER "(" ParamList "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[2], val[4], val[11], val[8], true) }
+  | PRIVATE DEF IDENTIFIER "(" "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[2], [], val[10], val[7], true) }
+  | PRIVATE DEF IDENTIFIER
+      "(" ParamList ")" Block     { result = DefNode.new(val[2], val[4], val[6], nil, true) }
+  | PRIVATE DEF IDENTIFIER
+      "(" ParamList "." "." "." IDENTIFIER ")" Block     { result = DefNode.new(val[2], val[4], val[10], val[8], true) }
+  | PRIVATE DEF IDENTIFIER
+      "(" "." "." "." IDENTIFIER ")" Block     { result = DefNode.new(val[2], [], val[9], val[7], true) }
   ;
 
   ParamList:

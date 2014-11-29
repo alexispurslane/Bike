@@ -226,10 +226,11 @@ end
 # Defining a method, using the +def+ keyword, is done by adding a method to the current class.
 class DefNode
   def eval(context)
-    method = BikeMethod.new(params, body, context, vararg)
+    method = BikeMethod.new(params, body, context, vararg, private)
     context.current_class.runtime_methods[name] = method
   end
 end
+
 class LambdaNode
   def eval(context)
     BikeMethod.new(params, body, context.current_class)
@@ -249,27 +250,27 @@ class ClassNode
     classname = name || gensym()
 
     bike_class = Constants[classname] # Check if class is already defined
-    
+
     unless bike_class # Class doesn't exist yet
       sup = Constants[superclass]
       bike_class = BikeClass.new(sup, mixins)
       Constants[classname] = bike_class # Define the class in the runtime
     end
-    
+
     class_context = Context.new(bike_class, bike_class)
     class_context.locals["self"] = bike_class
     RootContext.locals.each do |name, value| 
       class_context.locals[name] = value
     end
     body.eval(class_context)
-    
+
     bike_class
   end
 end
 class HashNode
   def eval(context)
     bike_class = BikeClass.new(Constants["Object"], [])
-    
+
     class_context = Context.new(bike_class, bike_class)
     class_context.locals["self"] = bike_class
     key_values.each do |e|
