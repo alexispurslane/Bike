@@ -18,11 +18,11 @@
 ##TODO for Beta 4:
  - [X]  Closures
  - [X]  Real computed Properties and getters (plus setters!)
- - [ ]  private and public modifiers
- - [ ]  Observers
- - [ ]  Sets
- - [ ]  array comprehenson
+ - [X]  private and public modifiers
  - [ ]  `for-of`
+ - [ ]  array comprehenson
+ - [ ]  Sets
+ - [ ]  Observers
 
 ##TODO for Beta 5:
  - [ ]  Documentation
