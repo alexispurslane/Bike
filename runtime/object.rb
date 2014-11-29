@@ -14,5 +14,3 @@ class BikeObject
     context.locals[method].call(closure, arguments)
   end
 end
-
-

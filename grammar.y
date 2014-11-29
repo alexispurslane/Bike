@@ -10,6 +10,7 @@ token WHILE
 token IMPORT
 token INTO
 token CLASS
+token PRIVATE
 token HASH
 token ROCKET
 token WITH
@@ -40,7 +41,7 @@ token NEWLINE
 prechigh
   left  '.'
   right 'not'
-  left  '*' '/' 
+  left  '*' '/'
   left  '+' '-' '%'
   left  '>' '>=' '<' '<='
   left  'is' 'isnt' '@' 'set'
@@ -248,21 +249,28 @@ rule
   | "{" Expressions NEWLINE "}"           { result = val[1] }
   | "{" NEWLINE Expressions NEWLINE "}"   { result = val[2] }
   ;
-  
+
   # The +def+ keyword is used for defining methods. Once again, we're introducing
   # a bit of syntactic sugar here to allow skipping the parentheses when there are no parameters.
   Def:
     DEF IDENTIFIER Block          { result = DefNode.new(val[1], [], val[2]) }
+
   | DEF IDENTIFIER "=" Expression { result = DefNode.new(val[1], [], val[3]) }
   | DEF IDENTIFIER "(" ParamList ")" "=" Expression { result = DefNode.new(val[1], val[3], val[6]) }
   | DEF IDENTIFIER "(" ParamList "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[1], val[3], val[10], val[7]) }
   | DEF IDENTIFIER "(" "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[1], [], val[9], val[6]) }
+
   | DEF IDENTIFIER
       "(" ParamList ")" Block     { result = DefNode.new(val[1], val[3], val[5]) }
   | DEF IDENTIFIER
       "(" ParamList "." "." "." IDENTIFIER ")" Block     { result = DefNode.new(val[1], val[3], val[9], val[7]) }
   | DEF IDENTIFIER
       "(" "." "." "." IDENTIFIER ")" Block     { result = DefNode.new(val[1], [], val[8], val[6]) }
+
+  | DEF IDENTIFIER "=" Expression { result = DefNode.new(val[1], [], val[3]) }
+  | DEF IDENTIFIER "(" ParamList ")" "=" Expression { result = DefNode.new(val[1], val[3], val[6]) }
+  | DEF IDENTIFIER "(" ParamList "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[1], val[3], val[10], val[7]) }
+  | DEF IDENTIFIER "(" "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[1], [], val[9], val[6]) }
   ;
 
   ParamList:
@@ -270,7 +278,7 @@ rule
   | IDENTIFIER                    { result = val }
   | ParamList "," IDENTIFIER      { result = val[0] << val[2] }
   ;
-  
+
   # Class definition is similar to method definition.
   # Class names are also constants because they start with a capital letter.
   Class:

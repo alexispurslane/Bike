@@ -2,13 +2,13 @@ def to_fi(v)
   v.match('\.').nil? ? Integer(v) : Float(v)
 end
 class Lexer
-  KEYWORDS = ["var", "def", "class", "if", "let", "else", "true", "false", "nil", "while", "unless", "apply", "extends", "import", "into", "package", "with", "mixin", "hash"]
-  
+  KEYWORDS = ["var", "def", "class", "if", "let", "else", "true", "false", "nil", "while", "unless", "apply", "extends", "import", "into", "package", "with", "mixin", "hash", "private"]
+
   def tokenize(code)
     code.chomp!
     i = 0
     tokens = []
-    
+
     while i < code.size
       chunk = code[i..-1]
 
@@ -62,11 +62,11 @@ class Lexer
         value = chunk[0,1]
         tokens << [value, value]
         i += 1
-        
+
       end
-      
+
     end
-    
+
     tokens
   end
 end
