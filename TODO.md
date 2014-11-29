@@ -16,12 +16,13 @@
  - [X]  Splat arguments for functions
 
 ##TODO for Beta 4:
+ - [X]  Closures
+ - [X]  Real computed Properties and getters (plus setters!)
  - [ ]  Observers
  - [ ]  private and public modifiers
  - [ ]  Sets
  - [ ]  array comprehenson
  - [ ]  `for-of`
- - [ ]  Closures
 
 ##TODO for Beta 5:
  - [ ]  Documentation
