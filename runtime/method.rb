@@ -13,25 +13,38 @@ class BikeMethod
   attr_reader :context
 
   # This method just sets the corresponding arguments onto properties of the same name and returns the new object. The only special thing it does is doctor up a +ruby_value+ based on these properties.
-  def initialize(params, body, context, vararg)
-    @params = params
-    @body = body
-    @context = context
-    @vararg = vararg
+  def initialize(params, body,
+                 context=Context.new(Constants["Object"]),
+                 vararg:nil, private:false)
+
+    @params, @body, @context, @vararg, @private = params, body, context, vararg, private
+
     @ruby_value = "def (#{@params.join(', ')}#{@vararg ? " ...#{@vararg}" : ""}) { ... }"
   end
 
   # The +call+ method takes the reciever (normally the global instance of Object, unless the function is called using dot-notation) and creates a new context based on the reciever. It also takes a ruby array of all the arguments that were passed in, and maps them to the parameters, deleting them as they go. If there is a vararg, it gets assigned to any arguments that were left over.
   def call (receiver, arguments)
+    if Context.new(receiver) == @context && @private
+      self.callMethod(arguments)
+    elsif !@private
+      self.callMethod(arguments)
+    else
+      raise "Called private method outside of class!"
+    end
+  end
+
+  protected
+  def callMethod (arguments)
     context = @context
     @params.each_with_index do |param, index|
       context.locals[param] = arguments[index > 0 ? index-1 : index]
       arguments.delete_at(index > 0 ? index-1 : index)
     end
     context.locals[@vararg] = Constants["Array"].new_with_value(arguments)
-    context.locals["self"] = receiver
+    context.locals["self"] = @context
     res = @body.eval(context)
     context.locals.keys.each { |e| $is_set[e] = false  }
     res
   end
+
 end

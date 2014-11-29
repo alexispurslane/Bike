@@ -257,20 +257,25 @@ rule
 
   | DEF IDENTIFIER "=" Expression { result = DefNode.new(val[1], [], val[3]) }
   | DEF IDENTIFIER "(" ParamList ")" "=" Expression { result = DefNode.new(val[1], val[3], val[6]) }
-  | DEF IDENTIFIER "(" ParamList "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[1], val[3], val[10], val[7]) }
-  | DEF IDENTIFIER "(" "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[1], [], val[9], val[6]) }
-
+  | DEF IDENTIFIER "(" ParamList "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[1], val[3], val[10], vararg: val[7]) }
+  | DEF IDENTIFIER "(" "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[1], [], val[9], vararg: val[6]) }
   | DEF IDENTIFIER
       "(" ParamList ")" Block     { result = DefNode.new(val[1], val[3], val[5]) }
   | DEF IDENTIFIER
-      "(" ParamList "." "." "." IDENTIFIER ")" Block     { result = DefNode.new(val[1], val[3], val[9], val[7]) }
+      "(" ParamList "." "." "." IDENTIFIER ")" Block     { result = DefNode.new(val[1], val[3], val[9], vararg: val[7]) }
   | DEF IDENTIFIER
-      "(" "." "." "." IDENTIFIER ")" Block     { result = DefNode.new(val[1], [], val[8], val[6]) }
+      "(" "." "." "." IDENTIFIER ")" Block     { result = DefNode.new(val[1], [], val[8], vararg: val[6]) }
 
-  | DEF IDENTIFIER "=" Expression { result = DefNode.new(val[1], [], val[3]) }
-  | DEF IDENTIFIER "(" ParamList ")" "=" Expression { result = DefNode.new(val[1], val[3], val[6]) }
-  | DEF IDENTIFIER "(" ParamList "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[1], val[3], val[10], val[7]) }
-  | DEF IDENTIFIER "(" "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[1], [], val[9], val[6]) }
+  | PRIVATE DEF IDENTIFIER "=" Expression { result = DefNode.new(val[2], [], val[4], private: true) }
+  | PRIVATE DEF IDENTIFIER "(" ParamList ")" "=" Expression { result = DefNode.new(val[2], val[4], val[7], private: true) }
+  | PRIVATE DEF IDENTIFIER "(" ParamList "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[2], val[4], val[11], vararg: val[8], private: true) }
+  | PRIVATE DEF IDENTIFIER "(" "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[2], [], val[10], vararg: val[7], private: true) }
+  | PRIVATE DEF IDENTIFIER
+      "(" ParamList ")" Block     { result = DefNode.new(val[2], val[4], val[6], private: true) }
+  | PRIVATE DEF IDENTIFIER
+      "(" ParamList "." "." "." IDENTIFIER ")" Block     { result = DefNode.new(val[2], val[4], val[10], vararg: val[8], private: true) }
+  | PRIVATE DEF IDENTIFIER
+      "(" "." "." "." IDENTIFIER ")" Block     { result = DefNode.new(val[2], [], val[9], vararg: val[7], private: true) }
   ;
 
   ParamList:

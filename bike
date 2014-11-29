@@ -7,32 +7,33 @@ require 'terminfo'
 width = TermInfo.screen_size[1]
 
 interpreter = Interpreter.new
-lexer = false
-parser = false
+lexer       = false
+parser      = false
+debug       = false
 
 trap('INT', 'SIG_IGN')
 LIST = [
-  'import', 'class', 'Wheels',
-  'wheels', ':exit', ':history',
-  ':help', ':lexer', ':clear',
-  'let', 'var', 'def', 'lambda',
-  'with', 'apply', 'while', 'else',
-  'unless', 'if', 'println', 'print',
-  'package', 'with', 'mixin', 'reopen',
-  '...', ':parser', 'hash'
+  'import',  'class',   'Wheels',
+  'wheels',  ':exit',   ':history',
+  ':help',   ':lexer',  ':clear',
+  'let',     'var',     'def',     'lambda',
+  'with',    'apply',   'while',   'else',
+  'unless',  'if',      'println', 'print',
+  'package', 'with',    'mixin',   'reopen',
+  '...',     ':parser', 'hash',    ':debug'
 ].sort
 
 comp = proc { |s| LIST.grep( /^#{Regexp.escape(s)}/ ) }
 
 Readline.completion_append_character = " "
 Readline.completion_proc = comp
-n = 1
+n        = 1
 PROMPT_1 = "[#{n}] >> ";
 PROMPT_2 = "  ...| ";
 continue = false
-code = ""
-line = ""
-history = ""
+code     = ""
+line     = ""
+history  = ""
 
 # If a file is given we eval it.
 if file = ARGV.first
@@ -73,6 +74,7 @@ else
       :lexer       - To have your input parsed only, but not interpreted
       :history     - List history
       :clear       - Clear Screen
+      :debug       - Sets Debug mode (For language contributors only)
       eos
     elsif line == ":history"
       puts "HISTORY".yellow
@@ -80,6 +82,13 @@ else
       Readline::HISTORY.to_a.each { |e| puts e }
     elsif line == ":clear"
       system "clear" or system "cls"
+    elsif line == ":debug"
+      debug = !debug
+      if debug
+        puts "Entering Debug mode. To go back to normal mode, type :debug again.".red
+      else
+        puts "Leaving Debug mode now.".green
+      end
     elsif line == ":save"
       File.open('repl_save.bk', 'w') do |file|
         file.write(history)
@@ -108,12 +117,13 @@ else
         puts "#{value.inspect}"     # 3. Print
       else
         history += "\n#{line}"
-      begin
+        begin
           value = interpreter.eval(line) # 4. Eval
-      rescue => e
-        puts "[ERROR]: ".red.gsub("\n", '') + e.message.yellow.gsub(/\(.*\)/, '').gsub("\n", '')
-        value = interpreter.eval('nil')
-      end
+        rescue => e
+          puts "[ERROR]: ".red.gsub("\n", '') + e.message.yellow.gsub(/\(.*\)/, '').gsub("\n", '')
+          puts e.backtrace.join("\n") if debug
+          value = interpreter.eval('nil')
+        end
 
         if value.ruby_value.is_a?(Array)
           print "<= [".light_white
@@ -124,5 +134,5 @@ else
         end
       end
     end                                      # 4. Loop
-  end 
+  end
 end
