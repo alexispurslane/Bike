@@ -13,4 +13,12 @@ class BikeObject
   def apply(context, closure, method, arguments=[])
     context.locals[method].call(closure, arguments)
   end
+  def each
+    if @ruby_value.is_a?(Array)
+      @ruby_value.each { |e| yield e }
+    else
+      yield @ruby_value
+    end
+  end
+  include Enumerable
 end
