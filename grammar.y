@@ -327,9 +327,15 @@ rule
 
   # Finally, +if+ is similar to +class+ but receives a *condition*.
   If:
-    IF Expression Block            { result = IfNode.new(val[1], val[2], nil) }
-  | IF Expression Block ELSE Block { result = IfNode.new(val[1], val[2], val[4]) }
-  | Expression IF Expression       { result = IfNode.new(val[2], val[0], nil) }
+    IF Expression Block             { result = IfNode.new(val[1], val[2], nil, nil) }
+  | IF Expression Block ElseIfs     { result = IfNode.new(val[1], val[2], nil, val[3]) }
+  | IF Expression Block ELSE Block  { result = IfNode.new(val[1], val[2], val[4], nil) }
+  | Expression IF Expression        { result = IfNode.new(val[2], val[0], nil, nil) }
+  ;
+
+  ElseIfs:
+    ELSEIF Expression Block         { result = val }
+  | ElseIfs ELSEIF Expression Block { result = val[0] << ElseIfNode.new(val[2], val[3]) }
   ;
 
   ForOf:
