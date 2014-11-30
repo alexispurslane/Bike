@@ -300,11 +300,11 @@ end
 class IfNode
   def eval(context)
     if elseifs
-      conditions = [condition] + elseifs.map(&:condition) + [true]
-      bodys = [body] + elseifs.map(&:body) + [else_body]
+      conditions = [condition] + elseifs.map(&:condition)
+      bodys = [body] + elseifs.map(&:body)
     else
-      conditions = [condition]
-      bodys = [body]
+      conditions = [condition, TrueNode.new]
+      bodys = [body, else_body]
     end
     conditions.each_with_index do |cond, i|
       if cond.eval(context).ruby_value

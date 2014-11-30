@@ -334,7 +334,7 @@ rule
   ;
 
   ElseIfs:
-    ELSEIF Expression Block         { result = val }
+    ELSEIF Expression Block         { result = [ElseIfNode.new(val[1], val[2])] }
   | ElseIfs ELSEIF Expression Block { result = val[0] << ElseIfNode.new(val[2], val[3]) }
   ;
 
