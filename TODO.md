@@ -19,7 +19,7 @@
  - [X]  Closures
  - [X]  Real computed Properties and getters (plus setters!)
  - [X]  private and public modifiers
- - [ ]  `for-of`
+ - [X]  `for-of`
  - [ ]  array comprehenson
  - [ ]  Sets
  - [ ]  Observers
@@ -52,7 +52,6 @@
  - [ ]  Multiline strings
  - [ ]  Threads
  - [ ]  Make a Gem
- - [ ]  Put on Brew
 
 #TODO for 1.0:
  - [ ]  Bootstrap the language
