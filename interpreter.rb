@@ -312,10 +312,19 @@ class IfNode
 end
 class ForNode
   def eval(context)
-    array = iterator.eval(context)
-    array.ruby_value.each do |e|
-      context.locals[key] = e
-      body.eval(context)
+    thing = iterator.eval(context)
+    if thing.ruby_value == "<object>"
+      thing.runtime_class.runtime_methods.keys.each do |m|
+        context.locals[value] = thing.call(m, [])
+        context.locals[key] = Constants["String"].new_with_value(m)
+        body.eval(context)
+      end
+      Constants["nil"]
+    else
+      array.each do |e|
+        context.locals[key] = e
+        body.eval(context)
+      end
     end
   end
 end
