@@ -300,8 +300,8 @@ end
 class IfNode
   def eval(context)
     if elseifs
-      conditions = [condition] + elseifs.map(&:condition)
-      bodys = [body] + elseifs.map(&:body)
+      conditions = [condition] + elseifs.map(&:condition) + [true]
+      bodys = [body] + elseifs.map(&:body) + [else_body]
     else
       conditions = [condition]
       bodys = [body]
