@@ -4,7 +4,7 @@ package {
     def E  = 2.718281828459045
   }
   class Set {
-    let var set = []
+    let var set = nil
     def init (array) {
       set = array.uniq
     }
