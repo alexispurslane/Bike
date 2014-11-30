@@ -20,6 +20,7 @@
  - [X]  Real computed Properties and getters (plus setters!)
  - [X]  private and public modifiers
  - [X]  `for-of`
+ - [X]  `elseif`
  - [ ]  array comprehenson
  - [ ]  Sets
  - [ ]  Observers

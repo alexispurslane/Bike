@@ -182,7 +182,6 @@ rule
     "[" "]"           { result = [] }
   | "[" ListArray "]" { result = ArrayListNode.new(val[1]) }
   ;
-
   ListArray:
     Expression               { result = val }
   | ListArray "," Expression { result = val[0] << val[2] }
@@ -332,6 +331,7 @@ rule
   | IF Expression Block ELSE Block { result = IfNode.new(val[1], val[2], val[4]) }
   | Expression IF Expression       { result = IfNode.new(val[2], val[0], nil) }
   ;
+
   ForOf:
     FOR "{" IDENTIFIER "," IDENTIFIER "}" OF Expression Block      { result = ForNode.new(val[2], val[4], val[7], val[8]) }
   | FOR IDENTIFIER OF Expression Block                             { result = ForNode.new(val[1], nil, val[3], val[4]) }
