@@ -58,12 +58,16 @@ end
 
 class ArrayListNode
   def eval(context)
-    new_value = []
-    value.each do |e|
-      e = e.eval(context)
-      new_value << e
+    if value.ruby_value != []
+      new_value = []
+      value.each do |e|
+        e = e.eval(context)
+        new_value << e
+      end
+      Constants["Array"].new_with_value(new_value)
+    else
+      Constants["Array"].new_with_value([])
     end
-    Constants["Array"].new_with_value(new_value)
   end
 end
 
