@@ -299,15 +299,19 @@ end
 # we turn the condition node into a Ruby value to use Ruby's if.
 class IfNode
   def eval(context)
-    if condition.eval(context).ruby_value
-      body.eval(context)
-    else # If no body is evaluated, we return nil.
-      if else_body
-        else_body.eval(context)
-      else
-        Constants["nil"]
+    if elseifs
+      conditions = [condition] + elseifs.map(&:condition)
+      bodys = [body] + elseifs.map(&:body)
+    else
+      conditions = [condition, TrueNode.new]
+      bodys = [body, else_body]
+    end
+    conditions.each_with_index do |cond, i|
+      if cond.eval(context).ruby_value
+        return bodys[i].eval(context)
       end
     end
+    Constants["nil"]
   end
 end
 class ForNode
