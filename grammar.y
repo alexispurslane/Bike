@@ -4,8 +4,11 @@ class Parser
 # by our lexer needs to be declared here.
 token IF
 token ELSE
+token ELSEIF
 token UNLESS
 token WHILE
+token FOR
+token OF
 
 token IMPORT
 token INTO
@@ -97,7 +100,7 @@ rule
   Expression:
     Literal
   | Call
-  | NEWLINE
+  | ForOf
   | Import
   | Apply
   | Operator
@@ -322,13 +325,18 @@ rule
     PACKAGE Block                        { result = PackageNode.new(val[1]) }
   | PACKAGE IDENTIFIER Block             { result = DefNode.new(val[1], [], PackageNode.new(val[2])) }
   ;
-  
+
   # Finally, +if+ is similar to +class+ but receives a *condition*.
   If:
     IF Expression Block            { result = IfNode.new(val[1], val[2], nil) }
   | IF Expression Block ELSE Block { result = IfNode.new(val[1], val[2], val[4]) }
   | Expression IF Expression       { result = IfNode.new(val[2], val[0], nil) }
   ;
+  ForOf:
+    FOR "{" IDENTIFIER "," IDENTIFIER "}" OF Expression Block      { result = ForNode.new(val[2], val[4], val[7], val[8]) }
+  | FOR IDENTIFIER OF Expression Block                             { result = ForNode.new(val[1], nil, val[3], val[4]) }
+  ;
+
   Unless:
     UNLESS Expression Block            { result = UnlessNode.new(val[1], val[2]) }
   | Expression UNLESS Expression       { result = UnlessNode.new(val[2], val[0]) }

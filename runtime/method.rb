@@ -26,11 +26,10 @@ class BikeMethod
 
   # The +call+ method takes the reciever (normally the global instance of Object, unless the function is called using dot-notation) and creates a new context based on the reciever. It also takes a ruby array of all the arguments that were passed in, and maps them to the parameters, deleting them as they go. If there is a vararg, it gets assigned to any arguments that were left over.
   def call (receiver, arguments)
-    puts arguments.map(&:ruby_value)
     if Context.new(receiver).locals == @context.locals && @private
-      self.call_method(arguments)
+      call_method(arguments)
     elsif !@private
-      self.call_method(arguments)
+      call_method(arguments)
     else
       raise "Called private method outside of class!"
     end

@@ -290,7 +290,7 @@ class PackageNode
     bike_class = BikeClass.new(sup)
     class_context = Context.new(bike_class, bike_class)
     body.eval(class_context)
-    
+
     bike_class.call("new", [])
   end
 end
@@ -310,6 +310,16 @@ class IfNode
     end
   end
 end
+class ForNode
+  def eval(context)
+    array = iterator.eval(context)
+    array.ruby_value.each do |e|
+      context.locals[key] = e
+      body.eval(context)
+    end
+  end
+end
+
 class UnlessNode
   def eval(context)
     if !condition.eval(context).ruby_value

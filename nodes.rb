@@ -97,6 +97,7 @@ class PackageNode < Struct.new(:body); end
 # be nodes that need to be evaluated at some point.
 # Look at this node if you want to implement other control structures like while, for, loop, etc.
 class IfNode  < Struct.new(:condition, :body, :else_body); end
+class ForNode  < Struct.new(:key, :value, :iterator, :body); end
 
 class UnlessNode  < Struct.new(:condition, :body); end
 

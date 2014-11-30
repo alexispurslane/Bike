@@ -1,0 +1,4 @@
+let a = [1, 2, 3]
+for e of a {
+  println e
+}

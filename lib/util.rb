@@ -1,7 +1,7 @@
 class String
   def valid_parentheses?
     valid = true
-    self.gsub(/[^\(\)]/, '').split('').inject(0) do |counter, parenthesis|
+    gsub(/[^\(\)]/, '').split('').inject(0) do |counter, parenthesis|
       counter += (parenthesis == '(' ? 1 : -1)
       valid = false if counter < 0
       counter
@@ -10,7 +10,7 @@ class String
 
   def valid_braces?
     valid = true
-    self.gsub(/[^\[\]]/, '').split('').inject(0) do |counter, parenthesis|
+    gsub(/[^\[\]]/, '').split('').inject(0) do |counter, parenthesis|
       counter += (parenthesis == '[' ? 1 : -1)
       valid = false if counter < 0
       counter
@@ -19,7 +19,7 @@ class String
 
   def valid_curlies?
     valid = true
-    self.gsub(/[^\{\}]/, '').split('').inject(0) do |counter, parenthesis|
+    gsub(/[^\{\}]/, '').split('').inject(0) do |counter, parenthesis|
       counter += (parenthesis == '{' ? 1 : -1)
       valid = false if counter < 0
       counter
@@ -27,6 +27,6 @@ class String
   end
 
   def valid_code?
-    self.valid_parentheses? && self.valid_braces? && self.valid_curlies?
+    valid_parentheses? && valid_braces? && valid_curlies?
   end
 end
