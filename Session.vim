@@ -8,13 +8,15 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +229 interpreter.rb
-badd +174 runtime/bootstrap.rb
-badd +15 Wheels.bk
-badd +10 runtime/object.rb
-badd +130 bike
+badd +311 interpreter.rb
+badd +168 runtime/bootstrap.rb
+badd +12 Wheels.bk
+badd +14 runtime/object.rb
+badd +12 bike
 badd +46 ~/.nvim/syntax/bk.vim
-badd +0 ~/Dropbox/bike/runtime/method.rb
+badd +41 runtime/method.rb
+badd +15 TODO.md
+badd +343 grammar.y
 argglobal
 silent! argdel *
 edit Wheels.bk
@@ -37,15 +39,15 @@ setlocal fml=1
 setlocal fdn=20
 setlocal nofen
 silent! normal! zE
-let s:l = 9 - ((8 * winheight(0) + 23) / 47)
+let s:l = 11 - ((10 * winheight(0) + 24) / 48)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-9
-normal! 0
+11
+normal! 020|
 wincmd w
 argglobal
-edit ~/Dropbox/bike/runtime/method.rb
+edit bike
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -55,7 +57,7 @@ setlocal fml=1
 setlocal fdn=20
 setlocal nofen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 23) / 47)
+let s:l = 1 - ((0 * winheight(0) + 24) / 48)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt

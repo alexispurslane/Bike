@@ -307,7 +307,7 @@ class IfNode
       bodys = [body, else_body]
     end
     conditions.each_with_index do |cond, i|
-      if cond.eval(context).ruby_value
+      if cond.eval(context).ruby_value && bodys[i] != nil
         return bodys[i].eval(context)
       end
     end
@@ -325,7 +325,7 @@ class ForNode
       end
       Constants["nil"]
     else
-      array.each do |e|
+      thing.ruby_value.each do |e|
         context.locals[key] = e
         body.eval(context)
       end

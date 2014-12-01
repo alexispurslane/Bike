@@ -194,8 +194,6 @@ Constants["Array"].def :/ do |receiver, arguments|
   Constants["Array"].new_with_value ((0..(receiver.ruby_value.length - 1) / arguments.first.ruby_value).map { |i| receiver.ruby_value[i * arguments.first.ruby_value, arguments.first.ruby_value] }).map { |e| Constants[e.type].new_with_value(e.value) }
 end
 
-
-
 Constants["String"].def :'@' do |receiver, arguments|
   Constants["String"].new_with_value(receiver.ruby_value[arguments[0].ruby_value-1]) || Constants["nil"]
 end
