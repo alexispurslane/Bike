@@ -35,6 +35,7 @@ code     = ""
 line     = ""
 history  = ""
 
+interpreter.eval "import Wheels"
 # If a file is given we eval it.
 if file = ARGV.first
   interpreter.eval File.read(file)
@@ -127,7 +128,7 @@ else
 
         if value.ruby_value.is_a?(Array)
           print "<= [".light_white
-          print value.map { |i| i.ruby_value.inspect }.join(", ").light_white
+          print value.ruby_value.map { |i| i.ruby_value.inspect }.join(", ").light_white
           puts "]".light_white
         else
           puts "<= #{value.ruby_value.inspect}".light_white   # 3. Print

@@ -21,7 +21,7 @@
  - [X]  private and public modifiers
  - [X]  `for-of`
  - [X]  `elseif`
- - [ ]  Sets
+ - [X]  Sets
  - [ ]  Observers
 
 ##TODO for Beta 5:

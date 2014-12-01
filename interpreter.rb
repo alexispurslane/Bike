@@ -17,14 +17,14 @@ class Interpreter
   def initialize
     @parser = Parser.new
   end
-  
+
   def eval(code)
     @parser.parse(code).eval(RootContext)
   end
 end
 # The Nodes class will always be at the top of the AST. Its only purpose it to
 # contain other nodes. It correspond to a block of code or a series of expressions.
-# 
+#
 # The eval method of every node is the "interpreter" part of our language.
 # All nodes know how to evalualte themselves and return the result of their evaluation.
 # The context variable is the Context in which the node is evaluated (local
@@ -58,16 +58,12 @@ end
 
 class ArrayListNode
   def eval(context)
-    if value.ruby_value != []
-      new_value = []
-      value.each do |e|
-        e = e.eval(context)
-        new_value << e
-      end
-      Constants["Array"].new_with_value(new_value)
-    else
-      Constants["Array"].new_with_value([])
+    new_value = []
+    value.each do |e|
+      e = e.eval(context)
+      new_value << e
     end
+    Constants["Array"].new_with_value(new_value)
   end
 end
 

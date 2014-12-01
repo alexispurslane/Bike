@@ -19,11 +19,13 @@ Constants["false"] = Constants["FalseClass"].new_with_value(false)
 Constants["nil"] = Constants["NilClass"].new_with_value(nil)
 
 Constants["Class"].def :new do |receiver,arguments|
-  if receiver.runtime_methods["init"]
-    receiver.call("init", arguments)
+  new_receiver = receiver.new
+  if new_receiver.runtime_class.runtime_methods["init"]
+    new_receiver.call("init", arguments)
   end
-  receiver.new
+  new_receiver
 end
+
 Constants["Object"].def :println do |receiver, arguments|
   check_all_arguments(arguments)
   puts arguments[0].ruby_value
@@ -163,12 +165,17 @@ end
 
 
 Constants["Array"].def :'@' do |receiver, arguments|
-  (receiver.ruby_value[arguments[0].ruby_value-1]) || Constants["nil"]
+  (receiver.ruby_value[arguments[0].ruby_value]) || Constants["nil"]
+end
+
+Constants["Array"].def :uniq do |receiver, arguments|
+  uniq_ary = receiver.ruby_value.map(&:ruby_value).uniq
+  Constants["Array"].new_with_value(uniq_ary.map { |e| Constants["Object"].new_with_value(e)  })
 end
 
 Constants["Array"].def :set do |receiver, arguments|
   clone = receiver.ruby_value.clone
-  clone[arguments[0].ruby_value-1] = arguments[1]
+  clone[arguments[0].ruby_value] = arguments[1]
   Constants["Array"].new_with_value(clone)
 end
 Constants["Array"].def :length do |receiver, arguments|

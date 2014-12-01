@@ -53,7 +53,7 @@ class BikeMethod
       context.locals[@vararg] = Constants["Array"].new_with_value(arguments)
     end
 
-    context.locals["self"] = @context
+    context.locals["self"] = @context.current_class
     res = @body.eval(context)
     context.locals.keys.each { |e| $is_set[e] = false  }
 

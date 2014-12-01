@@ -1064,7 +1064,7 @@ module_eval(<<'.,.,', 'grammar.y', 178)
 
 module_eval(<<'.,.,', 'grammar.y', 181)
   def _reduce_50(val, _values, result)
-     result = [] 
+     result = ArrayListNode.new([]) 
     result
   end
 .,.,

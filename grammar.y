@@ -179,7 +179,7 @@ rule
   | ArgList                       { result = val[0] }
   ;
   Array:
-    "[" "]"           { result = [] }
+    "[" "]"           { result = ArrayListNode.new([]) }
   | "[" ListArray "]" { result = ArrayListNode.new(val[1]) }
   ;
   ListArray:
