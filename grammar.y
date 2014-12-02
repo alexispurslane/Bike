@@ -22,6 +22,8 @@ token PACKAGE
 token EXTENDS
 
 token DEF
+token PIPE
+token INIT
 token ARROW
 token SLASH
 token APPLY
@@ -100,6 +102,7 @@ rule
   Expression:
     Literal
   | Call
+  | Compose
   | ForOf
   | Import
   | Apply
@@ -108,6 +111,7 @@ rule
   | SetLocal
   | Arrow
   | Def
+  | Init
   | Class
   | Hash
   | Mixin
@@ -167,6 +171,9 @@ rule
   Apply:
     IDENTIFIER APPLY Arguments        { result = ApplyNode.new(nil, val[0], val[2]) }
   | IDENTIFIER APPLY                  { result = ApplyNode.new(nil, val[0], []) }
+  ;
+  Compose:
+    Expression PIPE Expression        { result = PipeNode.new(val[0], val[2]) }
   ;
   Import:
     IMPORT IDENTIFIER                 { result = ImportNode.new(nil, "#{val[1]}.bk") }
@@ -279,6 +286,10 @@ rule
   | PRIVATE DEF IDENTIFIER
       "(" "." "." "." IDENTIFIER ")" Block     { result = DefNode.new(val[2], [], val[9], val[7], true) }
   ;
+  Init:
+    INIT "(" ParamList ")" Block     { result = DefNode.new("init", val[2], val[4]) }
+  ;
+
 
   ParamList:
     /* nothing */                 { result = [] }

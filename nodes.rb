@@ -103,3 +103,5 @@ class ForNode  < Struct.new(:key, :value, :iterator, :body); end
 class UnlessNode  < Struct.new(:condition, :body); end
 
 class WhileNode  < Struct.new(:condition, :body); end
+
+class PipeNode < Struct.new(:first_function, :second_funtion); end
