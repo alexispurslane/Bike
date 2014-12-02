@@ -186,12 +186,12 @@ rule
   ;
   ListArray:
     Expression               { result = val }
-  | ListArray Expression     { result = val[0] << val[1] }
+  | ListArray "," Expression { result = val[0] << val[2] }
   ;
 
   ArgList:
     Expression                    { result = val }
-  | ArgList Expression            { result = val[0] << val[1] }
+  | ArgList "," Expression        { result = val[0] << val[2] }
   ;
 
   Arrow:
@@ -289,7 +289,7 @@ rule
   ParamList:
     /* nothing */                 { result = [] }
   | IDENTIFIER                    { result = val }
-  | ParamList IDENTIFIER      { result = val[0] << val[1] }
+  | ParamList "," IDENTIFIER      { result = val[0] << val[2] }
   ;
 
   # Class definition is similar to method definition.
