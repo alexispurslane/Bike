@@ -219,7 +219,7 @@ class ApplyNode
     end
 
     evaluated_arguments = arguments.map { |arg| arg.eval(context) }
-    value.apply(context, context.locals[method].context, method, evaluated_arguments)
+    value.apply(context, method, evaluated_arguments)
   end
 end
 

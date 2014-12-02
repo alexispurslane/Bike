@@ -11,14 +11,14 @@ class BikeObject
     unless method == "new"
       watches_for_method = @watches.keep_if { |v| v[:prop] == method }
       watches_for_method.each do |v|
-        v[:meth].call(self, [arguments.first])
+        v[:meth].call(self, [Constants["Array"].new_with_value(arguments.first.ruby_value)])
       end
     end
     @runtime_class.lookup(method).call(self, arguments)
   end
   # Calls a method that has been stored as a variable (like calling a lambda that was passed into a function.) In Bike this is done using the +$+ operator.
-  def apply(context, closure, method, arguments=[])
-    context.locals[method].call(closure, arguments)
+  def apply(context, method, arguments=[])
+    context.locals[method].call(context, arguments)
   end
 
   def observe (prop, method)

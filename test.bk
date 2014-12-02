@@ -1,5 +1,5 @@
 let myset = wheels.Set.new([1 2 3])
 myset.observe_property "array" \x -> {
-  println x
+  println_all x...
 }
 myset.array = [1 nil 1 2 3]
