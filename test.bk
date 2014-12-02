@@ -1,5 +1,5 @@
-let myset = wheels.Set.new([1, 2, 3])
-myset.observe_property "array", \x -> {
+let myset = wheels.Set.new([1 2 3])
+myset.observe_property "array" \x -> {
   println x
 }
-myset.array = [1, nil, 1, 2, 3]
+myset.array = [1 nil 1 2 3]
