@@ -219,7 +219,7 @@ class ApplyNode
     end
 
     evaluated_arguments = arguments.map { |arg| arg.eval(context) }
-    value.apply(context, context.locals[method].context, method, evaluated_arguments)
+    value.apply(context, method, evaluated_arguments)
   end
 end
 
@@ -233,7 +233,7 @@ end
 
 class LambdaNode
   def eval(context)
-    BikeMethod.new(params, body, context.current_class)
+    BikeMethod.new(params, body, context, nil, false)
   end
 end
 
@@ -259,7 +259,7 @@ class ClassNode
 
     class_context = Context.new(bike_class, bike_class)
     class_context.locals["self"] = bike_class
-    RootContext.locals.each do |name, value| 
+    RootContext.locals.each do |name, value|
       class_context.locals[name] = value
     end
     body.eval(class_context)
@@ -289,6 +289,10 @@ class PackageNode
     sup = Constants["Object"]
     bike_class = BikeClass.new(sup)
     class_context = Context.new(bike_class, bike_class)
+    class_context.locals["self"] = bike_class
+    RootContext.locals.each do |name, value| 
+      class_context.locals[name] = value
+    end
     body.eval(class_context)
 
     bike_class.call("new", [])
@@ -307,7 +311,7 @@ class IfNode
       bodys = [body, else_body]
     end
     conditions.each_with_index do |cond, i|
-      if cond.eval(context).ruby_value
+      if cond.eval(context).ruby_value && bodys[i] != nil
         return bodys[i].eval(context)
       end
     end
@@ -325,7 +329,7 @@ class ForNode
       end
       Constants["nil"]
     else
-      array.each do |e|
+      thing.ruby_value.each do |e|
         context.locals[key] = e
         body.eval(context)
       end

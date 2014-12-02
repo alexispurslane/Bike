@@ -22,7 +22,7 @@
  - [X]  `for-of`
  - [X]  `elseif`
  - [X]  Sets
- - [ ]  Observers
+ - [X]  Observers
 
 ##TODO for Beta 5:
  - [ ]  Documentation

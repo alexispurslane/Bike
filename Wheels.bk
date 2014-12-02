@@ -1,12 +1,16 @@
 package {
   package Math {
     def Pi = 3.141592653589793
-      def E  = 2.718281828459045
+    def E  = 2.718281828459045
   }
   def Set = class {
     let var set = []
-    def init(array) {
-      set = array.uniq
+    init (array) {
+      for e of (array.uniq) {
+        if e isnt nil {
+          set = set + [e]
+        }
+      }
     }
 
     def array = set

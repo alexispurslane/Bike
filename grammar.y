@@ -22,6 +22,7 @@ token PACKAGE
 token EXTENDS
 
 token DEF
+token INIT
 token ARROW
 token SLASH
 token APPLY
@@ -108,6 +109,7 @@ rule
   | SetLocal
   | Arrow
   | Def
+  | Init
   | Class
   | Hash
   | Mixin
@@ -279,6 +281,10 @@ rule
   | PRIVATE DEF IDENTIFIER
       "(" "." "." "." IDENTIFIER ")" Block     { result = DefNode.new(val[2], [], val[9], val[7], true) }
   ;
+  Init:
+    INIT "(" ParamList ")" Block     { result = DefNode.new("init", val[2], val[4]) }
+  ;
+
 
   ParamList:
     /* nothing */                 { result = [] }

@@ -9,13 +9,13 @@ width = TermInfo.screen_size[1]
 interpreter = Interpreter.new
 lexer       = false
 parser      = false
-debug       = false
+debug       = true
 
 trap('INT', 'SIG_IGN')
 LIST = [
   'import',  'class',   'Wheels',
   'wheels',  ':exit',   ':history',
-  ':help',   ':lexer',  ':clear',
+  ':help',   ':lexer',  ':clear',  'observe_property',
   'let',     'var',     'def',     'lambda',
   'with',    'apply',   'while',   'else',
   'unless',  'if',      'println', 'print',
@@ -128,7 +128,7 @@ else
 
         if value.ruby_value.is_a?(Array)
           print "<= [".light_white
-          print value.ruby_value.map { |i| i.ruby_value.inspect }.join(", ").light_white
+          print value.ruby_value.map { |i| i.ruby_value.inspect }.join(" ").light_white
           puts "]".light_white
         else
           puts "<= #{value.ruby_value.inspect}".light_white   # 3. Print
