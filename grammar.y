@@ -22,6 +22,7 @@ token PACKAGE
 token EXTENDS
 
 token DEF
+token INIT
 token ARROW
 token SLASH
 token APPLY
@@ -108,6 +109,7 @@ rule
   | SetLocal
   | Arrow
   | Def
+  | Init
   | Class
   | Hash
   | Mixin
@@ -184,12 +186,12 @@ rule
   ;
   ListArray:
     Expression               { result = val }
-  | ListArray "," Expression { result = val[0] << val[2] }
+  | ListArray Expression     { result = val[0] << val[1] }
   ;
 
   ArgList:
     Expression                    { result = val }
-  | ArgList "," Expression        { result = val[0] << val[2] }
+  | ArgList Expression            { result = val[0] << val[1] }
   ;
 
   Arrow:
@@ -279,11 +281,15 @@ rule
   | PRIVATE DEF IDENTIFIER
       "(" "." "." "." IDENTIFIER ")" Block     { result = DefNode.new(val[2], [], val[9], val[7], true) }
   ;
+  Init:
+    INIT "(" ParamList ")" Block     { result = DefNode.new("init", val[2], val[4]) }
+  ;
+
 
   ParamList:
     /* nothing */                 { result = [] }
   | IDENTIFIER                    { result = val }
-  | ParamList "," IDENTIFIER      { result = val[0] << val[2] }
+  | ParamList IDENTIFIER      { result = val[0] << val[1] }
   ;
 
   # Class definition is similar to method definition.

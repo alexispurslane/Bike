@@ -259,7 +259,7 @@ class ClassNode
 
     class_context = Context.new(bike_class, bike_class)
     class_context.locals["self"] = bike_class
-    RootContext.locals.each do |name, value| 
+    RootContext.locals.each do |name, value|
       class_context.locals[name] = value
     end
     body.eval(class_context)
@@ -289,6 +289,10 @@ class PackageNode
     sup = Constants["Object"]
     bike_class = BikeClass.new(sup)
     class_context = Context.new(bike_class, bike_class)
+    class_context.locals["self"] = bike_class
+    RootContext.locals.each do |name, value| 
+      class_context.locals[name] = value
+    end
     body.eval(class_context)
 
     bike_class.call("new", [])

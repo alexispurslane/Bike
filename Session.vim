@@ -9,9 +9,10 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
 endif
 set shortmess=aoO
 badd +311 interpreter.rb
-badd +168 runtime/bootstrap.rb
+badd +29 runtime/bootstrap.rb
 badd +12 Wheels.bk
 badd +14 runtime/object.rb
+badd +233 ~/.nvimrc
 badd +12 bike
 badd +46 ~/.nvim/syntax/bk.vim
 badd +41 runtime/method.rb
@@ -47,7 +48,7 @@ normal! zt
 normal! 020|
 wincmd w
 argglobal
-edit bike
+edit runtime/object.rb
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}

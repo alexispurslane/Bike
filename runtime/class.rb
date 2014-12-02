@@ -15,13 +15,17 @@ class BikeClass < BikeObject
     @runtime_methods = {}
     if mixins != nil
       mixins.each do |e|
-        Constants[e].runtime_methods.each_pair do |key, method| 
+        Constants[e].runtime_methods.each_pair do |key, method|
           @runtime_methods[key] = method
         end
       end
     end
     @runtime_class = Constants["Class"]
-    @runtime_superclass = Constants[superclass]
+    @runtime_superclass = if superclass.is_a?(String)
+                            Constants[superclass]
+                          else
+                            superclass
+                          end
     @ruby_value = "<class>"
   end
 
@@ -32,7 +36,7 @@ class BikeClass < BikeObject
       if @runtime_superclass
         method = @runtime_superclass.lookup(method_name)
       else
-        raise "Method not found: #{method_name} of #{@runtime_superclass}"
+        raise "Method not found: #{method_name} of #{@runtime_class}"
       end
     end
     method

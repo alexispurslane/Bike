@@ -5,7 +5,7 @@ package {
   }
   def Set = class {
     let var set = []
-    def init (array) {
+    init (array) {
       for e of (array.uniq) {
         if e isnt nil {
           set = set + [e]

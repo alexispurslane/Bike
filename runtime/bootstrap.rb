@@ -26,6 +26,11 @@ Constants["Class"].def :new do |receiver,arguments|
   new_receiver
 end
 
+Constants["Object"].def :observe_property do |receiver, arguments|
+  receiver.observe arguments.first.ruby_value, arguments[1]
+  Constants["nil"]
+end
+
 Constants["Object"].def :println do |receiver, arguments|
   check_all_arguments(arguments)
   puts arguments[0].ruby_value
@@ -35,16 +40,16 @@ end
 Constants["Object"].def :println_all do |receiver, arguments|
   check_all_arguments(arguments)
   arguments.each do |e|
-    puts e
+    puts e.ruby_value.inspect
   end
-  arguments || Constants["nil"] # We always want to return objects from our runtime
+  Constants["nil"] # We always want to return objects from our runtime
 end
 Constants["Object"].def :print do |receiver, arguments|
   check_all_arguments(arguments)
   print arguments.first.ruby_value
   arguments[0] || Constants["nil"] # We always want to return objects from our runtime
 end
-def check_all_arguments (args) 
+def check_all_arguments (args)
   args.each_index do |i|
     arg = args[i]
     unless arg
