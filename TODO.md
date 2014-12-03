@@ -25,8 +25,8 @@
  - [X]  Observers
 
 ##TODO for Beta 5:
- - [ ]  Multiline strings
- - [ ]  Threads
+ - [X]  Multiline strings
+ - [X]  Threads
  - [ ]  Make a Gem
 
 ##TODO for Beta 6:

@@ -164,6 +164,9 @@ rule
   | IDENTIFIER IDENTIFIER "." "." "."         { result = CallNode.new(nil, val[0], val[1], true) }
   | IDENTIFIER "(" IDENTIFIER "." "." "." ")" { result = CallNode.new(nil, val[0], val[2], true) }
   | Expression "." IDENTIFIER "=" Expression  { result = CallNode.new(val[0], val[2] + "=", [val[4]], false) }
+  | IDENTIFIER Arguments Block                { result = CallNode.new(nil, val[0], [LambdaNode.new([], val[2], "args")] + val[1], false) }
+  | Expression "." IDENTIFIER
+      Arguments Block                         { result = CallNode.new(val[0], val[2], [LambdaNode.new([], val[4], "args")] + val[3], false) }
   ;
 
   Apply:
@@ -195,10 +198,10 @@ rule
   ;
 
   Arrow:
-    SLASH ParamList ARROW Expression    { result = LambdaNode.new(val[1], val[3]) }
-  | SLASH ParamList ARROW Block         { result = LambdaNode.new(val[1], val[3]) }
-  | ARROW Block                         { result = LambdaNode.new([], val[1]) }
-  | ARROW Expression                    { result = LambdaNode.new([], val[1]) }
+    SLASH ParamList ARROW Expression    { result = LambdaNode.new(val[1], val[3], nil) }
+  | SLASH ParamList ARROW Block         { result = LambdaNode.new(val[1], val[3], nil) }
+  | ARROW Block                         { result = LambdaNode.new([], val[1], nil) }
+  | ARROW Expression                    { result = LambdaNode.new([], val[1], nil) }
   ;
 
   # In our language, like in Ruby, operators are converted to method calls.

@@ -233,7 +233,7 @@ end
 
 class LambdaNode
   def eval(context)
-    BikeMethod.new(params, body, context, nil, false)
+    BikeMethod.new(params, body, context, vararg, false)
   end
 end
 

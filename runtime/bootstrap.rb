@@ -31,6 +31,13 @@ Constants["Object"].def :observe_property do |receiver, arguments|
   Constants["nil"]
 end
 
+Constants["Object"].def :thread do |receiver, arguments|
+  t = Thread.new { Thread.current[:output] = arguments.first.call(receiver, arguments) }
+  t.abort_on_exception = true
+  t.join
+  t[:output]
+end
+
 Constants["Object"].def :println do |receiver, arguments|
   check_all_arguments(arguments)
   puts arguments[0].ruby_value
