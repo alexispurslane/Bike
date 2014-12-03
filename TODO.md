@@ -25,10 +25,9 @@
  - [X]  Observers
 
 ##TODO for Beta 5:
- - [ ]  Documentation
- - [ ]  Markdown Comments
- - [ ]  Multiline Comments
- - [ ]  Wheels API documentation with Markdown Comments
+ - [ ]  Multiline strings
+ - [ ]  Threads
+ - [ ]  Make a Gem
 
 ##TODO for Beta 6:
  - [ ]  Better Error reporting
@@ -47,11 +46,11 @@
  - [ ]  Show more people
 
 ##TODO for Beta 9:
- - [ ]  Function composition operator
- - [ ]  Function currying operator
- - [ ]  Multiline strings
- - [ ]  Threads
- - [ ]  Make a Gem
+ - [ ]  Documentation
+ - [ ]  Markdown Comments
+ - [ ]  Multiline Comments
+ - [ ]  Wheels API documentation with Markdown Comments
+
 
 #TODO for 1.0:
  - [ ]  Bootstrap the language

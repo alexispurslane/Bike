@@ -3,6 +3,43 @@ package {
     def Pi = 3.141592653589793
     def E  = 2.718281828459045
   }
+  def println_all (args) {
+    for e of args {
+      println e
+    }
+    args
+  }
+  def each (f, a) {
+    for x of a {
+      f $ x
+    }
+    a
+  }
+  def map (f, a) {
+    let var res = []
+    for x of a {
+      res = res + [f $ x]
+    }
+    res
+  }
+  def filter (f, a) {
+    let var res = []
+    for x of a {
+      if f $ x {
+        res = res + [x]
+      }
+    }
+    res
+  }
+  def reject (f, a) {
+    let var res = []
+    for x of a {
+      if not f $ x {
+        res = res + [x]
+      }
+    }
+    res
+  }
   def Set = class {
     let var set = []
     init (array) {

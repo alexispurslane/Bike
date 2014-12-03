@@ -11,14 +11,15 @@ class Lexer
 
     while i < code.size
       chunk = code[i..-1]
-
-      if operator = chunk[/\A(%|@|=@|isnt|or|and|not|is|<=|>=|->|=>|\\|\$)/, 1]
+      if comment = chunk[/\A#\|.*\|#/]
+        i += comment.size
+      elsif comment = chunk[/\A#.*$/]
+        i += comment.size
+      elsif operator = chunk[/\A(%|@|=@|isnt|or|and|not|is|<=|>=|->|=>|\\|\$)/, 1]
         if operator == "->"
           tokens << [:ARROW, "arrow"]
         elsif operator == "=>"
           tokens << [:ROCKET, "rocket"]
-        elsif operator == "#"
-          tokens << [:HASH, "hash"]
         elsif operator == "=@"
           tokens << ["set", "set"]
         elsif operator == "\\"
@@ -56,17 +57,12 @@ class Lexer
 
       elsif chunk.match(/\A /)
         i += 1
-      elsif comment = chunk.match(/\A#.*$/)
-        i += comment.size
       else
         value = chunk[0,1]
         tokens << [value, value]
         i += 1
-
       end
-
     end
-
     tokens
   end
 end

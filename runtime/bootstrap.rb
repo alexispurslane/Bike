@@ -37,13 +37,6 @@ Constants["Object"].def :println do |receiver, arguments|
   arguments[0] || Constants["nil"] # We always want to return objects from our runtime
 end
 
-Constants["Object"].def :println_all do |receiver, arguments|
-  check_all_arguments(arguments)
-  arguments.each do |e|
-    puts e.ruby_value.inspect
-  end
-  Constants["nil"] # We always want to return objects from our runtime
-end
 Constants["Object"].def :print do |receiver, arguments|
   check_all_arguments(arguments)
   print arguments.first.ruby_value
