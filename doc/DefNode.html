@@ -208,6 +208,33 @@ being a Nodes instance.</p>
       <li class="public ">
   <span class="summary_signature">
     
+      <a href="#private-instance_method" title="#private (instance method)">- (Object) <strong>private</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute private.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#vararg-instance_method" title="#vararg (instance method)">- (Object) <strong>vararg</strong> </a>
     
 
@@ -459,6 +486,67 @@ being a Nodes instance.</p>
 </div>
     
       
+      <span id="private=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="private-instance_method">
+  
+    - (<tt>Object</tt>) <strong>private</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute private</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Object</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the current value of private</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+87
+88
+89</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'nodes.rb', line 87</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_private'>private</span>
+  <span class='ivar'>@private</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
       <span id="vararg=-instance_method"></span>
       <div class="method_details ">
   <h3 class="signature " id="vararg-instance_method">
@@ -550,7 +638,7 @@ being a Nodes instance.</p>
       <pre class="code"><span class="info file"># File 'interpreter.rb', line 228</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_eval'>eval</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_method'>method</span> <span class='op'>=</span> <span class='const'>BikeMethod</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='id identifier rubyid_vararg'>vararg</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_method'>method</span> <span class='op'>=</span> <span class='const'>BikeMethod</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='id identifier rubyid_vararg'>vararg</span><span class='comma'>,</span> <span class='id identifier rubyid_private'>private</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_current_class'>current_class</span><span class='period'>.</span><span class='id identifier rubyid_runtime_methods'>runtime_methods</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_method'>method</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -563,7 +651,7 @@ being a Nodes instance.</p>
 </div>
 
     <div id="footer">
-  Generated on Fri Nov 28 18:47:50 2014 by
+  Generated on Tue Dec  2 18:16:50 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.0.0).
 </div>

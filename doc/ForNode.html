@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>
-  Class: ClassNode
+  Class: ForNode
   
     &mdash; Documentation by YARD 0.8.7.6
   
@@ -17,7 +17,7 @@
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
   relpath = '';
-  framesUrl = "frames.html#!ClassNode.html";
+  framesUrl = "frames.html#!ForNode.html";
 </script>
 
 
@@ -31,10 +31,10 @@
     <div id="header">
       <div id="menu">
   
-    <a href="_index.html">Index (C)</a> &raquo;
+    <a href="_index.html">Index (F)</a> &raquo;
     
     
-    <span class="title">ClassNode</span>
+    <span class="title">ForNode</span>
   
 
   <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
@@ -63,7 +63,7 @@
 
     <iframe id="search_frame"></iframe>
 
-    <div id="content"><h1>Class: ClassNode
+    <div id="content"><h1>Class: ForNode
   
   
   
@@ -80,7 +80,7 @@
           
             <li class="next">Struct</li>
           
-            <li class="next">ClassNode</li>
+            <li class="next">ForNode</li>
           
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
@@ -103,19 +103,7 @@
 </dl>
 <div class="clear"></div>
 
-<h2>Overview</h2><div class="docstring">
-  <div class="discussion">
-    
-<p>Class definitions are stored into the following node. Once again, the name
-of the class and its body, a tree of nodes.</p>
 
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div>
 
 
 
@@ -152,7 +140,7 @@ of the class and its body, a tree of nodes.</p>
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#mixins-instance_method" title="#mixins (instance method)">- (Object) <strong>mixins</strong> </a>
+      <a href="#iterator-instance_method" title="#iterator (instance method)">- (Object) <strong>iterator</strong> </a>
     
 
     
@@ -170,7 +158,7 @@ of the class and its body, a tree of nodes.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute mixins.</p>
+<p>Returns the value of attribute iterator.</p>
 </div></span>
   
 </li>
@@ -179,7 +167,7 @@ of the class and its body, a tree of nodes.</p>
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#name-instance_method" title="#name (instance method)">- (Object) <strong>name</strong> </a>
+      <a href="#key-instance_method" title="#key (instance method)">- (Object) <strong>key</strong> </a>
     
 
     
@@ -197,7 +185,7 @@ of the class and its body, a tree of nodes.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute name.</p>
+<p>Returns the value of attribute key.</p>
 </div></span>
   
 </li>
@@ -206,7 +194,7 @@ of the class and its body, a tree of nodes.</p>
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#superclass-instance_method" title="#superclass (instance method)">- (Object) <strong>superclass</strong> </a>
+      <a href="#value-instance_method" title="#value (instance method)">- (Object) <strong>value</strong> </a>
     
 
     
@@ -224,7 +212,7 @@ of the class and its body, a tree of nodes.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute superclass.</p>
+<p>Returns the value of attribute value.</p>
 </div></span>
   
 </li>
@@ -319,12 +307,12 @@ of the class and its body, a tree of nodes.</p>
       <pre class="lines">
 
 
-92
-93
-94</pre>
+101
+102
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'nodes.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'nodes.rb', line 101</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_body'>body</span>
   <span class='ivar'>@body</span>
@@ -335,11 +323,11 @@ of the class and its body, a tree of nodes.</p>
 </div>
     
       
-      <span id="mixins=-instance_method"></span>
+      <span id="iterator=-instance_method"></span>
       <div class="method_details ">
-  <h3 class="signature " id="mixins-instance_method">
+  <h3 class="signature " id="iterator-instance_method">
   
-    - (<tt>Object</tt>) <strong>mixins</strong> 
+    - (<tt>Object</tt>) <strong>iterator</strong> 
   
 
   
@@ -348,7 +336,7 @@ of the class and its body, a tree of nodes.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns the value of attribute mixins</p>
+<p>Returns the value of attribute iterator</p>
 
 
   </div>
@@ -367,7 +355,7 @@ of the class and its body, a tree of nodes.</p>
       
         &mdash;
         <div class='inline'>
-<p>the current value of mixins</p>
+<p>the current value of iterator</p>
 </div>
       
     </li>
@@ -380,15 +368,15 @@ of the class and its body, a tree of nodes.</p>
       <pre class="lines">
 
 
-92
-93
-94</pre>
+101
+102
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'nodes.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'nodes.rb', line 101</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_mixins'>mixins</span>
-  <span class='ivar'>@mixins</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_iterator'>iterator</span>
+  <span class='ivar'>@iterator</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -396,11 +384,11 @@ of the class and its body, a tree of nodes.</p>
 </div>
     
       
-      <span id="name=-instance_method"></span>
+      <span id="key=-instance_method"></span>
       <div class="method_details ">
-  <h3 class="signature " id="name-instance_method">
+  <h3 class="signature " id="key-instance_method">
   
-    - (<tt>Object</tt>) <strong>name</strong> 
+    - (<tt>Object</tt>) <strong>key</strong> 
   
 
   
@@ -409,7 +397,7 @@ of the class and its body, a tree of nodes.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns the value of attribute name</p>
+<p>Returns the value of attribute key</p>
 
 
   </div>
@@ -428,7 +416,7 @@ of the class and its body, a tree of nodes.</p>
       
         &mdash;
         <div class='inline'>
-<p>the current value of name</p>
+<p>the current value of key</p>
 </div>
       
     </li>
@@ -441,15 +429,15 @@ of the class and its body, a tree of nodes.</p>
       <pre class="lines">
 
 
-92
-93
-94</pre>
+101
+102
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'nodes.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'nodes.rb', line 101</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_name'>name</span>
-  <span class='ivar'>@name</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_key'>key</span>
+  <span class='ivar'>@key</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -457,11 +445,11 @@ of the class and its body, a tree of nodes.</p>
 </div>
     
       
-      <span id="superclass=-instance_method"></span>
+      <span id="value=-instance_method"></span>
       <div class="method_details ">
-  <h3 class="signature " id="superclass-instance_method">
+  <h3 class="signature " id="value-instance_method">
   
-    - (<tt>Object</tt>) <strong>superclass</strong> 
+    - (<tt>Object</tt>) <strong>value</strong> 
   
 
   
@@ -470,7 +458,7 @@ of the class and its body, a tree of nodes.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns the value of attribute superclass</p>
+<p>Returns the value of attribute value</p>
 
 
   </div>
@@ -489,7 +477,7 @@ of the class and its body, a tree of nodes.</p>
       
         &mdash;
         <div class='inline'>
-<p>the current value of superclass</p>
+<p>the current value of value</p>
 </div>
       
     </li>
@@ -502,15 +490,15 @@ of the class and its body, a tree of nodes.</p>
       <pre class="lines">
 
 
-92
-93
-94</pre>
+101
+102
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'nodes.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'nodes.rb', line 101</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_superclass'>superclass</span>
-  <span class='ivar'>@superclass</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_value'>value</span>
+  <span class='ivar'>@value</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -539,49 +527,41 @@ of the class and its body, a tree of nodes.</p>
       <pre class="lines">
 
 
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268</pre>
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'interpreter.rb', line 249</span>
+      <pre class="code"><span class="info file"># File 'interpreter.rb', line 318</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_eval'>eval</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_classname'>classname</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>||</span> <span class='id identifier rubyid_gensym'>gensym</span><span class='lparen'>(</span><span class='rparen'>)</span>
-
-  <span class='id identifier rubyid_bike_class'>bike_class</span> <span class='op'>=</span> <span class='const'>Constants</span><span class='lbracket'>[</span><span class='id identifier rubyid_classname'>classname</span><span class='rbracket'>]</span> <span class='comment'># Check if class is already defined
-</span>
-  <span class='kw'>unless</span> <span class='id identifier rubyid_bike_class'>bike_class</span> <span class='comment'># Class doesn&#39;t exist yet
-</span>    <span class='id identifier rubyid_sup'>sup</span> <span class='op'>=</span> <span class='const'>Constants</span><span class='lbracket'>[</span><span class='id identifier rubyid_superclass'>superclass</span><span class='rbracket'>]</span>
-    <span class='id identifier rubyid_bike_class'>bike_class</span> <span class='op'>=</span> <span class='const'>BikeClass</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_sup'>sup</span><span class='comma'>,</span> <span class='id identifier rubyid_mixins'>mixins</span><span class='rparen'>)</span>
-    <span class='const'>Constants</span><span class='lbracket'>[</span><span class='id identifier rubyid_classname'>classname</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_bike_class'>bike_class</span> <span class='comment'># Define the class in the runtime
-</span>  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_class_context'>class_context</span> <span class='op'>=</span> <span class='const'>Context</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_bike_class'>bike_class</span><span class='comma'>,</span> <span class='id identifier rubyid_bike_class'>bike_class</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_class_context'>class_context</span><span class='period'>.</span><span class='id identifier rubyid_locals'>locals</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>self</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_bike_class'>bike_class</span>
-  <span class='const'>RootContext</span><span class='period'>.</span><span class='id identifier rubyid_locals'>locals</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span> 
-    <span class='id identifier rubyid_class_context'>class_context</span><span class='period'>.</span><span class='id identifier rubyid_locals'>locals</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+  <span class='id identifier rubyid_thing'>thing</span> <span class='op'>=</span> <span class='id identifier rubyid_iterator'>iterator</span><span class='period'>.</span><span class='id identifier rubyid_eval'>eval</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_thing'>thing</span><span class='period'>.</span><span class='id identifier rubyid_ruby_value'>ruby_value</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&lt;object&gt;</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_thing'>thing</span><span class='period'>.</span><span class='id identifier rubyid_runtime_class'>runtime_class</span><span class='period'>.</span><span class='id identifier rubyid_runtime_methods'>runtime_methods</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_m'>m</span><span class='op'>|</span>
+      <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_locals'>locals</span><span class='lbracket'>[</span><span class='id identifier rubyid_value'>value</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_thing'>thing</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_m'>m</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_locals'>locals</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'>Constants</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>String</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_new_with_value'>new_with_value</span><span class='lparen'>(</span><span class='id identifier rubyid_m'>m</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_eval'>eval</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='const'>Constants</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>nil</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_array'>array</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span>
+      <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_locals'>locals</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_e'>e</span>
+      <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_eval'>eval</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_eval'>eval</span><span class='lparen'>(</span><span class='id identifier rubyid_class_context'>class_context</span><span class='rparen'>)</span>
-
-  <span class='id identifier rubyid_bike_class'>bike_class</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>

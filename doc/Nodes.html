@@ -114,19 +114,19 @@ representation of a block of code.</p>
 simple way, in Ruby, to create a class that holds some attributes (values).
 It is almost equivalent to:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>Nodes</span>
-  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_nodes'>nodes</span><span class='rparen'>)</span>
-    <span class='ivar'>@nodes</span> <span class='op'>=</span> <span class='id identifier rubyid_nodes'>nodes</span>
-  <span class='kw'>end</span>
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">Nodes</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">nodes</span>)
+    <span class="ruby-ivar">@nodes</span> = <span class="ruby-identifier">nodes</span>
+  <span class="ruby-keyword">end</span>
 
-  <span class='kw'>def</span> <span class='id identifier rubyid_nodes'>nodes</span>
-    <span class='ivar'>@nodes</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">nodes</span>
+    <span class="ruby-ivar">@nodes</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
 
-<span class='id identifier rubyid_n'>n</span> <span class='op'>=</span> <span class='const'>Nodes</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>this is stored @nodes</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-<span class='id identifier rubyid_n'>n</span><span class='period'>.</span><span class='id identifier rubyid_nodes'>nodes</span> <span class='comment'># =&gt; &quot;this is stored @nodes&quot;
-</span></code></pre>
+<span class="ruby-identifier">n</span> = <span class="ruby-constant">Nodes</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;this is stored @nodes&quot;</span>)
+<span class="ruby-identifier">n</span>.<span class="ruby-identifier">nodes</span> <span class="ruby-comment"># =&gt; &quot;this is stored @nodes&quot;</span>
+</pre>
 
 <p>But Ruby&#39;s Struct takes care of overriding the == operator for us and a
 bunch of other things that will make testing easier.</p>
@@ -392,7 +392,7 @@ bunch of other things that will make testing easier.</p>
 </div>
 
     <div id="footer">
-  Generated on Fri Nov 28 18:47:49 2014 by
+  Generated on Tue Dec  2 18:16:49 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.0.0).
 </div>

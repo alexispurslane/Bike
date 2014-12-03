@@ -133,11 +133,15 @@
 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>error</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>IF</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ELSE</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ELSEIF</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>UNLESS</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>WHILE</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>FOR</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>OF</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>IMPORT</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>INTO</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CLASS</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PRIVATE</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HASH</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ROCKET</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>WITH</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
@@ -192,6 +196,7 @@
 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Terminator</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Literal</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Call</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ForOf</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Import</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Apply</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Operator</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
@@ -213,7 +218,8 @@
 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ParamList</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Block</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Mixins</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>KeyVal</span><span class='tstring_end'>&quot;</span></span> <span class='rbracket'>]</span></pre></dd>
+<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>KeyVal</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ElseIfs</span><span class='tstring_end'>&quot;</span></span> <span class='rbracket'>]</span></pre></dd>
       
         <dt id="Racc_debug_parser-constant" class="">Racc_debug_parser =
           
@@ -284,12 +290,12 @@
       <pre class="lines">
 
 
-1490
-1491
-1492</pre>
+1681
+1682
+1683</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'parser.rb', line 1490</span>
+      <pre class="code"><span class="info file"># File 'parser.rb', line 1681</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid__reduce_none'>_reduce_none</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='comma'>,</span> <span class='id identifier rubyid__values'>_values</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_val'>val</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
@@ -304,7 +310,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Nov 28 18:47:50 2014 by
+  Generated on Tue Dec  2 18:16:50 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.0.0).
 </div>
