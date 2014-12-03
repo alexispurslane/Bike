@@ -1,97 +1,184 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
-
-    <title>Bike: The Language</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="jumbotron.css" rel="stylesheet">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Bike by christopherdumas</title>
   </head>
 
   <body>
+    <div id="container">
+      <div class="inner">
 
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Bike</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
-              <input type="search" class="form-control" placeholder="Search Website...">
-            </div>
-            <button type="submit" class="btn btn-default">
-              <span class="glyphicon glyphicon-search"></span>
-            </button>
-          </form>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="#">Homepage</a></li>
-            <li class=""><a href="wheels.html">Wheels API Docs</a></li>
-            <li class=""><a href="guide.html/#install">Installation</a></li>
-            <li class=""><a href="guide.html">Guide</a></li>
-            <li class=""><a href="tut.html">Tutorial</a></li>
-            <li class=""><a href="referance.html">Referance</a></li>
-          </ul>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </nav>
+        <header>
+          <h1>Bike</h1>
+          <h2>A clean, lightweight functional programming language that has an interpreter and compiles to llvm. A mix of Haskell, CoffeeScript and Scala.</h2>
+        </header>
 
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-      <div class="container">
-        <h1>Welcome to the Bike Homepage</h1>
-        <p>As some people know, a bike is the most efficient man-powered vehicle known to man. The Bike Programming Language aims to be the same for programming.</p>
-        <p><a class="btn btn-primary btn-lg" href="tut.html" role="button">Learn more &raquo;</a></p>
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/christopherdumas/Bike/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/christopherdumas/Bike/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/christopherdumas/Bike" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a id="the-bike-programming-language" class="anchor" href="#the-bike-programming-language" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Bike programming language</h1>
+
+<p>Christopher Dumas</p>
+
+<p>The Bike programming language is a programming language that combines Haskell's currying, function composition, anonymous functions, and array comprehension, with Scala's packages, classes, and traits, Python's <code>is</code> and <code>isnt</code> style operators, Scheme's everything is an expression idea, Ruby's everything-is-an-object philosophy, and Go's no paren control structures, with Coffeescript's infix <code>if</code> and <code>unless</code>. It also has optional no-paren function calls, and immutable arrays are also present. This is mixed in with mixins and Java's ananymous Classes, as well as JavaScript's Objects (called hashes) and ES6's destructuring assignment. It is immutable in everything by default, but in a way that makes it fairly painless to use. </p>
+
+<p>Bike's motto is:</p>
+
+<blockquote>
+<p>Not a lot of syntax, but a lot more sugar.</p>
+</blockquote>
+
+<p>Some code samples are in order:</p>
+
+<pre><code>class Animal {
+  def sound = "some strange animal sound" # define function that returns a string. This gets you computed properties and getters for free!
+  def name = "some strange animal"
+  def make_sound (n) {
+    (name + " makes " + sound) * n # Return doctored-up string
+  }
+}
+class Dog extends Animal {
+  let intern_name = "Doggie"
+  def sound = "Bark!" # override some stuff
+  def name = intern_name
+  def name= (new_name) {
+    println "You are changing this dog's name to " + new_name
+    intern_name = new_name
+  }
+  def init = println "Initialized!" # Add an init method
+}
+let mutatedDog = class with Animal {  }
+let dog = Dog.new # You could also use `let var` if you wanted the variable to be mutable
+dog.make_sound 3 + 2  
+
+
+let array = [1, 2, 3, 4, 5, 99] unless false # Another way to write this is: `flatten [1..5, 99]`
+let fixed_count_array = (array =@ 6 6) if true
+if array isnt fixed_count_array {
+  println "Ok!"
+} else {
+  println "Run for the hills!!!!"
+}
+let foo = hash {
+  bar =&gt; "baz"
+  boo =&gt; "bar"
+}
+let {bar, boo} = foo
+</code></pre>
+
+<h2>
+<a id="roadmap" class="anchor" href="#roadmap" aria-hidden="true"><span class="octicon octicon-link"></span></a>Roadmap</h2>
+
+<p>In the TODO.md file is our roadmap to 1.0. It will be updated every major version release. Our versioning system is like this: The whole number (the 1 in 1.0) is incremented each major, or breaking version. The decimal point is incremented by five, and normally for big, but not breaking changes, like adding new operators or shorthand syntax. The Beta version (indicated by <code>+b&lt;number&gt;</code>) is incremented every time a bug is fixed, or a change is being contemplated but I have not fully committed to it.</p>
+
+<h2>
+<a id="development" class="anchor" href="#development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development</h2>
+
+<h3>
+<a id="setting-up-your-development-environment" class="anchor" href="#setting-up-your-development-environment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setting up your development environment</h3>
+
+<pre><code>$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" # get homebrew
+$ sudo mkdir /usr/local/Cellar
+$ sudo chown -R `whoami` /usr/local
+$ brew install ruby gem
+$ sudo gem install racc
+$ sudo gem install hanna-nouveau
+$ sudo gem install colorize
+$ sudo gem install ruby-terminfo
+$ sudo gem install irbtools
+$ sudo gem install terminal-notifier
+$ git clone git@github.com:christopherdumas/Bike.git bike
+$ cd bike/
+$ racc grammar.y -o parser.rb
+$ # have fun!!!!
+</code></pre>
+
+<h2>
+<a id="contribution" class="anchor" href="#contribution" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contribution</h2>
+
+<h3>
+<a id="issues" class="anchor" href="#issues" aria-hidden="true"><span class="octicon octicon-link"></span></a>Issues</h3>
+
+<p>Please keep issues short and to the point. Please no flaming, or arguments over preferences over syntax. If you make any changes to the syntax, check them with the author first, over email. Also, avoid adding syntax that uses obscure symbols. Also, please no OOP vs. Functional debates. Bike is supposed to make OOP and FP live together. Any debates about them should be about how to make them work together.</p>
+
+<h3>
+<a id="emails-to-author" class="anchor" href="#emails-to-author" aria-hidden="true"><span class="octicon octicon-link"></span></a>Emails to author</h3>
+
+<p>Please keep emails to a minimum, only when concerning major changes/bugs.</p>
+
+<h3>
+<a id="code-style" class="anchor" href="#code-style" aria-hidden="true"><span class="octicon octicon-link"></span></a>Code Style</h3>
+
+<p>Please use CamelCase for classes and grammar rules, snake_case for variables, and CAPS_SNAKE_CASE for symbols related to keywords or literals. Please unit test any changes made to the Interpreter class or Lexer class. Also, only comment where things are non-obvous</p>
+
+<h3>
+<a id="commits" class="anchor" href="#commits" aria-hidden="true"><span class="octicon octicon-link"></span></a>Commits</h3>
+
+<p>Please use descriptive commits, but under 80 characters. Always use emoji.</p>
+
+<table>
+<thead>
+<tr>
+<th>Type of Commit</th>
+<th>emoji</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bug fix</td>
+<td>
+<img class="emoji" title=":bug:" alt=":bug:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f41b.png" height="20" width="20" align="absmiddle"> <img class="emoji" title=":collision:" alt=":collision:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4a5.png" height="20" width="20" align="absmiddle">
+</td>
+</tr>
+<tr>
+<td>Major change</td>
+<td><img class="emoji" title=":sparkles:" alt=":sparkles:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/2728.png" height="20" width="20" align="absmiddle"></td>
+</tr>
+<tr>
+<td>code refactor</td>
+<td><img class="emoji" title=":angel:" alt=":angel:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f47c.png" height="20" width="20" align="absmiddle"></td>
+</tr>
+<tr>
+<td>documentation</td>
+<td><img class="emoji" title=":notebook:" alt=":notebook:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d3.png" height="20" width="20" align="absmiddle"></td>
+</tr>
+<tr>
+<td>Partial fix/temporary hack</td>
+<td>
+<img class="emoji" title=":lipstick:" alt=":lipstick:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f484.png" height="20" width="20" align="absmiddle"> <img class="emoji" title=":pig:" alt=":pig:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f437.png" height="20" width="20" align="absmiddle">
+</td>
+</tr>
+<tr>
+<td>Backwards compatability</td>
+<td><img class="emoji" title=":trollface:" alt=":trollface:" src="https://assets-cdn.github.com/images/icons/emoji/trollface.png" height="20" width="20" align="absmiddle"></td>
+</tr>
+</tbody>
+</table>
+        </section>
+
+        <footer>
+          Bike is maintained by <a href="https://github.com/christopherdumas">christopherdumas</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
       </div>
     </div>
-
-    <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-md-4">
-          <h2>Functional.</h2>
-          <p>With lambdas, functions are values. With arrow function and everything being an expression, it becomes easy to use functional programming. With immutability by default, you can start functional programming today, painlessly. With a rich API of folds, maps, eaches, and many more of the hallowed functional programming capabilities, you'll never be at a loss, or have to resort to imperitive-land!</p>
-          <p><a class="btn btn-default" href="tut.html/#func" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-          <h2>OOP, with a twist.</h2>
-          <p>With algebraic datatypes, as well as classes and mixins, and everything being an object (even functions) this is a true OOP language. But, leaning twords the functinal side, we ditched inheritance intirely, and instead use mixins, hugely symplyfieing and empoewering the OOP side of Bike! And with Haskell-style algebraic datatypes to add to the mix, there'll be nothing you can't do!</p>
-          <p><a class="btn btn-default" href="tut.html/#oop" role="button">View details &raquo;</a></p>
-       </div>
-        <div class="col-md-4">
-          <h2>Lightweight.</h2>
-          <p>With some syntax borrowed from Ruby and Python, languages known for their lightweight syntax and ease of reading, Bike is a pleasent mix of curly brace style C syntax, and significant whitespace style languages, Bike is a pleasure to program in. And everything being an expresison, along with CoffeeScript style if expressions and until expressions, Bike is a buity to look at!</p>
-          <p><a class="btn btn-default" href="tut.html/#syntax" role="button">View details &raquo;</a></p>
-        </div>
-      </div>
-
-      <hr>
-
-      <footer>
-        <p>&copy; TitoniumWorks 2014</p>
-      </footer>
-    </div> <!-- /container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="./bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   </body>
 </html>
