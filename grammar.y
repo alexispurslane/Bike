@@ -44,7 +44,7 @@ token NEWLINE
 # which order to parse expressions containing operators.
 # This table is based on the [C and C++ Operator Precedence Table](http://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B#Operator_precedence).
 prechigh
-  left  '.'
+  left  '.' '|'
   right 'not'
   left  '*' '/'
   left  '+' '-' '%'
@@ -102,7 +102,6 @@ rule
   Expression:
     Literal
   | Call
-  | Compose
   | ForOf
   | Import
   | Apply
@@ -172,9 +171,7 @@ rule
     IDENTIFIER APPLY Arguments        { result = ApplyNode.new(nil, val[0], val[2]) }
   | IDENTIFIER APPLY                  { result = ApplyNode.new(nil, val[0], []) }
   ;
-  Compose:
-    Expression PIPE Expression        { result = PipeNode.new(val[0], val[2]) }
-  ;
+
   Import:
     IMPORT IDENTIFIER                 { result = ImportNode.new(nil, "#{val[1]}.bk") }
   | IMPORT IDENTIFIER INTO IDENTIFIER { result = ImportNode.new(val[3], "#{val[1]}.bk") }
@@ -230,11 +227,10 @@ rule
   | Expression '*'  Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
   | Expression '/'  Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
   ;
-  
   GetLocal:
     IDENTIFIER                    { result = GetLocalNode.new(val[0]) }
   ;
-  
+
   SetLocal:
     LET IDENTIFIER "=" Expression             { result = SetLocalNode.new(val[1], val[3]) }
   | LET VAR IDENTIFIER "=" Expression         { result = SetMutLocalNode.new(val[2], val[4]) }
