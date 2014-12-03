@@ -2,6 +2,8 @@
 
 Christopher Dumas
 
+For language implementation documentation (not comprehensive in any way, just as an aid as you read the code) [go here](https://rawgit.com/christopherdumas/Bike/master/doc/_index.html)
+
 The Bike programming language is a programming language that combines Haskell's currying, function composition, anonymous functions, and array comprehension, with Scala's packages, classes, and traits, Python's `is` and `isnt` style operators, Scheme's everything is an expression idea, Ruby's everything-is-an-object philosophy, and Go's no paren control structures, with Coffeescript's infix `if` and `unless`. It also has optional no-paren function calls, and immutable arrays are also present. This is mixed in with mixins and Java's ananymous Classes, as well as JavaScript's Objects (called hashes) and ES6's destructuring assignment. It is immutable in everything by default, but in a way that makes it fairly painless to use. 
 
 Bike's motto is:
