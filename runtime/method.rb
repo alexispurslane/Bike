@@ -15,13 +15,14 @@ class BikeMethod
   # This method just sets the corresponding arguments onto properties of the same name and returns the new object. The only special thing it does is doctor up a +ruby_value+ based on these properties.
   def initialize(params, body,
                  context=Context.new(Constants["Object"]),
-                 vararg=nil, private=false)
+                 vararg=nil, private=false, name="")
     @params, @body, @context = params, body, context
 
     @vararg = vararg
     @private = private
+    @name = name
 
-    @ruby_value = "#{@private ? "#{@private} " : ""}def (#{@params.join(', ')}#{@vararg ? " ...#{@vararg}" : ""}) { ... }"
+    @ruby_value = "#{@private ? "#{@private} " : ""}def #{@name}(#{@params.join(', ')}#{@vararg ? " ...#{@vararg}" : ""}) { ... }"
   end
 
 
@@ -32,6 +33,7 @@ class BikeMethod
                else
                  Context.new(receiver)
                end
+    @context.current_class.runtime_methods[@name] = self
     if rec_cont.locals == @context.locals && @private
       call_method(arguments)
     elsif !@private
