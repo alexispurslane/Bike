@@ -217,7 +217,12 @@ Constants["String"].def :- do |receiver, arguments|
   Constants["String"].new_with_value(receiver.ruby_value.gsub(arguments.first.ruby_value, ''))
 end
 Constants["String"].def :/ do |receiver, arguments|
-  Constants["Array"].new_with_value ((0..(receiver.ruby_value.length - 1) / arguments.first.ruby_value).map { |i| receiver.ruby_value[i * arguments.first.ruby_value, arguments.first.ruby_value] }).map { |e| Constants["String"].new_with_value(e) }
+  ns = []
+  (receiver.ruby_value.length * arguments.first.ruby_value).times do |e|
+    ns << Constants["Array"].new_with_value(receiver.ruby_value.slice!(0, arguments.first.ruby_value))
+  end
+  ns = ns.delete_if { |e| e.ruby_value == "" }
+  Constants["String"].new_with_value ns
 end
 
 
