@@ -201,7 +201,7 @@ Constants["Array"].def :/ do |receiver, arguments|
     na << Constants["Array"].new_with_value(receiver.ruby_value.slice!(0, arguments.first.ruby_value))
   end
   na = na.delete_if { |e| e.ruby_value == [] }
-  Constants["Array"].new_with_value(na)
+  Constants["Array"].new_with_value na
 end
 
 Constants["String"].def :'@' do |receiver, arguments|
