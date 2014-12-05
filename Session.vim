@@ -8,47 +8,33 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +311 interpreter.rb
-badd +29 runtime/bootstrap.rb
-badd +12 Wheels.bk
-badd +14 runtime/object.rb
-badd +233 ~/.nvimrc
-badd +12 bike
-badd +46 ~/.nvim/syntax/bk.vim
-badd +41 runtime/method.rb
-badd +15 TODO.md
-badd +343 grammar.y
+badd +203 runtime/bootstrap.rb
+badd +29 Wheels.bk
+badd +1 context.rb
+badd +12 runtime/context.rb
+badd +63 runtime/method.rb
+badd +23 ~/.nvim/syntax/bk.vim
+badd +203 interpreter.rb
+badd +31 TODO.md
+badd +16 lexer.rb
+badd +267 grammar.y
+badd +82 nodes.rb
+badd +3 doc/LambdaNode.html
+badd +1 ra
+badd +5 runtime/object.rb
+badd +1 doc/ImportNode.html
+badd +1 doc/Context.html
+badd +20 runtime/class.rb
+badd +660 doc/DefNode.html
+badd +7 runtime.rb
+badd +43 bin/bike
 argglobal
 silent! argdel *
-edit Wheels.bk
+edit runtime/bootstrap.rb
 set splitbelow splitright
-wincmd _ | wincmd |
-vsplit
-1wincmd h
-wincmd w
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 101 + 102) / 204)
-exe 'vert 2resize ' . ((&columns * 102 + 102) / 204)
 argglobal
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal nofen
-silent! normal! zE
-let s:l = 11 - ((10 * winheight(0) + 24) / 48)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-11
-normal! 020|
-wincmd w
-argglobal
-edit runtime/object.rb
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -64,10 +50,6 @@ exe s:l
 normal! zt
 1
 normal! 0
-wincmd w
-2wincmd w
-exe 'vert 1resize ' . ((&columns * 101 + 102) / 204)
-exe 'vert 2resize ' . ((&columns * 102 + 102) / 204)
 tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf

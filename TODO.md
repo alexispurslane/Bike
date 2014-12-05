@@ -57,3 +57,8 @@
  - [ ]  Just keep on doing more funcitons for the Wheels STDLIB!
  - [ ]  Do more publicizing
 
+##TODO for Beta 1.1:
+ - [ ] Better mixin syntax
+ - [ ] JSON support
+ - [ ] OS Library
+ - [ ] HTTP Library

@@ -196,7 +196,12 @@ Constants["Array"].def :- do |receiver, arguments|
   Constants["Array"].new_with_value(receiver.ruby_value.delete(receiver.ruby_value.index(arguments.first.ruby_value)))
 end
 Constants["Array"].def :/ do |receiver, arguments|
-  Constants["Array"].new_with_value ((0..(receiver.ruby_value.length - 1) / arguments.first.ruby_value).map { |i| receiver.ruby_value[i * arguments.first.ruby_value, arguments.first.ruby_value] }).map { |e| Constants[e.type].new_with_value(e.value) }
+  na = []
+  (receiver.ruby_value.length * arguments.first.ruby_value).times do |e|
+    na << Constants["Array"].new_with_value(receiver.ruby_value.slice!(0, arguments.first.ruby_value))
+  end
+  na = na.delete_if { |e| e.ruby_value == [] }
+  Constants["Array"].new_with_value(na)
 end
 
 Constants["String"].def :'@' do |receiver, arguments|

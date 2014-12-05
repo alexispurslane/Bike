@@ -198,7 +198,7 @@ class CallNode
     if !is_splat
       evaluated_arguments = arguments.map { |arg| arg.eval(context) }
     else
-      evaluated_arguments = context.locals[arguments]
+      evaluated_arguments = arguments.eval(context)
       if !evaluated_arguments
         raise "Cannot find splatted argument identifier."
       else
