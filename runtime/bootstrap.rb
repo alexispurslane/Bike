@@ -2,10 +2,10 @@ Constants = {}
 Constants["Class"] = BikeClass.new # Defining the `Class` class.
 Constants["Class"].runtime_class = Constants["Class"] # Setting `Class.class = Class`.
 Constants["Object"] = BikeClass.new # Defining the `Object` class
-Constants["Number"] = BikeClass.new(Constants["Object"]) # Defining the `Number` class
-Constants["Array"] = BikeClass.new(Constants["Object"]) # Defining the `Array` class
-Constants["String"] = BikeClass.new(Constants["Array"])
-Constants["Symbol"] = BikeClass.new(Constants["Object"])
+Constants["Number"] = BikeClass.new("Object") # Defining the `Number` class
+Constants["Array"] = BikeClass.new("Object") # Defining the `Array` class
+Constants["String"] = BikeClass.new("Array")
+Constants["Symbol"] = BikeClass.new("Object")
 
 root_self = Constants["Object"].new
 RootContext = Context.new(root_self)

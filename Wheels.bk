@@ -3,24 +3,19 @@ package {
     def Pi = 3.141592653589793
     def E  = 2.718281828459045
   }
-  def println_all (args) {
-    for e of args {
-      println e
-    }
-    args
-  }
   def each (f, a) {
     for x of a {
       f $ x
     }
     a
   }
-  def map (f, a) {
-    let var res = []
-    for x of a {
-      res = res + [f $ x]
+  def map (f, a, res) {
+    if a isnt [] {
+      self.new.println a @ 0
+      map f, a - a @ 0, res + [f $ (a @ 0)]
+    } else {
+      res
     }
-    res
   }
   def filter (f, a) {
     let var res = []

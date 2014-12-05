@@ -252,8 +252,7 @@ class ClassNode
     bike_class = Constants[classname] # Check if class is already defined
 
     unless bike_class # Class doesn't exist yet
-      sup = Constants[superclass]
-      bike_class = BikeClass.new(sup, mixins)
+      bike_class = BikeClass.new(superclass, mixins)
       Constants[classname] = bike_class # Define the class in the runtime
     end
 
@@ -269,7 +268,7 @@ class ClassNode
 end
 class HashNode
   def eval(context)
-    bike_class = BikeClass.new(Constants["Object"], [])
+    bike_class = BikeClass.new("Object")
 
     class_context = Context.new(bike_class, bike_class)
     class_context.locals["self"] = bike_class
@@ -286,8 +285,7 @@ end
 
 class PackageNode
   def eval(context)
-    sup = Constants["Object"]
-    bike_class = BikeClass.new(sup)
+    bike_class = BikeClass.new
     class_context = Context.new(bike_class, bike_class)
     class_context.locals["self"] = bike_class
     RootContext.locals.each do |name, value| 
