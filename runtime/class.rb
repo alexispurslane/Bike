@@ -14,8 +14,8 @@ class BikeClass < BikeObject
   def initialize(superclass="Object", mixins=[])
     @runtime_mixins = mixins
     @runtime_methods = {}
-    if mixins != nil
-      mixins.each do |e|
+    if @runtime_mixins != nil
+      @runtime_mixins.each do |e|
         Constants[e].runtime_methods.each_pair do |key, method|
           @runtime_methods[key] = method
         end
@@ -33,9 +33,9 @@ class BikeClass < BikeObject
     method = @runtime_methods[method_name]
     unless method
       if @runtime_superclass
-        method = @runtime_superclass.lookup(method_name)
+        return @runtime_superclass.lookup(method_name)
       else
-        raise "Method not found: #{method_name.inspect} of #{@runtime_class.inspect}"
+        raise "Method not found: #{method_name.inspect} of #{@runtime_methods.keys.inspect}"
       end
     end
     method

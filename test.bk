@@ -1,7 +1,7 @@
-class Foo {
-  def bar {
-    self.println "Foo to bar!"
-  }
+mixin Foo {
+  def foo { "Did something" }
 }
-let baz = Foo.new
-baz.bar
+class Bar (with Foo) {
+  def bar { "Bar: " + self.foo }
+}
+println ((Bar.new).bar)

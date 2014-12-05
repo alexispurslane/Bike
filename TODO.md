@@ -27,7 +27,7 @@
 ##TODO for Beta 5:
  - [X]  Multiline strings
  - [X]  Threads
- - [ ]  Make a Gem
+ - [ ]  Fix Mixins and Inheritence (this is a heisenbug)
 
 ##TODO for Beta 6:
  - [ ]  Better Error reporting

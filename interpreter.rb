@@ -97,7 +97,6 @@ class GetLocalNode
       context.locals[name] || Constants[name]
     else
       class_context = Context.new(Constants[dotIdent], Constants[dotIdent])
-      puts Constants[dotIdent]
       class_context.locals[name]
     end
   end

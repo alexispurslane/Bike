@@ -43,12 +43,12 @@ token NEWLINE
 # which order to parse expressions containing operators.
 # This table is based on the [C and C++ Operator Precedence Table](http://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B#Operator_precedence).
 prechigh
-  left  '.'
+  left  '.' '@' 'set'
   right 'not'
   left  '*' '/'
   left  '+' '-' '%'
   left  '>' '>=' '<' '<='
-  left  'is' 'isnt' '@' 'set'
+  left  'is' 'isnt'
   left  'and'
   left  'or'
   right '='

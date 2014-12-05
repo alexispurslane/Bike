@@ -1,2 +1,0 @@
-class Foo { def foo = "bar" }
-Foo.new.foo

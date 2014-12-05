@@ -62,7 +62,6 @@ class BikeMethod
     Constants["self"] = @context.current_class
     res = @body.eval(context)
     context.locals.keys.each { |e| $is_set[e] = false  }
-    Constants.delete("self")
 
     res
   end
