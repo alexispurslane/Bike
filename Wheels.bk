@@ -11,30 +11,26 @@ package {
   }
   def map (f, a, res) {
     if a isnt [] {
-      println a @ 0
       map f, a - a @ 0, res + [f $ (a @ 0)]
     } else {
       res
     }
   }
-  def filter (f, a) {
-    let var res = []
-    for x of a {
-      if f $ x {
-        res = res + [x]
-      }
+
+  def filter (f, a, res) {
+    if a isnt [] {
+      filter f, a - a @ 0, if f $ a @ 0 { res + [a @ 0] } else { res }
+    } else {
+      res
     }
-    res
   }
+
   def reject (f, a) {
-    let var res = []
-    for x of a {
-      if not f $ x {
-        res = res + [x]
-      }
+    filter (a, []) {
+      not f $ args @ 0
     }
-    res
   }
+
   def Set = class {
     let var set = []
     init (array) {

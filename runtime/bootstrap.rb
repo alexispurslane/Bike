@@ -27,7 +27,7 @@ Constants["Class"].def :new do |receiver,arguments|
 end
 
 Constants["Object"].def :observe_property do |receiver, arguments|
-  receiver.observe arguments.first.ruby_value, arguments[1]
+  receiver.observe arguments[1].ruby_value, arguments.first
   Constants["nil"]
 end
 
@@ -193,7 +193,11 @@ Constants["Array"].def :* do |receiver, arguments|
   Constants["Array"].new_with_value(receiver.ruby_value * arguments.first.ruby_value)
 end
 Constants["Array"].def :- do |receiver, arguments|
-  Constants["Array"].new_with_value(receiver.ruby_value.delete(receiver.ruby_value.index(arguments.first.ruby_value)))
+  a = receiver.ruby_value.clone
+  rem = arguments.first
+  a.delete_at(a.map(&:ruby_value).index(rem.ruby_value) || a.length) # Mutation, but what are ya gonna do?
+
+  Constants["Array"].new_with_value(a)
 end
 Constants["Array"].def :/ do |receiver, arguments|
   na = []

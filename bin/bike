@@ -51,8 +51,8 @@ if file = ARGV.first
 
   # Start the REPL, read-eval-print-loop, or interactive interpreter
 else
-  interpreter.eval "import Wheels" rescue puts "Could not load Wheels.bk!"
   puts "Importing STDLIB (Wheels.bk)..."
+  interpreter.eval "import Wheels"
   puts ''
   puts "Bike Programming Language REPL\n" +
        "(Type :help for help, and :exit to exit)\n" +
