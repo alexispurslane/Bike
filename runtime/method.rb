@@ -44,7 +44,16 @@ class BikeMethod
   protected
   def call_method (receiver, arguments)
     context = Context.new(receiver)
-    @context.current_class.runtime_methods[@name] = self
+
+    @context.current_class.runtime_methods.each do |k, v|
+      context.current_class.runtime_methods[k] = v
+    end
+
+    @context.locals.each do |k, v|
+      context.locals[k] = v
+    end
+
+    context.current_class.runtime_methods[@name] = self
     @params.each_with_index do |param, index|
       context.locals[param] = arguments[index]
     end

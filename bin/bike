@@ -35,13 +35,10 @@ line     = ""
 history  = ""
 level_in = 0
 
-puts "Importing STDLIB (Wheels.bk)..."
-interpreter.eval "import Wheels" rescue puts "Could not load Wheels.bk!"
-puts ''
 def formt (value)
   if value.ruby_value.is_a?(Array)
     formatted_content = value.ruby_value.map { |i| formt(i) }.join(", ").light_white
-    ("[".light_white + 
+    ("[".light_white +
     formatted_content +
     "]".light_white)
   else
@@ -54,6 +51,9 @@ if file = ARGV.first
 
   # Start the REPL, read-eval-print-loop, or interactive interpreter
 else
+  interpreter.eval "import Wheels" rescue puts "Could not load Wheels.bk!"
+  puts "Importing STDLIB (Wheels.bk)..."
+  puts ''
   puts "Bike Programming Language REPL\n" +
        "(Type :help for help, and :exit to exit)\n" +
        "(See LICENSE.md for licensing information)"
