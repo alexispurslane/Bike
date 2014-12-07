@@ -1,3 +1,4 @@
+![Bike icon image (a black vector bycicle)](bike-icon-hi.png)
 #The Bike programming language
 
 Christopher Dumas
@@ -12,38 +13,96 @@ Bike's motto is:
 
 Some code samples are in order:
 
+    import Wheels #Not nesissary but gives an idea
+    import Wheels into w # Aliases!
+    mixin MakesSound {
+      let sound = "Blarghhh"
+      def make_sound = (sound + "!") * 2
+    }
 
-    class Animal {
-      def sound = "some strange animal sound" # define function that returns a string. This gets you computed properties and getters for free!
-      def name = "some strange animal"
-      def make_sound (n) {
-        (name + " makes " + sound) * n # Return doctored-up string
+    mixin Attacks {
+      def attack (o) {
+        println o + " has been hit!"
       }
     }
-    class Dog extends Animal {
-      def sound = "Bark!" # override some stuff
-      def name = "Doggie"
-      def init = println "Initialized!" # Add an init method
+
+    class Animal (with MakesSound) {
+      let name = "Foobar"
+      def name = name
+      def name= (new_name) {
+        println "It takes a while, but your animal finally responds to it's new name!"
+        name = new_name
+      }
     }
-    let mutatedDog = class with Animal {  }
-    let dog = Dog.new # You could also use `let var` if you wanted the variable to be mutable
-    dog.make_sound 3 + 2  
-
-
-    let array = [1, 2, 3, 4, 5, 99] unless false # Another way to write this is: `flatten [1..5, 99]`
-    let fixed_count_array = (array =@ 6 6) if true
-    if array isnt fixed_count_array {
-      println "Ok!"
-    } else {
-      println "Run for the hills!!!!"
+    class Dog extends Animal (with Attacks) {
+      init (n_name) {
+        name(n_name) # From super!
+      }
     }
-    let foo = object {
-      bar => "baz"
-      boo => "bar"
+
+    let dog = Dog.new "Lad" # Parens are optional
+
+    dog.observe_property "name" {  # Shorthand. could have also written \name -> { println "Name set to " + name }
+      println "Name set to " + args @ 0
     }
-    let var {bar, boo} = foo
+    dog = "Foo" # ERROR! Variables are immutable unless you put `var` after let.
 
+    # In Wheels.bk
+    package {
+      package Math {
+        def Pi = 3.141592653589793
+        def E  = 2.718281828459045
+      }
+      def each (f, a) {
+        for x of a {
+          f $ x
+        }
+        a
+      }
+      def map (f, a, res) {
+        if a isnt [] {
+          println a @ 0
+          map f, a - a @ 0, res + [f $ (a @ 0)]
+        } else {
+          res
+        }
+      }
+      def filter (f, a) {
+        let var res = []
+        for x of a {
+          if f $ x {
+            res = res + [x]
+          }
+        }
+        res
+      }
+      def reject (f, a) {
+        let var res = []
+        for x of a {
+          if not f $ x {
+            res = res + [x]
+          }
+        }
+        res
+      }
+      def Set = class {
+        let var set = []
+        init (array) {
+          for e of (array.uniq) {
+            if e isnt nil {
+              set = set + [e]
+            }
+          }
+        }
 
+        def array = set
+        def array= (new_array) {
+          let new_set = new_array.uniq
+          self.new new_set
+        }
+      }
+    }
+    # And much, much more!!!
 ## Roadmap
 In the TODO.md file is our roadmap to 1.0. It will be updated every major version release. Our versioning system is like this: The whole number (the 1 in 1.0) is incremented each major, or breaking version. The decimal point is incremented by five, and normally for big, but not breaking changes, like adding new operators or shorthand syntax. The Beta version (indicated by `+b<number>`) is incremented every time a bug is fixed, or a change is being contemplated but I have not fully committed to it.
 
