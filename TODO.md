@@ -25,13 +25,14 @@
  - [X]  Observers
 
 ##TODO for Beta 5:
- - [X]  Multiline strings
+ - [X]  Multiline comments
  - [X]  Threads
- - [ ]  *BUGFIX*: Fix Mixins and Inheritence (this is a heisenbug) -- *HARD*
+ - [X]  *BUGFIX*: Fix Mixins and Inheritence (this is a heisenbug) -- *HARD*
 
 ##TODO for Beta 6:
  - [ ]  Better Error reporting
  - [ ]  More robust (for wierd edge-cases)
+ - [ ]  RSpec testing
 
 ##TODO for Beta 7:
  - [ ]  In-Depth language implementation docs
@@ -47,7 +48,7 @@
 ##TODO for Beta 9:
  - [ ]  Documentation
  - [ ]  Markdown Comments
- - [ ]  Multiline Comments
+ - [ ]  Multiline strings
  - [ ]  Wheels API documentation with Markdown Comments
 
 

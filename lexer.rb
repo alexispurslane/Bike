@@ -43,11 +43,10 @@ class Lexer
       elsif string = chunk[/\A"(.*?)"/, 1]
         tokens << [:STRING, string]
         i += string.size + 2
-
        elsif string = chunk[/\A'(.*?)'/, 1]
         tokens << [:STRING, string]
         i += string.size + 2
-      
+
       ######
       # All indentation magic code was removed and only this elsif was added.
       elsif chunk.match(/\A\n+/)
