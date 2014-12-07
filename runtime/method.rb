@@ -14,10 +14,9 @@ class BikeMethod
 
   # This method just sets the corresponding arguments onto properties of the same name and returns the new object. The only special thing it does is doctor up a +ruby_value+ based on these properties.
   def initialize(params, body,
-                 context=Context.new(Constants["Object"]),
+                 context="Object",
                  vararg=nil, private=false, name="")
     @params, @body, @context = params, body, context
-
     @vararg = vararg
     @private = private
     @name = name

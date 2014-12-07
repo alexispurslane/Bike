@@ -283,7 +283,7 @@ class PackageNode
     bike_class = BikeClass.new
     class_context = Context.new(bike_class, bike_class)
     class_context.locals["self"] = bike_class
-    RootContext.locals.each do |name, value| 
+    context.locals.each do |name, value| 
       class_context.locals[name] = value
     end
     body.eval(class_context)
