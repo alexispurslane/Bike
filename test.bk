@@ -1,8 +1,9 @@
 mixin Foo {
-  def foo { "Did something" }
+  def foo = "Did something"
 }
+
 class Bar (with Foo) {
-  def bar { "Bar: " + self.foo }
+  def bar = "Bar: " + foo()
 }
 let b = Bar.new
 println b.bar

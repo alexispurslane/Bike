@@ -35,7 +35,7 @@ class BikeClass < BikeObject
       if @runtime_superclass
         return @runtime_superclass.lookup(method_name)
       else
-        raise "Method not found: #{method_name.inspect} of #{@runtime_methods.keys.inspect}"
+        raise "Method not found: #{method_name.inspect} of #{@superclass_name}"
       end
     end
     method

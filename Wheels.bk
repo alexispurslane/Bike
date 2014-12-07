@@ -11,7 +11,7 @@ package {
   }
   def map (f, a, res) {
     if a isnt [] {
-      self.new.println a @ 0
+      println a @ 0
       map f, a - a @ 0, res + [f $ (a @ 0)]
     } else {
       res

@@ -4,6 +4,7 @@ class BikeObject
   attr_accessor :runtime_class, :ruby_value, :watches
   def initialize(runtime_class, ruby_value="<object>")
     @runtime_class = runtime_class
+    @runtime_methods = @runtime_class.runtime_methods
     @ruby_value = ruby_value
   end
   # Calls a runtime method.

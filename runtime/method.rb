@@ -33,19 +33,19 @@ class BikeMethod
                else
                  Context.new(receiver)
                end
-    @context.current_class.runtime_methods[@name] = self
     if rec_cont.locals == @context.locals && @private
-      call_method(arguments)
+      call_method(receiver, arguments)
     elsif !@private
-      call_method(arguments)
+      call_method(receiver, arguments)
     else
       raise "Called private method outside of class!"
     end
   end
 
   protected
-  def call_method (arguments)
-    context = @context
+  def call_method (receiver, arguments)
+    context = Context.new(receiver)
+    @context.current_class.runtime_methods[@name] = self
     @params.each_with_index do |param, index|
       context.locals[param] = arguments[index]
     end
@@ -59,7 +59,7 @@ class BikeMethod
       context.locals[@vararg] = Constants["Array"].new_with_value(arguments)
     end
 
-    Constants["self"] = @context.current_class
+    Constants["self"] = context.current_class
     res = @body.eval(context)
     context.locals.keys.each { |e| $is_set[e] = false  }
 

@@ -1,5 +1,5 @@
 Constants = {}
-Constants["Class"] = BikeClass.new # Defining the `Class` class.
+Constants["Class"] = BikeClass.new("Class") # Defining the `Class` class.
 Constants["Class"].runtime_class = Constants["Class"] # Setting `Class.class = Class`.
 Constants["Object"] = BikeClass.new # Defining the `Object` class
 Constants["Number"] = BikeClass.new("Object") # Defining the `Number` class

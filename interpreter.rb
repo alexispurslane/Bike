@@ -93,12 +93,7 @@ end
 
 class GetLocalNode
   def eval(context)
-    unless dotIdent
-      context.locals[name] || Constants[name]
-    else
-      class_context = Context.new(Constants[dotIdent], Constants[dotIdent])
-      class_context.locals[name]
-    end
+    context.locals[name] || Constants[name]
   end
 end
 class ImportNode
@@ -257,7 +252,7 @@ class ClassNode
 
     class_context = Context.new(bike_class, bike_class)
     class_context.locals["self"] = bike_class
-    RootContext.locals.each do |name, value|
+    context.locals.each do |name, value|
       class_context.locals[name] = value
     end
     body.eval(class_context)
@@ -265,6 +260,7 @@ class ClassNode
     bike_class
   end
 end
+
 class HashNode
   def eval(context)
     bike_class = BikeClass.new("Object")
