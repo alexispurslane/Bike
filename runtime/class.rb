@@ -8,24 +8,23 @@ class BikeClass < BikeObject
   attr_reader :runtime_mixins
   # +ruby_value+ is a dummy value <tt>"<class>"</tt>
   attr_reader :ruby_value
+  attr_reader :superclass_name
 
   # The initialization is basicly getting the superclass from constants, copying all of the methods from all of the mixins into the +runtime_methods+ property and then returning.
   def initialize(superclass="Object", mixins=[])
     @runtime_mixins = mixins
     @runtime_methods = {}
-    if mixins != nil
-      mixins.each do |e|
+    if @runtime_mixins != nil
+      @runtime_mixins.each do |e|
         Constants[e].runtime_methods.each_pair do |key, method|
           @runtime_methods[key] = method
         end
       end
     end
     @runtime_class = Constants["Class"]
-    @runtime_superclass = if superclass.is_a?(String)
-                            Constants[superclass]
-                          else
-                            superclass
-                          end
+    @runtime_superclass = Constants[superclass]
+    @superclass_name = superclass
+
     @ruby_value = "<class>"
   end
 
@@ -34,9 +33,9 @@ class BikeClass < BikeObject
     method = @runtime_methods[method_name]
     unless method
       if @runtime_superclass
-        method = @runtime_superclass.lookup(method_name)
+        return @runtime_superclass.lookup(method_name)
       else
-        raise "Method not found: #{method_name} of #{@runtime_class}"
+        raise "Method not found: #{method_name.inspect} of #{@superclass_name}"
       end
     end
     method

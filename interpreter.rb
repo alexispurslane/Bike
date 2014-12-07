@@ -93,13 +93,7 @@ end
 
 class GetLocalNode
   def eval(context)
-    unless dotIdent
-      context.locals[name] || Constants[name]
-    else
-      class_context = Context.new(Constants[dotIdent], Constants[dotIdent])
-      puts Constants[dotIdent]
-      class_context.locals[name]
-    end
+    context.locals[name] || Constants[name]
   end
 end
 class ImportNode
@@ -199,7 +193,7 @@ class CallNode
     if !is_splat
       evaluated_arguments = arguments.map { |arg| arg.eval(context) }
     else
-      evaluated_arguments = context.locals[arguments]
+      evaluated_arguments = arguments.eval(context)
       if !evaluated_arguments
         raise "Cannot find splatted argument identifier."
       else
@@ -252,14 +246,13 @@ class ClassNode
     bike_class = Constants[classname] # Check if class is already defined
 
     unless bike_class # Class doesn't exist yet
-      sup = Constants[superclass]
-      bike_class = BikeClass.new(sup, mixins)
+      bike_class = BikeClass.new(superclass, mixins)
       Constants[classname] = bike_class # Define the class in the runtime
     end
 
     class_context = Context.new(bike_class, bike_class)
     class_context.locals["self"] = bike_class
-    RootContext.locals.each do |name, value|
+    context.locals.each do |name, value|
       class_context.locals[name] = value
     end
     body.eval(class_context)
@@ -267,9 +260,10 @@ class ClassNode
     bike_class
   end
 end
+
 class HashNode
   def eval(context)
-    bike_class = BikeClass.new(Constants["Object"], [])
+    bike_class = BikeClass.new("Object")
 
     class_context = Context.new(bike_class, bike_class)
     class_context.locals["self"] = bike_class
@@ -286,11 +280,10 @@ end
 
 class PackageNode
   def eval(context)
-    sup = Constants["Object"]
-    bike_class = BikeClass.new(sup)
+    bike_class = BikeClass.new
     class_context = Context.new(bike_class, bike_class)
     class_context.locals["self"] = bike_class
-    RootContext.locals.each do |name, value| 
+    context.locals.each do |name, value| 
       class_context.locals[name] = value
     end
     body.eval(class_context)

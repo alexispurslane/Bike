@@ -43,12 +43,12 @@ token NEWLINE
 # which order to parse expressions containing operators.
 # This table is based on the [C and C++ Operator Precedence Table](http://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B#Operator_precedence).
 prechigh
-  left  '.'
+  left  '.' '@' 'set'
   right 'not'
   left  '*' '/'
   left  '+' '-' '%'
   left  '>' '>=' '<' '<='
-  left  'is' 'isnt' '@' 'set'
+  left  'is' 'isnt'
   left  'and'
   left  'or'
   right '='
@@ -152,21 +152,21 @@ rule
   #
   # Each one of those is handled by the following rule.
   Call:
-    IDENTIFIER Arguments                      { result = CallNode.new(nil, val[0], val[1], false) }
+    IDENTIFIER Arguments                     { result = CallNode.new(nil, val[0], val[1], false) }
   | Expression "." IDENTIFIER
-      Arguments                               { result = CallNode.new(val[0], val[2], val[3], false) }
-  | Expression "." IDENTIFIER                 { result = CallNode.new(val[0], val[2], [], false) }
+      Arguments                              { result = CallNode.new(val[0], val[2], val[3], false) }
+  | Expression "." IDENTIFIER                { result = CallNode.new(val[0], val[2], [], false) }
   | Expression "." IDENTIFIER
-      IDENTIFIER "." "." "."                  { result = CallNode.new(val[0], val[2], val[3], true) }
+      "~" Expression                         { result = CallNode.new(val[0], val[2], val[4], true) }
   | Expression "." IDENTIFIER
-      "(" IDENTIFIER "." "." "." ")"          { result = CallNode.new(val[0], val[2], val[4], true) }
+      "(" "~" Expression ")"                 { result = CallNode.new(val[0], val[2], val[5], true) }
 
-  | IDENTIFIER IDENTIFIER "." "." "."         { result = CallNode.new(nil, val[0], val[1], true) }
-  | IDENTIFIER "(" IDENTIFIER "." "." "." ")" { result = CallNode.new(nil, val[0], val[2], true) }
-  | Expression "." IDENTIFIER "=" Expression  { result = CallNode.new(val[0], val[2] + "=", [val[4]], false) }
-  | IDENTIFIER Arguments Block                { result = CallNode.new(nil, val[0], [LambdaNode.new([], val[2], "args")] + val[1], false) }
+  | IDENTIFIER "~" IDENTIFIER                { result = CallNode.new(nil, val[0], val[2], true) }
+  | IDENTIFIER "(" "~" Expression ")"        { result = CallNode.new(nil, val[0], val[3], true) }
+  | Expression "." IDENTIFIER "=" Expression { result = CallNode.new(val[0], val[2] + "=", [val[4]], false) }
+  | IDENTIFIER Arguments Block               { result = CallNode.new(nil, val[0], [LambdaNode.new([], val[2], "args")] + val[1], false) }
   | Expression "." IDENTIFIER
-      Arguments Block                         { result = CallNode.new(val[0], val[2], [LambdaNode.new([], val[4], "args")] + val[3], false) }
+      Arguments Block                        { result = CallNode.new(val[0], val[2], [LambdaNode.new([], val[4], "args")] + val[3], false) }
   ;
 
   Apply:
@@ -260,29 +260,29 @@ rule
   # The +def+ keyword is used for defining methods. Once again, we're introducing
   # a bit of syntactic sugar here to allow skipping the parentheses when there are no parameters.
   Def:
-    DEF IDENTIFIER Block          { result = DefNode.new(val[1], [], val[2]) }
+    DEF IDENTIFIER Block                                                    { result = DefNode.new(val[1], [], val[2]) }
 
-  | DEF IDENTIFIER "=" Expression { result = DefNode.new(val[1], [], val[3]) }
-  | DEF IDENTIFIER "(" ParamList ")" "=" Expression { result = DefNode.new(val[1], val[3], val[6]) }
-  | DEF IDENTIFIER "(" ParamList "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[1], val[3], val[10], val[7]) }
-  | DEF IDENTIFIER "(" "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[1], [], val[9], val[6]) }
+  | DEF IDENTIFIER "=" Expression                                           { result = DefNode.new(val[1], [], val[3]) }
+  | DEF IDENTIFIER "(" ParamList ")" "=" Expression                         { result = DefNode.new(val[1], val[3], val[6]) }
+  | DEF IDENTIFIER "(" ParamList "*" IDENTIFIER  ")" "=" Expression         { result = DefNode.new(val[1], val[3], val[8], val[5]) }
+  | DEF IDENTIFIER "(" "*" IDENTIFIER  ")" "=" Expression                   { result = DefNode.new(val[1], [], val[7], val[4]) }
   | DEF IDENTIFIER
-      "(" ParamList ")" Block     { result = DefNode.new(val[1], val[3], val[5]) }
+      "(" ParamList ")" Block                                               { result = DefNode.new(val[1], val[3], val[5]) }
   | DEF IDENTIFIER
-      "(" ParamList "." "." "." IDENTIFIER ")" Block     { result = DefNode.new(val[1], val[3], val[9], val[7]) }
+      "(" ParamList "*" IDENTIFIER ")" Block                                { result = DefNode.new(val[1], val[3], val[9], val[5]) }
   | DEF IDENTIFIER
-      "(" "." "." "." IDENTIFIER ")" Block     { result = DefNode.new(val[1], [], val[8], val[6]) }
+      "(" "*" IDENTIFIER ")" Block                                          { result = DefNode.new(val[1], [], val[8], val[4]) }
 
-  | PRIVATE DEF IDENTIFIER "=" Expression { result = DefNode.new(val[2], [], val[4], nil, true) }
-  | PRIVATE DEF IDENTIFIER "(" ParamList ")" "=" Expression { result = DefNode.new(val[2], val[4], val[7], nil, true) }
-  | PRIVATE DEF IDENTIFIER "(" ParamList "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[2], val[4], val[11], val[8], true) }
-  | PRIVATE DEF IDENTIFIER "(" "."".""." IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[2], [], val[10], val[7], true) }
+  | PRIVATE DEF IDENTIFIER "=" Expression                                   { result = DefNode.new(val[2], [], val[4], nil, true) }
+  | PRIVATE DEF IDENTIFIER "(" ParamList ")" "=" Expression                 { result = DefNode.new(val[2], val[4], val[7], nil, true) }
+  | PRIVATE DEF IDENTIFIER "(" ParamList "*" IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[2], val[4], val[11], val[6], true) }
+  | PRIVATE DEF IDENTIFIER "(" "*" IDENTIFIER  ")" "=" Expression           { result = DefNode.new(val[2], [], val[10], val[5], true) }
   | PRIVATE DEF IDENTIFIER
-      "(" ParamList ")" Block     { result = DefNode.new(val[2], val[4], val[6], nil, true) }
+      "(" ParamList ")" Block                                               { result = DefNode.new(val[2], val[4], val[6], nil, true) }
   | PRIVATE DEF IDENTIFIER
-      "(" ParamList "." "." "." IDENTIFIER ")" Block     { result = DefNode.new(val[2], val[4], val[10], val[8], true) }
+      "(" ParamList "*" IDENTIFIER ")" Block                                { result = DefNode.new(val[2], val[4], val[10], val[6], true) }
   | PRIVATE DEF IDENTIFIER
-      "(" "." "." "." IDENTIFIER ")" Block     { result = DefNode.new(val[2], [], val[9], val[7], true) }
+      "(" "*" IDENTIFIER ")" Block                                          { result = DefNode.new(val[2], [], val[9], val[5], true) }
   ;
   Init:
     INIT "(" ParamList ")" Block     { result = DefNode.new("init", val[2], val[4]) }

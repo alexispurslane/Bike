@@ -1,11 +1,11 @@
 Constants = {}
-Constants["Class"] = BikeClass.new # Defining the `Class` class.
+Constants["Class"] = BikeClass.new("Class") # Defining the `Class` class.
 Constants["Class"].runtime_class = Constants["Class"] # Setting `Class.class = Class`.
 Constants["Object"] = BikeClass.new # Defining the `Object` class
-Constants["Number"] = BikeClass.new(Constants["Object"]) # Defining the `Number` class
-Constants["Array"] = BikeClass.new(Constants["Object"]) # Defining the `Array` class
-Constants["String"] = BikeClass.new(Constants["Array"])
-Constants["Symbol"] = BikeClass.new(Constants["Object"])
+Constants["Number"] = BikeClass.new("Object") # Defining the `Number` class
+Constants["Array"] = BikeClass.new("Object") # Defining the `Array` class
+Constants["String"] = BikeClass.new("Array")
+Constants["Symbol"] = BikeClass.new("Object")
 
 root_self = Constants["Object"].new
 RootContext = Context.new(root_self)
@@ -27,7 +27,7 @@ Constants["Class"].def :new do |receiver,arguments|
 end
 
 Constants["Object"].def :observe_property do |receiver, arguments|
-  receiver.observe arguments.first.ruby_value, arguments[1]
+  receiver.observe arguments[1].ruby_value, arguments.first
   Constants["nil"]
 end
 
@@ -193,10 +193,19 @@ Constants["Array"].def :* do |receiver, arguments|
   Constants["Array"].new_with_value(receiver.ruby_value * arguments.first.ruby_value)
 end
 Constants["Array"].def :- do |receiver, arguments|
-  Constants["Array"].new_with_value(receiver.ruby_value.delete(receiver.ruby_value.index(arguments.first.ruby_value)))
+  a = receiver.ruby_value.clone
+  rem = arguments.first
+  a.delete_at(a.map(&:ruby_value).index(rem.ruby_value) || a.length) # Mutation, but what are ya gonna do?
+
+  Constants["Array"].new_with_value(a)
 end
 Constants["Array"].def :/ do |receiver, arguments|
-  Constants["Array"].new_with_value ((0..(receiver.ruby_value.length - 1) / arguments.first.ruby_value).map { |i| receiver.ruby_value[i * arguments.first.ruby_value, arguments.first.ruby_value] }).map { |e| Constants[e.type].new_with_value(e.value) }
+  na = []
+  (receiver.ruby_value.length * arguments.first.ruby_value).times do |e|
+    na << Constants["Array"].new_with_value(receiver.ruby_value.slice!(0, arguments.first.ruby_value))
+  end
+  na = na.delete_if { |e| e.ruby_value == [] }
+  Constants["Array"].new_with_value na
 end
 
 Constants["String"].def :'@' do |receiver, arguments|
@@ -212,7 +221,12 @@ Constants["String"].def :- do |receiver, arguments|
   Constants["String"].new_with_value(receiver.ruby_value.gsub(arguments.first.ruby_value, ''))
 end
 Constants["String"].def :/ do |receiver, arguments|
-  Constants["Array"].new_with_value ((0..(receiver.ruby_value.length - 1) / arguments.first.ruby_value).map { |i| receiver.ruby_value[i * arguments.first.ruby_value, arguments.first.ruby_value] }).map { |e| Constants["String"].new_with_value(e) }
+  ns = []
+  (receiver.ruby_value.length * arguments.first.ruby_value).times do |e|
+    ns << Constants["Array"].new_with_value(receiver.ruby_value.slice!(0, arguments.first.ruby_value))
+  end
+  ns = ns.delete_if { |e| e.ruby_value == "" }
+  Constants["String"].new_with_value ns
 end
 
 

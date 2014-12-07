@@ -4,6 +4,7 @@ class BikeObject
   attr_accessor :runtime_class, :ruby_value, :watches
   def initialize(runtime_class, ruby_value="<object>")
     @runtime_class = runtime_class
+    @runtime_methods = @runtime_class.runtime_methods
     @ruby_value = ruby_value
   end
   # Calls a runtime method.
@@ -16,7 +17,7 @@ class BikeObject
   end
   # Calls a method that has been stored as a variable (like calling a lambda that was passed into a function.) In Bike this is done using the +$+ operator.
   def apply(context, method, arguments=[])
-    context.locals[method].call(context, arguments)
+    context.locals[method].call(self, arguments)
   end
 
   def observe (prop, method)

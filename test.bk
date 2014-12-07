@@ -1,5 +1,9 @@
-let myset = wheels.Set.new([1, 2, 3])
-myset.observe_property "array", \x -> {
-  println_all x...
+mixin Foo {
+  def foo = "Did something"
 }
-myset.array = [1, nil, 1, 2, 3]
+
+class Bar (with Foo) {
+  def bar = "Bar: " + foo()
+}
+let b = Bar.new
+println b.bar
