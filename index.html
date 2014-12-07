@@ -1,40 +1,43 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <title>The Bike Programming lanuage by christopherdumas</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <title>Bike by christopherdumas</title>
   </head>
-
   <body>
-    <div id="container">
-      <div class="inner">
+    <div class="wrapper">
+      <header>
+        <h1 class="header">The Bike Programming lanuage</h1>
+        <p class="header">A bike is the most efficient man-powered vehicle...</p>
 
-        <header>
-          <h1>Bike</h1>
-          <h2>A clean, lightweight functional programming language that has an interpreter and compiles to llvm. A mix of Haskell, CoffeeScript and Scala.</h2>
-        </header>
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/christopherdumas/Bike/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/christopherdumas/Bike/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/christopherdumas/Bike">View On GitHub</a></li>
+        </ul>
 
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/christopherdumas/Bike/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/christopherdumas/Bike/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/christopherdumas/Bike" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/christopherdumas">christopherdumas</a></p>
 
-        <hr>
 
-        <section id="main_content">
-          <h1>
+      </header>
+      <section>
+        <p><img src="bike-icon-hi.png" alt="Bike icon image (a black vector bycicle)"></p>
+
+<h1>
 <a id="the-bike-programming-language" class="anchor" href="#the-bike-programming-language" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Bike programming language</h1>
 
 <p>Christopher Dumas</p>
+
+<p>For language implementation documentation (not comprehensive in any way, just as an aid as you read the code) <a href="https://rawgit.com/christopherdumas/Bike/master/doc/_index.html">go here</a></p>
 
 <p>The Bike programming language is a programming language that combines Haskell's currying, function composition, anonymous functions, and array comprehension, with Scala's packages, classes, and traits, Python's <code>is</code> and <code>isnt</code> style operators, Scheme's everything is an expression idea, Ruby's everything-is-an-object philosophy, and Go's no paren control structures, with Coffeescript's infix <code>if</code> and <code>unless</code>. It also has optional no-paren function calls, and immutable arrays are also present. This is mixed in with mixins and Java's ananymous Classes, as well as JavaScript's Objects (called hashes) and ES6's destructuring assignment. It is immutable in everything by default, but in a way that makes it fairly painless to use. </p>
 
@@ -46,40 +49,96 @@
 
 <p>Some code samples are in order:</p>
 
-<pre><code>class Animal {
-  def sound = "some strange animal sound" # define function that returns a string. This gets you computed properties and getters for free!
-  def name = "some strange animal"
-  def make_sound (n) {
-    (name + " makes " + sound) * n # Return doctored-up string
+<pre><code>import Wheels #Not nesissary but gives an idea
+import Wheels into w # Aliases!
+mixin MakesSound {
+  let sound = "Blarghhh"
+  def make_sound = (sound + "!") * 2
+}
+
+mixin Attacks {
+  def attack (o) {
+    println o + " has been hit!"
   }
 }
-class Dog extends Animal {
-  let intern_name = "Doggie"
-  def sound = "Bark!" # override some stuff
-  def name = intern_name
+
+class Animal (with MakesSound) {
+  let name = "Foobar"
+  def name = name
   def name= (new_name) {
-    println "You are changing this dog's name to " + new_name
-    intern_name = new_name
+    println "It takes a while, but your animal finally responds to it's new name!"
+    name = new_name
   }
-  def init = println "Initialized!" # Add an init method
 }
-let mutatedDog = class with Animal {  }
-let dog = Dog.new # You could also use `let var` if you wanted the variable to be mutable
-dog.make_sound 3 + 2  
+class Dog extends Animal (with Attacks) {
+  init (n_name) {
+    name(n_name) # From super!
+  }
+}
 
+let dog = Dog.new "Lad" # Parens are optional
 
-let array = [1, 2, 3, 4, 5, 99] unless false # Another way to write this is: `flatten [1..5, 99]`
-let fixed_count_array = (array =@ 6 6) if true
-if array isnt fixed_count_array {
-  println "Ok!"
-} else {
-  println "Run for the hills!!!!"
+dog.observe_property "name" {  # Shorthand. could have also written \name -&gt; { println "Name set to " + name }
+  println "Name set to " + args @ 0
 }
-let foo = hash {
-  bar =&gt; "baz"
-  boo =&gt; "bar"
+dog = "Foo" # ERROR! Variables are immutable unless you put `var` after let.
+
+# In Wheels.bk
+package {
+  package Math {
+    def Pi = 3.141592653589793
+    def E  = 2.718281828459045
+  }
+  def each (f, a) {
+    for x of a {
+      f $ x
+    }
+    a
+  }
+  def map (f, a, res) {
+    if a isnt [] {
+      println a @ 0
+      map f, a - a @ 0, res + [f $ (a @ 0)]
+    } else {
+      res
+    }
+  }
+  def filter (f, a) {
+    let var res = []
+    for x of a {
+      if f $ x {
+        res = res + [x]
+      }
+    }
+    res
+  }
+  def reject (f, a) {
+    let var res = []
+    for x of a {
+      if not f $ x {
+        res = res + [x]
+      }
+    }
+    res
+  }
+  def Set = class {
+    let var set = []
+    init (array) {
+      for e of (array.uniq) {
+        if e isnt nil {
+          set = set + [e]
+        }
+      }
+    }
+
+    def array = set
+    def array= (new_array) {
+      let new_set = new_array.uniq
+      self.new new_set
+    }
+  }
 }
-let {bar, boo} = foo
+# And much, much more!!!
 </code></pre>
 
 <h2>
@@ -170,15 +229,12 @@ $ # have fun!!!!
 </tr>
 </tbody>
 </table>
-        </section>
-
-        <footer>
-          Bike is maintained by <a href="https://github.com/christopherdumas">christopherdumas</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
-
-        
-      </div>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
     </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
   </body>
 </html>
