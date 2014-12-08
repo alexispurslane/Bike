@@ -1,5 +1,3 @@
-# THIS PROECT IS NOW DISCONTINUED, BECOUSE OF CERTIAN CONCERNS.
-## The language that is replacing this one is a complie-to-llvm langugage written in rust. It is called Nanite, and you can visit it here: [Nanite Programming Langage](https://github.com/christopherdumas/nanite)
 ![Bike icon image (a black vector bycicle)](bike-icon-hi.png)
 #The Bike programming language
 
