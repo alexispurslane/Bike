@@ -30,12 +30,11 @@
  - [X]  *BUGFIX*: Fix Mixins and Inheritence (this is a heisenbug) -- *HARD*
 
 ##TODO for Beta 6:
- - [ ]  Better Error reporting
- - [ ]  More robust (for wierd edge-cases)
  - [ ]  RSpec testing
+ - [ ]  Better Error reporting
+ - [ ]  Exeption handling in language
 
 ##TODO for Beta 7:
- - [ ]  In-Depth language implementation docs
  - [ ]  Language tutorial (short)
  - [ ]  Language Guide (everything I know)
  - [ ]  Installation Guide
