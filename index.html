@@ -7,7 +7,6 @@
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -16,18 +15,17 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1 class="header">The Bike Programming language</h1>
-        <p class="header">A bike is the most efficient man-powered vehicle...</p>
+        <h1>The Bike Programming language</h1>
+        <p>A bike is the most efficient man-powered vehicle...</p>
+
+        <p class="view"><a href="https://github.com/christopherdumas/Bike">View the Project on GitHub <small>christopherdumas/Bike</small></a></p>
+
 
         <ul>
-          <li class="download"><a class="buttons" href="https://github.com/christopherdumas/Bike/zipball/master">Download ZIP</a></li>
-          <li class="download"><a class="buttons" href="https://github.com/christopherdumas/Bike/tarball/master">Download TAR</a></li>
-          <li><a class="buttons github" href="https://github.com/christopherdumas/Bike">View On GitHub</a></li>
+          <li><a href="https://github.com/christopherdumas/Bike/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/christopherdumas/Bike/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/christopherdumas/Bike">View On <strong>GitHub</strong></a></li>
         </ul>
-
-        <p class="header">This project is maintained by <a class="header name" href="https://github.com/christopherdumas">christopherdumas</a></p>
-
-
       </header>
       <section>
         <p><img src="bike-icon-hi.png" alt="Bike icon image (a black vector bycicle)"></p>
@@ -39,107 +37,13 @@
 
 <p>For language implementation documentation (not comprehensive in any way, just as an aid as you read the code) <a href="https://rawgit.com/christopherdumas/Bike/master/doc/_index.html">go here</a></p>
 
-<p>The Bike programming language is a programming language that combines Haskell's currying, function composition, anonymous functions, and array comprehension, with Scala's packages, classes, and traits, Python's <code>is</code> and <code>isnt</code> style operators, Scheme's everything is an expression idea, Ruby's everything-is-an-object philosophy, and Go's no paren control structures, with Coffeescript's infix <code>if</code> and <code>unless</code>. It also has optional no-paren function calls, and immutable arrays are also present. This is mixed in with mixins and Java's ananymous Classes, as well as JavaScript's Objects (called hashes) and ES6's destructuring assignment. It is immutable in everything by default, but in a way that makes it fairly painless to use. </p>
+<p>The Bike programming language is a programming language that combines Haskell's currying, function composition, anonymous functions, and array comprehension, with Scala's packages, classes, and traits, Python's <code>is</code> and <code>isnt</code> style operators, Scheme's everything is an expression idea, Haskell's permanent immutability, Swift's Lambdas,  Ruby's everything-is-an-object philosophy, and Go's no paren control structures, with Coffeescript's infix <code>if</code> and <code>unless</code>. It also has optional no-paren function calls, and immutable arrays are also present. This is mixed in with mixins and Java's ananymous Classes, as well as JavaScript's Objects (called hashes) and ES6's destructuring assignment. It is immutable in everything by default, but in a way that makes it fairly painless to use. </p>
 
 <p>Bike's motto is:</p>
 
 <blockquote>
 <p>Not a lot of syntax, but a lot more sugar.</p>
 </blockquote>
-
-<p>Some code samples are in order:</p>
-
-<pre><code>import Wheels #Not nesissary but gives an idea
-import Wheels into w # Aliases!
-mixin MakesSound {
-  let sound = "Blarghhh"
-  def make_sound = (sound + "!") * 2
-}
-
-mixin Attacks {
-  def attack (o) {
-    println o + " has been hit!"
-  }
-}
-
-class Animal (with MakesSound) {
-  let name = "Foobar"
-  def name = name
-  def name= (new_name) {
-    println "It takes a while, but your animal finally responds to it's new name!"
-    name = new_name
-  }
-}
-class Dog extends Animal (with Attacks) {
-  init (n_name) {
-    name(n_name) # From super!
-  }
-}
-
-let dog = Dog.new "Lad" # Parens are optional
-
-dog.observe_property "name" {  # Shorthand. could have also written \name -&gt; { println "Name set to " + name }
-  println "Name set to " + args @ 0
-}
-dog = "Foo" # ERROR! Variables are immutable unless you put `var` after let.
-
-# In Wheels.bk
-package {
-  package Math {
-    def Pi = 3.141592653589793
-    def E  = 2.718281828459045
-  }
-  def each (f, a) {
-    for x of a {
-      f $ x
-    }
-    a
-  }
-  def map (f, a, res) {
-    if a isnt [] {
-      println a @ 0
-      map f, a - a @ 0, res + [f $ (a @ 0)]
-    } else {
-      res
-    }
-  }
-  def filter (f, a) {
-    let var res = []
-    for x of a {
-      if f $ x {
-        res = res + [x]
-      }
-    }
-    res
-  }
-  def reject (f, a) {
-    let var res = []
-    for x of a {
-      if not f $ x {
-        res = res + [x]
-      }
-    }
-    res
-  }
-  def Set = class {
-    let var set = []
-    init (array) {
-      for e of (array.uniq) {
-        if e isnt nil {
-          set = set + [e]
-        }
-      }
-    }
-
-    def array = set
-    def array= (new_array) {
-      let new_set = new_array.uniq
-      self.new new_set
-    }
-  }
-}
-# And much, much more!!!
-</code></pre>
 
 <h2>
 <a id="roadmap" class="anchor" href="#roadmap" aria-hidden="true"><span class="octicon octicon-link"></span></a>Roadmap</h2>
@@ -231,10 +135,11 @@ $ # have fun!!!!
 </table>
       </section>
       <footer>
-        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+        <p>This project is maintained by <a href="https://github.com/christopherdumas">christopherdumas</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-		
+    <script src="javascripts/scale.fix.js"></script>
+    
   </body>
 </html>
