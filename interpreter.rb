@@ -106,15 +106,6 @@ class ImportNode
   end
 end
 
-# When setting the value of a constant or a local variable, the value attribute
-# is a node, created by the parser. We need to evaluate the node first, to convert
-# it to an object, before storing it into a variable or constant.
-class SetConstantNode
-  def eval(context)
-    Constants[name] = value.eval(context)
-  end
-end
-
 class SetLocalNode
   def eval(context)
     if !$is_set[name]
@@ -126,6 +117,7 @@ class SetLocalNode
     end
   end
 end
+
 class SetLocalDescNode
   def eval(context)
     name.each do |name|
@@ -139,42 +131,14 @@ class SetLocalDescNode
     Constants["nil"]
   end
 end
-class SetMutLocalDescNode
+
+class SetLocalAryNode
   def eval(context)
-    name.each do |name|
-      if !$is_set[name]
-        context.locals[name] = value.eval(context).call(name, [])
-      else
-        raise "Attemt to re-assign variable using mutable variable."
-      end
-    end
+    context.locals[head] = array.eval(context).ruby_value[0]
+    context.locals[tail] = Constants["Array"].new_with_value(array.eval(context).ruby_value.drop(1))
     Constants["nil"]
   end
 end
-class SSetLocalNode
-  def eval(context)
-    if !$is_set[name]
-      if context.locals[name]
-        context.locals[name] = value.eval(context)
-      else
-        raise "Attemt to assign undeclared mutable variable."
-      end
-      context.locals[name]
-    else
-      raise "Attemt to re-assign normal variable."
-    end
-  end
-end
-class SetMutLocalNode
-  def eval(context)
-    if !$is_set[name]
-      context.locals[name] = value.eval(context)
-    else
-      raise "Attemt to re-assign variable using mutable variable."
-    end
-  end
-end
-
 
 
 # The CallNode for calling a method is a little more complex. It needs to set the +receiver+
@@ -267,6 +231,7 @@ class HashNode
 
     class_context = Context.new(bike_class, bike_class)
     class_context.locals["self"] = bike_class
+
     key_values.each do |e|
       key = e[0]
       val = e[1]

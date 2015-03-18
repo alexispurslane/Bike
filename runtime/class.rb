@@ -4,23 +4,13 @@ class BikeClass < BikeObject
   attr_reader :runtime_methods
   # +runtime_superclass+ holds the BikeClass for the superclass of this object. +Object+ is the great-grandsuperclass of everything.
   attr_reader :runtime_superclass
-  # +runtime_mixins+ is a referance to all of the mixins this object uses. It can be added to, and the list of methods that the class has will be updated. (<b>That last funcitonality is in the future.</b>)
-  attr_reader :runtime_mixins
   # +ruby_value+ is a dummy value <tt>"<class>"</tt>
   attr_reader :ruby_value
   attr_reader :superclass_name
 
   # The initialization is basicly getting the superclass from constants, copying all of the methods from all of the mixins into the +runtime_methods+ property and then returning.
   def initialize(superclass="Object", mixins=[])
-    @runtime_mixins = mixins
     @runtime_methods = {}
-    if @runtime_mixins != nil
-      @runtime_mixins.each do |e|
-        Constants[e].runtime_methods.each_pair do |key, method|
-          @runtime_methods[key] = method
-        end
-      end
-    end
     @runtime_class = Constants["Class"]
     @runtime_superclass = Constants[superclass]
     @superclass_name = superclass

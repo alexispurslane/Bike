@@ -23,9 +23,8 @@ token EXTENDS
 
 token DEF
 token INIT
-token ARROW
-token SLASH
 token APPLY
+token ARROW
 
 token LET
 token VAR
@@ -77,17 +76,17 @@ rule
   | Expressions                        { result = val[0] }
   ;
   
-  # Next, we define what a list of expressions is. Simply put, it's series of expressions separated by a
+  # Next, we define what a list of expressions is. Simply put, its series of expressions separated by a
   # terminator (a new line or +;+ as defined later). But once again, we need to explicitly
   # define how to handle trailing and orphans line breaks (the last two lines).
   #
-  # One very powerful trick we'll use to define variable rules like this one
+  # One very powerful trick well use to define variable rules like this one
   # (rules which can match any number of tokens) is *left-recursion*. Which means we reference
   # the rule itself, directly or indirectly, on the left side **only**. This is true for the current
-  # type of parser we're using (LR). For other types of parsers like ANTLR (LL), it's the opposite,
+  # type of parser were using (LR). For other types of parsers like ANTLR (LL), its the opposite,
   # you can only use right-recursion.
   #
-  # As you'll see bellow, the +Expressions+ rule references +Expressions+ itself.
+  # As youll see bellow, the +Expressions+ rule references +Expressions+ itself.
   # In other words, a list of expressions can be another list of expressions followed by
   # another expression.
   Expressions:
@@ -100,6 +99,7 @@ rule
   # Every type of expression supported by our language is defined here.
   Expression:
     Literal
+  | ArrayAccess
   | Call
   | ForOf
   | Import
@@ -107,12 +107,10 @@ rule
   | Operator
   | GetLocal
   | SetLocal
-  | Arrow
+  | Lambda
   | Def
-  | Init
   | Class
   | Hash
-  | Mixin
   | Package
   | If
   | While
@@ -120,6 +118,7 @@ rule
   | Array
   | '(' Expression ')'                    { result = val[1] }
   | '(' Expression NEWLINE ')'            { result = val[1] }
+  | '(' NEWLINE Expression ')'            { result = val[2] }
   | '(' NEWLINE Expression NEWLINE ')'    { result = val[2] }
   ;
 
@@ -135,7 +134,7 @@ rule
   | ";"
   ;
   # Literals are the hard-coded values inside the program. If you want to add support
-  # for other literal types, such as arrays or hashes, this it where you'd do it.
+  # for other literal types, such as arrays or hashes, this it where youd do it.
   Literal:
     NUMBER                        { result = NumberNode.new(val[0], "Number") }
   | STRING                        { result = StringNode.new(val[0], "String") }
@@ -156,14 +155,7 @@ rule
   | Expression "." IDENTIFIER
       Arguments                              { result = CallNode.new(val[0], val[2], val[3], false) }
   | Expression "." IDENTIFIER                { result = CallNode.new(val[0], val[2], [], false) }
-  | Expression "." IDENTIFIER
-      "~" Expression                         { result = CallNode.new(val[0], val[2], val[4], true) }
-  | Expression "." IDENTIFIER
-      "(" "~" Expression ")"                 { result = CallNode.new(val[0], val[2], val[5], true) }
 
-  | IDENTIFIER "~" IDENTIFIER                { result = CallNode.new(nil, val[0], val[2], true) }
-  | IDENTIFIER "(" "~" Expression ")"        { result = CallNode.new(nil, val[0], val[3], true) }
-  | Expression "." IDENTIFIER "=" Expression { result = CallNode.new(val[0], val[2] + "=", [val[4]], false) }
   | IDENTIFIER Arguments Block               { result = CallNode.new(nil, val[0], [LambdaNode.new([], val[2], "args")] + val[1], false) }
   | Expression "." IDENTIFIER
       Arguments Block                        { result = CallNode.new(val[0], val[2], [LambdaNode.new([], val[4], "args")] + val[3], false) }
@@ -173,6 +165,7 @@ rule
     IDENTIFIER APPLY Arguments        { result = ApplyNode.new(nil, val[0], val[2]) }
   | IDENTIFIER APPLY                  { result = ApplyNode.new(nil, val[0], []) }
   ;
+
   Import:
     IMPORT IDENTIFIER                 { result = ImportNode.new(nil, "#{val[1]}.bk") }
   | IMPORT IDENTIFIER INTO IDENTIFIER { result = ImportNode.new(val[3], "#{val[1]}.bk") }
@@ -181,8 +174,8 @@ rule
   Arguments:
     "(" ")"                       { result = [] }
   | "(" ArgList ")"               { result = val[1] }
-  | ArgList                       { result = val[0] }
   ;
+
   Array:
     "[" "]"           { result = ArrayListNode.new([]) }
   | "[" ListArray "]" { result = ArrayListNode.new(val[1]) }
@@ -197,11 +190,15 @@ rule
   | ArgList "," Expression        { result = val[0] << val[2] }
   ;
 
-  Arrow:
-    SLASH ParamList ARROW Expression    { result = LambdaNode.new(val[1], val[3], nil) }
-  | SLASH ParamList ARROW Block         { result = LambdaNode.new(val[1], val[3], nil) }
-  | ARROW Block                         { result = LambdaNode.new([], val[1], nil) }
-  | ARROW Expression                    { result = LambdaNode.new([], val[1], nil) }
+  Lambda:
+    '{' '(' ParamList ')' ARROW Expressions '}'                    { result = LambdaNode.new(val[2], val[5], nil) }
+  | '{' '(' ParamList ')' ARROW NEWLINE Expressions '}'            { result = LambdaNode.new(val[2], val[6], nil) }
+  | '{' '(' ParamList ')' ARROW Expressions NEWLINE '}'                  { result = LambdaNode.new(val[2], val[5], nil) }
+  | '{' '(' ParamList ')' ARROW NEWLINE Expressions NEWLINE '}'    { result = LambdaNode.new(val[2], val[6], nil) }
+  ;
+
+  ArrayAccess:
+    Expression '[' Expression ']'                  { result = CallNode.new(val[0], "@", [val[2]]) }
   ;
 
   # In our language, like in Ruby, operators are converted to method calls.
@@ -214,8 +211,6 @@ rule
     Expression 'or' Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
   | Expression 'and' Expression            { result = CallNode.new(val[0], val[1], [val[2]]) }
   | Expression 'is' Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression '@' Expression              { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression 'set' Expression Expression { result = CallNode.new(val[0], val[1], [val[2], val[3]]) }
   | Expression 'isnt' Expression           { result = CallNode.new(val[0], val[1], [val[2]]) }
   | 'not' Expression                       { result = CallNode.new(val[1], val[0], []) }
   | Expression '>'  Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
@@ -235,10 +230,8 @@ rule
   
   SetLocal:
     LET IDENTIFIER "=" Expression             { result = SetLocalNode.new(val[1], val[3]) }
-  | LET VAR IDENTIFIER "=" Expression         { result = SetMutLocalNode.new(val[2], val[4]) }
   | LET "{" ParamList "}" "=" Expression      { result = SetLocalDescNode.new(val[2], val[5]) }
-  | LET VAR "{" ParamList "}" "=" Expression  { result = SetMutLocalDescNode.new(val[3], val[6]) }
-  | IDENTIFIER "=" Expression                 { result = SSetLocalNode.new(val[0], val[2]) }
+  | LET "[" IDENTIFIER ":" IDENTIFIER "]" "=" Expression      { result = SetLocalAryNode.new(val[2], val[4], val[7]) }
   ;
 
   # Our language uses indentation to separate blocks of code. But the lexer took care of all
@@ -246,9 +239,9 @@ rule
   # is simply an increment in indentation followed by some code and closing with an equivalent
   # decrement in indentation.
   # 
-  # If you'd like to use curly brackets or +end+ to delimit blocks instead, you'd
+  # If youd like to use curly brackets or +end+ to delimit blocks instead, youd
   # simply need to modify this one rule.
-  # You'll also need to remove the indentation logic from the lexer.
+  # Youll also need to remove the indentation logic from the lexer.
   Block:
     "{" Expressions "}"                   { result = val[1] }
   | "{" NEWLINE Expressions "}"           { result = val[2] }
@@ -257,35 +250,19 @@ rule
   | "{" NEWLINE Expressions NEWLINE "}"   { result = val[2] }
   ;
 
-  # The +def+ keyword is used for defining methods. Once again, we're introducing
-  # a bit of syntactic sugar here to allow skipping the parentheses when there are no parameters.
+  # The +def+ keyword is used for defining methods. 
   Def:
     DEF IDENTIFIER Block                                                    { result = DefNode.new(val[1], [], val[2]) }
 
   | DEF IDENTIFIER "=" Expression                                           { result = DefNode.new(val[1], [], val[3]) }
   | DEF IDENTIFIER "(" ParamList ")" "=" Expression                         { result = DefNode.new(val[1], val[3], val[6]) }
-  | DEF IDENTIFIER "(" ParamList "*" IDENTIFIER  ")" "=" Expression         { result = DefNode.new(val[1], val[3], val[8], val[5]) }
-  | DEF IDENTIFIER "(" "*" IDENTIFIER  ")" "=" Expression                   { result = DefNode.new(val[1], [], val[7], val[4]) }
   | DEF IDENTIFIER
       "(" ParamList ")" Block                                               { result = DefNode.new(val[1], val[3], val[5]) }
-  | DEF IDENTIFIER
-      "(" ParamList "*" IDENTIFIER ")" Block                                { result = DefNode.new(val[1], val[3], val[9], val[5]) }
-  | DEF IDENTIFIER
-      "(" "*" IDENTIFIER ")" Block                                          { result = DefNode.new(val[1], [], val[8], val[4]) }
 
   | PRIVATE DEF IDENTIFIER "=" Expression                                   { result = DefNode.new(val[2], [], val[4], nil, true) }
   | PRIVATE DEF IDENTIFIER "(" ParamList ")" "=" Expression                 { result = DefNode.new(val[2], val[4], val[7], nil, true) }
-  | PRIVATE DEF IDENTIFIER "(" ParamList "*" IDENTIFIER  ")" "=" Expression { result = DefNode.new(val[2], val[4], val[11], val[6], true) }
-  | PRIVATE DEF IDENTIFIER "(" "*" IDENTIFIER  ")" "=" Expression           { result = DefNode.new(val[2], [], val[10], val[5], true) }
   | PRIVATE DEF IDENTIFIER
       "(" ParamList ")" Block                                               { result = DefNode.new(val[2], val[4], val[6], nil, true) }
-  | PRIVATE DEF IDENTIFIER
-      "(" ParamList "*" IDENTIFIER ")" Block                                { result = DefNode.new(val[2], val[4], val[10], val[6], true) }
-  | PRIVATE DEF IDENTIFIER
-      "(" "*" IDENTIFIER ")" Block                                          { result = DefNode.new(val[2], [], val[9], val[5], true) }
-  ;
-  Init:
-    INIT "(" ParamList ")" Block     { result = DefNode.new("init", val[2], val[4]) }
   ;
 
 
@@ -300,35 +277,19 @@ rule
   Class:
     CLASS IDENTIFIER Block                                          { result = ClassNode.new(val[1], "Object", val[2], nil) }
   | CLASS IDENTIFIER EXTENDS IDENTIFIER Block                       { result = ClassNode.new(val[1], val[3], val[4], nil) }
-  | CLASS IDENTIFIER "(" Mixins ")" EXTENDS IDENTIFIER Block        { result = ClassNode.new(val[1], val[6], val[7], val[3]) }
-  | CLASS IDENTIFIER "(" Mixins ")" Block                           { result = ClassNode.new(val[1], "Object", val[5], val[3]) }
-  | CLASS Block                                                     { result = ClassNode.new(nil, "Object", val[1], nil) }
-  | CLASS EXTENDS IDENTIFIER Block                                  { result = ClassNode.new(nil, val[2], val[3], nil) }
-  | CLASS "(" Mixins ")" EXTENDS IDENTIFIER Block                   { result = ClassNode.new(nil, val[5], val[6], val[2]) }
-  | CLASS "(" Mixins ")" Block                                      { result = ClassNode.new(nil, "Object", val[4], val[2]) }
   ;
   Hash:
-    HASH "{" NEWLINE KeyVal "}"                { result = HashNode.new(val[3]) }
-  | HASH "{" KeyVal "}"                        { result = HashNode.new(val[2]) }
-  | HASH "{" KeyVal NEWLINE "}"                { result = HashNode.new(val[2]) }
-  | HASH "{" NEWLINE KeyVal NEWLINE "}"        { result = HashNode.new(val[3]) }
-  | HASH "{" "}"                               { result = HashNode.new([]) }
+    "{" NEWLINE KeyVal "}"                { result = HashNode.new(val[2]) }
+  | "{" KeyVal "}"                        { result = HashNode.new(val[1]) }
+  | "{" KeyVal NEWLINE "}"                { result = HashNode.new(val[1]) }
+  | "{" NEWLINE KeyVal NEWLINE "}"        { result = HashNode.new(val[2]) }
+  | "{" "}"                               { result = HashNode.new([]) }
   ;
   KeyVal:
-    /* nothing */                                  { result = [] }
-  | IDENTIFIER ROCKET Expression                   { result = [[val[0], val[2]]] }
-  | KeyVal "," IDENTIFIER ROCKET Expression { result = val[0] << [val[2], val[4]] }
+    IDENTIFIER ROCKET Expression                   { result = [[val[0], val[2]]] }
+  | KeyVal "," IDENTIFIER ROCKET Expression        { result = val[0] << [val[2], val[4]] }
   ;
 
-
-  Mixin:
-    MIXIN IDENTIFIER Block                        { result = ClassNode.new(val[1], "Object", val[2], nil) }
-  | MIXIN IDENTIFIER Mixins Block                 { result = ClassNode.new(val[1], "Object", val[5], val[3]) }
-  ;
-  Mixins:
-    WITH IDENTIFIER                               { result = [val[1]] }
-  | Mixins "," WITH IDENTIFIER                    { result = val[0] << val[3] }
-  ;
   Package:
     PACKAGE Block                        { result = PackageNode.new(val[1]) }
   | PACKAGE IDENTIFIER Block             { result = DefNode.new(val[1], [], PackageNode.new(val[2])) }

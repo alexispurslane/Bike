@@ -1,50 +1,34 @@
 package {
   package Math {
-    def Pi = 3.141592653589793
-    def E  = 2.718281828459045
+    def E       = 2.71828182845904523536028747135266249775724709369995957496696763
+    def Pi      = 3.14159265358979323846264338327950288419716939937510582097494459
+    def Phi     = 1.61803398874989484820458683436563811772030917980576286213544862
+    def Sqrt2   = 1.41421356237309504880168872420969807856967187537694807317667974
+    def SqrtE   = 1.64872127070012814684865078781416357165377610071014801157507931
+    def SqrtPi  = 1.77245385090551602729816748334114518279754945612238712821380779
+    def SqrtPhi = 1.27201964951406896425242246173749149171560804184009624861664038
+    def Ln2     = 0.693147180559945309417232121458176568075500134360255254120680009
+    def Log2E   = 1 / Ln2
+    def Ln10    = 2.30258509299404568401799145468436420760110148862877297603332790
+    def Log10E  = 1 / Ln10 
   }
-  def each (f, a) {
-    for x of a {
-      f $ x
+  
+  package List {
+    def head (list) {
+      let [h : t] = list
+      h
     }
-    a
-  }
-  def map (f, a, res) {
-    if a isnt [] {
-      map f, a - a @ 0, res + [f $ (a @ 0)]
-    } else {
-      res
+    def tail (list) {
+      let [h : t] = list
+      t
     }
-  }
-
-  def filter (f, a, res) {
-    if a isnt [] {
-      filter f, a - a @ 0, if f $ a @ 0 { res + [a @ 0] } else { res }
-    } else {
-      res
-    }
-  }
-
-  def reject (f, a) {
-    filter (a, []) {
-      not f $ args @ 0
-    }
-  }
-
-  def Set = class {
-    let var set = []
-    init (array) {
-      for e of (array.uniq) {
-        if e isnt nil {
-          set = set + [e]
-        }
+    
+    def map (list, f) {
+      if list isnt [] {
+        [f $ (head(list))] + [map(tail(list), f)]
+      } else {
+        []
       }
-    }
-
-    def array = set
-    def array= (new_array) {
-      let new_set = new_array.uniq
-      self.new new_set
     }
   }
 }

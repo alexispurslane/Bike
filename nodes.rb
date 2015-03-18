@@ -67,19 +67,12 @@ class ImportNode < Struct.new(:into, :file); end
 # Retrieving the value of a constant by its name is done by the following node.
 class GetConstantNode < Struct.new(:name); end
 
-# And setting its value is done by this one. The value will be a node. If we're
-# storing a number inside a constant, for example, value would contain an instance
-# of NumberNode.
-class SetConstantNode < Struct.new(:name, :value); end
-
 # Similar to the previous nodes, the next ones are for dealing with local variables.
 class GetLocalNode < Struct.new(:name, :dotIdent); end
 
 class SetLocalNode < Struct.new(:name, :value); end
-class SetMutLocalNode < SetLocalNode; end
 class SetLocalDescNode < SetLocalNode; end
-class SetMutLocalDescNode < SetMutLocalNode; end
-class SSetLocalNode < SetLocalNode; end
+class SetLocalAryNode < Struct.new(:head, :tail, :array); end
 
 # Each method definition will be stored into the following node. It holds the name of the method,
 # the name of its parameters (params) and the body to evaluate when the method is called, which
