@@ -165,7 +165,7 @@ class CallNode
       end
     end
 
-    value.call(method, evaluated_arguments, context)
+    value.call(method, evaluated_arguments)
   end
 end
 
@@ -291,7 +291,6 @@ class ForNode
         context.locals[key] = e
         body.eval(context)
       end
-      Constants["nil"]
     end
   end
 end

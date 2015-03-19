@@ -21,7 +21,7 @@ class BikeMethod
     @private = private
     @name = name
 
-    @ruby_value = "#{@private ? "#{@private} " : ""}def #{@name}(#{@params.join(', ')}#{@vararg ? " ...#{@vararg}" : ""}) { ... }"
+    @ruby_value = "#{@private ? "private " : ""} def #{@name}(#{@params.join(', ')}) { ... }"
   end
 
 
@@ -45,32 +45,45 @@ class BikeMethod
   def call_method (receiver, arguments)
     context = Context.new(receiver)
 
-    @context.current_class.runtime_methods.each do |k, v|
-      context.current_class.runtime_methods[k] = v
+    if arguments.length == @params.length
+      @context.current_class.runtime_methods.each do |k, v|
+        context.current_class.runtime_methods[k] = v
+      end
+
+      @context.locals.each do |k, v|
+        context.locals[k] = v
+      end
+
+      context.current_class.runtime_methods[@name] = self
+      @params.each_with_index do |param, index|
+        context.locals[param] = arguments[index]
+      end
+
+      left_overs = arguments
+      @params.each do |p|
+        left_overs.delete(context.locals[p])
+      end
+
+      if @vararg
+        context.locals[@vararg] = Constants["Array"].new_with_value(arguments)
+      end
+
+      Constants["self"] = context.current_class
+      res = @body.eval(context)
+      context.locals.keys.each { |e| $is_set[e] = false  }
+
+      res
+    else
+      @context.locals.each do |k, v|
+        context.locals[k] = v
+      end
+
+      context.current_class.runtime_methods[@name] = self
+      arguments.each_with_index do |arg, index|
+        context.locals[@params[index]] = arg 
+      end
+      
+      BikeMethod.new(@params.drop(arguments.length), @body, context, nil, false, @name)
     end
-
-    @context.locals.each do |k, v|
-      context.locals[k] = v
-    end
-
-    context.current_class.runtime_methods[@name] = self
-    @params.each_with_index do |param, index|
-      context.locals[param] = arguments[index]
-    end
-
-    left_overs = arguments
-    @params.each do |p|
-      left_overs.delete(context.locals[p])
-    end
-
-    if @vararg
-      context.locals[@vararg] = Constants["Array"].new_with_value(arguments)
-    end
-
-    Constants["self"] = context.current_class
-    res = @body.eval(context)
-    context.locals.keys.each { |e| $is_set[e] = false  }
-
-    res
   end
 end

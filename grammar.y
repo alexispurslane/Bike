@@ -4,7 +4,7 @@ class Parser
 # by our lexer needs to be declared here.
 token IF
 token ELSE
-token ELSEIF
+token ELSIF
 token UNLESS
 token WHILE
 token FOR
@@ -163,7 +163,7 @@ rule
 
   Apply:
     IDENTIFIER APPLY Arguments        { result = ApplyNode.new(nil, val[0], val[2]) }
-  | IDENTIFIER APPLY                  { result = ApplyNode.new(nil, val[0], []) }
+  | Expression APPLY Arguments        { result = ApplyNode.new(nil, val[0], val[2], true) }
   ;
 
   Import:
@@ -299,13 +299,14 @@ rule
   If:
     IF Expression Block             { result = IfNode.new(val[1], val[2], nil, nil) }
   | IF Expression Block ElseIfs     { result = IfNode.new(val[1], val[2], nil, val[3]) }
+  | IF Expression Block ElseIfs ELSE Block     { result = IfNode.new(val[1], val[2], val[5], val[3]) }
   | IF Expression Block ELSE Block  { result = IfNode.new(val[1], val[2], val[4], nil) }
   | Expression IF Expression        { result = IfNode.new(val[2], val[0], nil, nil) }
   ;
 
   ElseIfs:
-    ELSEIF Expression Block         { result = [ElseIfNode.new(val[1], val[2])] }
-  | ElseIfs ELSEIF Expression Block { result = val[0] << ElseIfNode.new(val[2], val[3]) }
+    ELSIF Expression Block         { result = [ElseIfNode.new(val[1], val[2])] }
+  | ElseIfs ELSIF Expression Block { result = val[0] << ElseIfNode.new(val[2], val[3]) }
   ;
 
   ForOf:

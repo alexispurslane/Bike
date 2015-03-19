@@ -61,7 +61,7 @@ class ArrayListNode < LiteralNode; end
 # the object on which the method is called, the method name and its
 # arguments, which are other nodes.
 class CallNode < Struct.new(:receiver, :method, :arguments, :is_splat); end
-class ApplyNode < Struct.new(:receiver, :method, :arguments); end
+class ApplyNode < Struct.new(:receiver, :method, :arguments, :is_expr); end
 class ImportNode < Struct.new(:into, :file); end
 
 # Retrieving the value of a constant by its name is done by the following node.

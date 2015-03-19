@@ -30,3 +30,8 @@ class String
     valid_parentheses? && valid_braces? && valid_curlies?
   end
 end
+class Object
+  def to_a
+    [self]
+  end
+end

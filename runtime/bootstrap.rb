@@ -1,3 +1,4 @@
+require_relative "../lib/util.rb"
 Constants = {}
 Constants["Class"] = BikeClass.new("Class") # Defining the `Class` class.
 Constants["Class"].runtime_class = Constants["Class"] # Setting `Class.class = Class`.
@@ -187,7 +188,11 @@ Constants["Array"].def :length do |receiver, arguments|
   Constants["Number"].new_with_value(receiver.ruby_value.count) || Constants["nil"]
 end
 Constants["Array"].def :+ do |receiver, arguments|
-  Constants["Array"].new_with_value(receiver.ruby_value + arguments.first.ruby_value)
+  if  arguments.first.ruby_value.is_a?(Array)
+    Constants["Array"].new_with_value(receiver.ruby_value + arguments.first.ruby_value)
+  else
+    Constants["Array"].new_with_value(receiver.ruby_value + [arguments.first])
+  end
 end
 Constants["Array"].def :* do |receiver, arguments|
   Constants["Array"].new_with_value(receiver.ruby_value * arguments.first.ruby_value)

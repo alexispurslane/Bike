@@ -12,22 +12,100 @@ package {
     def Ln10    = 2.30258509299404568401799145468436420760110148862877297603332790
     def Log10E  = 1 / Ln10 
   }
+
+  package Util {
+    def compose1 (list) {
+      { (x) ->
+        def go_through (prev, lst) {
+	  let f = head(list)
+	  go_through(f(prev), tail(list))
+        }
+	go_through(x, list)
+      }
+    }
+    def un (e) = not e
+    def yes (e) = e is true
+    def no (e) = e is false
+    def null (e) = e is nil or e is [] or e is ""
+    def positive (e) = e >= 0
+    def negative (e) = not positive(e)
+    def even (e) = (e % 2) is 0
+    def odd (e) = not even(e)
+    def zero (e) = e is 0
+    def equal(x, y) = x is y
+  }
   
   package List {
-    def head (list) {
-      let [h : t] = list
-      h
+    def head (list) = list[0]
+    def tail (list) = list - list[0]
+    def last (list) = list[list.length - 1]
+    def butlast (list) = list - list[list.length - 1]
+
+    def concat (lists) {
+      def concat_inner (lists, acc) {
+        if lists isnt [] {
+	  concat_inner(tail(lists), acc + head(lists))
+        } else { acc }
+      }
+      concat_inner(lists, [])
     }
-    def tail (list) {
-      let [h : t] = list
-      t
+
+    def reverse (list) {
+      def reverse_inner (list, so_far) {
+        if list isnt [] {
+          reverse_inner(butlast(list), so_far + [last(list)])
+        } else { so_far }
+      }
+      reverse_inner(list, [])
+    }
+
+    def intersperse (el, list) {
+      def intersperse_inner (el, list, acc) {
+        if list isnt [] and list.length isnt 1 {
+          intersperse_inner(el, tail(list), acc + [head(list), el])
+        } elsif list.length is 1 {
+	  acc + [head(list)]
+        } else { acc }
+      }
+      intersperse_inner(el, list, [])
+    }
+
+    def intercalate (xs, xss) {
+      concat(intersperse(xs, xss))
     }
     
-    def map (list, f) {
+    def transpose (list) {
+      def transpose_inner (list, acc) {
+        if list[0] isnt [] {
+          transpose_inner(map({ (x) -> tail(x) }, list), acc + [map({ (x) -> head(x) }, list)])
+	} else { acc }
+      }
+      transpose_inner(list, [])
+    }
+
+    def map (f, list) {
       if list isnt [] {
-        [f $ (head(list))] + [map(tail(list), f)]
+        [f(head(list))] + map(f, tail(list))
       } else {
         []
+      }
+    }
+
+    def filter (f, list) {
+      if list isnt [] {
+        if f(head(list)) is true {
+          [head(list)] + filter(f, tail(list))
+	} else {
+          [] + filter(f, tail(list))
+        }
+      } else {
+        []
+      }
+    }
+
+    def each (f, list) {
+      for e of list {
+        f(e)
       }
     }
   }
