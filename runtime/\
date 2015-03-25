@@ -40,11 +40,9 @@ Constants["Object"].def :thread do |receiver, arguments|
 end
 
 Constants["Object"].def :farity do |receiver, arguments|
-  arg = arguments.first
+  arg = arguments.first.runtime_class
   if arg.is_a?(BikeMethod)
     Constants["Number"].new_with_value(arg.params.length)
-  else arg.is_a?(BikeObject) && arg.runtime_class.is_a?(BikeMethod)
-    Constants["Number"].new_with_value(arg.runtime_class.params.length)
   end
 end
 

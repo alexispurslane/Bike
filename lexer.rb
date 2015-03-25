@@ -15,7 +15,7 @@ class Lexer
         i += comment.size
       elsif comment = chunk[/\A#.*$/]
         i += comment.size
-      elsif operator = chunk[/\A(%|@|=@|isnt|or|and|not|is|<=|>=|->|=>|\\|\$)/, 1]
+      elsif operator = chunk[/\A(%|@|=@|isnt|or|and|not|is|<=|>=|->|=>|\\|\$|\:|\|\>)/, 1]
         if operator == "->"
           tokens << [:ARROW, "arrow"]
         elsif operator == "=>"

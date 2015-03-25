@@ -1,7 +1,7 @@
 # BikeObject represeints the bare skeleton of what an object should have in the Bike runtime. It also provides a pre-programed call and apply methods, that depend on the lookup method being defined in BikeClass
 class BikeObject
   $watches = []
-  attr_accessor :runtime_class, :ruby_value, :watches
+  attr_accessor :runtime_class, :ruby_value, :watches, :runtime_methods
   def initialize(runtime_class, ruby_value="<object>")
     @runtime_class = runtime_class
     @runtime_methods = @runtime_class.runtime_methods

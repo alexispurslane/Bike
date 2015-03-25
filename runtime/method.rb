@@ -12,6 +12,8 @@ class BikeMethod
   # The context that the method (or function) was created in. <b>THIS IS NOT BEING USED FOR CLOSURES OR ANYTHING YET. IT DOES NOT WORK</b>
   attr_reader :context
 
+  attr_reader :params
+
   # This method just sets the corresponding arguments onto properties of the same name and returns the new object. The only special thing it does is doctor up a +ruby_value+ based on these properties.
   def initialize(params, body,
                  context="Object",
@@ -45,7 +47,7 @@ class BikeMethod
   def call_method (receiver, arguments)
     context = Context.new(receiver)
 
-    if arguments.length == @params.length
+    if arguments.length >= @params.length
       @context.current_class.runtime_methods.each do |k, v|
         context.current_class.runtime_methods[k] = v
       end

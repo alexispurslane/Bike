@@ -14,15 +14,6 @@ package {
   }
 
   package Util {
-    def compose1 (list) {
-      { (x) ->
-        def go_through (prev, lst) {
-	  let f = head(list)
-	  go_through(f(prev), tail(list))
-        }
-	go_through(x, list)
-      }
-    }
     def un (e) = not e
     def yes (e) = e is true
     def no (e) = e is false
@@ -32,7 +23,20 @@ package {
     def even (e) = (e % 2) is 0
     def odd (e) = not even(e)
     def zero (e) = e is 0
-    def equal(x, y) = x is y
+    def equal (x, y) = x is y
+    def both (x, y) = x and y
+    def either (x, y) = x or y
+    def less_than (x, y) = x < y
+    def more_than (x, y) = x > y
+    def more_or_equal (x, y) = x > y
+    def less_or_equal (x, y) = x < y
+    def add (x, y) = x + y
+    def subtract (x, y) = x - y
+    def multiply (x, y) = x * y
+    def divide (x, y) = x / y
+    def modulo (x, y) = x % y
+    def max (x, y) = if x > y { x } else { y }
+    def min (x, y) = if x < y { x } else { y }
   }
   
   package List {
@@ -41,13 +45,18 @@ package {
     def last (list) = list[list.length - 1]
     def butlast (list) = list - list[list.length - 1]
 
+    def all (f, list) = foldl({ (x, y) -> x and f(y) }, true, list)
+    def none (f, list) = foldl({ (x, y) -> not (x and f(y)) }, false, list)
+    def some (f, list) = foldl({ (x, y) -> x or f(y) }, false, list)
+    def minimum (list) = foldl(Util().min, head(list), list)
+    def maximum  (list) = foldl(Util().max, head(list), list)
+
     def concat (lists) {
-      def concat_inner (lists, acc) {
-        if lists isnt [] {
-	  concat_inner(tail(lists), acc + head(lists))
-        } else { acc }
-      }
-      concat_inner(lists, [])
+      foldl(Util().add, [], lists)
+    }
+
+    def concat_map (f, list) {
+      concat(map(f, list))
     }
 
     def reverse (list) {
@@ -57,6 +66,39 @@ package {
         } else { so_far }
       }
       reverse_inner(list, [])
+    }
+
+    def index_of (e, list) {
+      def idxof_inner (e, list, i) {
+        if list is [] {
+	  -1
+	} else {
+	  if head(list) is e {
+	    i
+          } else { idxof_inner(e, tail(list), i + 1) }
+        }
+      }
+      idxof_inner(e, list, 0)
+    }
+
+    def foldl (f, acc, list) {
+      if list isnt [] {
+        let r = f(acc, head(list))
+        foldl(f, r, tail(list))
+      } else { acc }
+    }
+
+    def foldr (f, acc, list) = foldl(f, acc, reverse(list))
+
+    def sum (l) = foldl(Util().add, 0, l)
+    def product (l) = foldl(Util().multiply, 0, l)
+    
+    def take (n, list) {
+      filter({ (e, i) -> i <= n }, list)
+    }
+    
+    def drop (n, list) {
+      filter({ (e, i) -> i > n }, list)
     }
 
     def intersperse (el, list) {
@@ -84,23 +126,31 @@ package {
     }
 
     def map (f, list) {
-      if list isnt [] {
-        [f(head(list))] + map(f, tail(list))
-      } else {
-        []
+      let full_list = list
+      def map_inner (f, list) {
+        if list isnt [] {
+          [f(head(list), index_of(head(list), full_list) + 1)] + map_inner(f, tail(list))
+        } else {
+          []
+        }
       }
+      map_inner(f, list)
     }
 
     def filter (f, list) {
-      if list isnt [] {
-        if f(head(list)) is true {
-          [head(list)] + filter(f, tail(list))
-	} else {
-          [] + filter(f, tail(list))
+      let full_list = list
+      def filter_inner (f, list) {
+        if list isnt [] {
+          if f(head(list), index_of(head(list), full_list) + 1) is true {
+            [head(list)] + filter_inner(f, tail(list))
+	  } else {
+            [] + filter_inner(f, tail(list))
+          }
+        } else {
+          []
         }
-      } else {
-        []
       }
+      filter_inner(f, list)
     }
 
     def each (f, list) {

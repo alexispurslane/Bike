@@ -1,5 +1,4 @@
 class Parser
-
 # We need to tell the parser what tokens to expect. So each type of token produced
 # by our lexer needs to be declared here.
 token IF
@@ -52,6 +51,7 @@ prechigh
   left  'or'
   right '='
   left  ','
+  left  '|>'
 preclow
 
 # In the following +rule+ section, we define the parsing rules.
@@ -155,10 +155,6 @@ rule
   | Expression "." IDENTIFIER
       Arguments                              { result = CallNode.new(val[0], val[2], val[3], false) }
   | Expression "." IDENTIFIER                { result = CallNode.new(val[0], val[2], [], false) }
-
-  | IDENTIFIER Arguments Block               { result = CallNode.new(nil, val[0], [LambdaNode.new([], val[2], "args")] + val[1], false) }
-  | Expression "." IDENTIFIER
-      Arguments Block                        { result = CallNode.new(val[0], val[2], [LambdaNode.new([], val[4], "args")] + val[3], false) }
   ;
 
   Apply:
@@ -210,6 +206,7 @@ rule
   Operator:
     Expression 'or' Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
   | Expression 'and' Expression            { result = CallNode.new(val[0], val[1], [val[2]]) }
+  | Expression '|>' Expression             { result = ApplyNode.new(nil, val[2], [val[0]], true) }
   | Expression 'is' Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
   | Expression 'isnt' Expression           { result = CallNode.new(val[0], val[1], [val[2]]) }
   | 'not' Expression                       { result = CallNode.new(val[1], val[0], []) }

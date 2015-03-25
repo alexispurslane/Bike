@@ -3,6 +3,7 @@ require_relative "runtime"
 
 $gc = 0
 $is_set = {}
+$saved_is_set = {}
 
 def gensym (base="AnonymousClass_")
   $gc += 1
@@ -93,7 +94,7 @@ end
 
 class GetLocalNode
   def eval(context)
-    context.locals[name] || Constants[name]
+    context.locals[name] || Constants[name] || context.current_class.runtime_methods[name]
   end
 end
 class ImportNode
@@ -145,13 +146,15 @@ end
 # first and then evaluate the +arguments+ before calling the method.
 class CallNode
   def eval(context)
+    isreceiver = false
     if receiver
+      isreceiver = true
       value = receiver.eval(context)
     else
       value = context.current_self # Default to self if no receiver.
     end
     if !value
-      raise "Receiver cannot be resolved by either getting current context, or through dot notation!"
+      raise "Receiver '#{receiver.name}' cannot be resolved by either getting current context, or through dot notation!"
     end
 
     if !is_splat
@@ -164,20 +167,34 @@ class CallNode
         evaluated_arguments = evaluated_arguments.ruby_value.clone
       end
     end
-
-    value.call(method, evaluated_arguments, context)
+    
+    saved_is_set = $is_set
+    $is_set = {}
+    res = value.call(method, evaluated_arguments, context)
+    $is_set = saved_is_set
+    
+    #if isreceiver && res.is_a?(BikeMethod) && evaluated_arguments.length >= res.params.length
+    #  res = res.call(value, evaluated_arguments)
+    #end
+    
+    res
   end
 end
 
 class ApplyNode
   def eval(context)
-    value = context.current_self
-    if !value
-      raise "Receiver cannot be resolved by getting current context!"
+    if !is_expr
+      value = context.current_self
+      if !value
+        raise "Receiver cannot be resolved by getting current context!"
+      end
+      
+      evaluated_arguments = arguments.map { |arg| arg.eval(context) }
+      value.apply(context, method, evaluated_arguments)
+    else
+      evaluated_arguments = arguments.map { |arg| arg.eval(context) }
+      method.eval(context).call(context.current_self, evaluated_arguments)
     end
-
-    evaluated_arguments = arguments.map { |arg| arg.eval(context) }
-    value.apply(context, method, evaluated_arguments)
   end
 end
 
@@ -248,6 +265,7 @@ class PackageNode
     bike_class = BikeClass.new
     class_context = Context.new(bike_class, bike_class)
     class_context.locals["self"] = bike_class
+    context.current_class.runtime_methods.each { |k, v| class_context.current_class.runtime_methods[k] = v }
     context.locals.each do |name, value| 
       class_context.locals[name] = value
     end
