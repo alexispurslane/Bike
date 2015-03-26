@@ -27,6 +27,9 @@ Constants["Class"].def :new do |receiver,arguments|
   new_receiver
 end
 
+Constants["Object"].def :'<|>' do |_, arguments|
+end
+
 Constants["Object"].def :observe_property do |receiver, arguments|
   receiver.observe arguments[1].ruby_value, arguments.first
   Constants["nil"]

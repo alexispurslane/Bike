@@ -191,6 +191,7 @@ rule
   | '{' '(' ParamList ')' ARROW NEWLINE Expressions '}'            { result = LambdaNode.new(val[2], val[6], nil) }
   | '{' '(' ParamList ')' ARROW Expressions NEWLINE '}'                  { result = LambdaNode.new(val[2], val[5], nil) }
   | '{' '(' ParamList ')' ARROW NEWLINE Expressions NEWLINE '}'    { result = LambdaNode.new(val[2], val[6], nil) }
+  | ARROW Expression                                               { result = LambdaNode.new([], val[1]) }
   ;
 
   ArrayAccess:
@@ -206,6 +207,7 @@ rule
   Operator:
     Expression 'or' Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
   | Expression 'and' Expression            { result = CallNode.new(val[0], val[1], [val[2]]) }
+  | Expression '<|>' Expression            { result = CallNode.new(nil,  val[1], [val[0], val[2]]) }
   | Expression '|>' Expression             { result = ApplyNode.new(nil, val[2], [val[0]], true) }
   | Expression 'is' Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
   | Expression 'isnt' Expression           { result = CallNode.new(val[0], val[1], [val[2]]) }
@@ -229,6 +231,7 @@ rule
     LET IDENTIFIER "=" Expression             { result = SetLocalNode.new(val[1], val[3]) }
   | LET "{" ParamList "}" "=" Expression      { result = SetLocalDescNode.new(val[2], val[5]) }
   | LET "[" IDENTIFIER ":" IDENTIFIER "]" "=" Expression      { result = SetLocalAryNode.new(val[2], val[4], val[7]) }
+  | Expression '.' IDENTIFIER '=' Lambda      { result = SetClassNode.new(val[0], val[2], val[4]) }
   ;
 
   # Our language uses indentation to separate blocks of code. But the lexer took care of all

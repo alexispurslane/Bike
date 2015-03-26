@@ -141,6 +141,13 @@ class SetLocalAryNode
   end
 end
 
+class SetClassNode
+  def eval (context)
+    bike_class.eval(context).runtime_methods[method] = lambda.eval(context)
+    Constants["nil"]
+  end
+end
+
 
 # The CallNode for calling a method is a little more complex. It needs to set the +receiver+
 # first and then evaluate the +arguments+ before calling the method.

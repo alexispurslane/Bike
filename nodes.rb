@@ -83,6 +83,7 @@ class LambdaNode < Struct.new(:params, :body, :vararg); end
 # Class definitions are stored into the following node. Once again, the name of the class and
 # its body, a tree of nodes.
 class ClassNode < Struct.new(:name, :superclass, :body, :mixins); end
+class SetClassNode < Struct.new(:bike_class, :method, :lambda); end
 class HashNode < Struct.new(:key_values); end
 class PackageNode < Struct.new(:body); end
 
