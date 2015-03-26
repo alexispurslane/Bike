@@ -143,7 +143,12 @@ end
 
 class SetClassNode
   def eval (context)
-    bike_class.eval(context).runtime_methods[method] = lambda.eval(context)
+    if bike_class
+      klass = bike_class.eval(context)
+    else
+      klass = context.current_self
+    end
+    klass.runtime_methods[method] = lambda.eval(context)
     Constants["nil"]
   end
 end
@@ -153,9 +158,7 @@ end
 # first and then evaluate the +arguments+ before calling the method.
 class CallNode
   def eval(context)
-    isreceiver = false
     if receiver
-      isreceiver = true
       value = receiver.eval(context)
     else
       value = context.current_self # Default to self if no receiver.
@@ -179,10 +182,6 @@ class CallNode
     $is_set = {}
     res = value.call(method, evaluated_arguments, context)
     $is_set = saved_is_set
-    
-    #if isreceiver && res.is_a?(BikeMethod) && evaluated_arguments.length >= res.params.length
-    #  res = res.call(value, evaluated_arguments)
-    #end
     
     res
   end
@@ -234,12 +233,11 @@ class ClassNode
     bike_class = Constants[classname] # Check if class is already defined
 
     unless bike_class # Class doesn't exist yet
-      bike_class = BikeClass.new(superclass, mixins)
+      bike_class = BikeClass.new(superclass, [])
       Constants[classname] = bike_class # Define the class in the runtime
     end
 
     class_context = Context.new(bike_class, bike_class)
-    class_context.locals["self"] = bike_class
     context.locals.each do |name, value|
       class_context.locals[name] = value
     end
