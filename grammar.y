@@ -136,8 +136,8 @@ rule
   # Literals are the hard-coded values inside the program. If you want to add support
   # for other literal types, such as arrays or hashes, this it where youd do it.
   Literal:
-    NUMBER                        { result = NumberNode.new(val[0], "Number") }
-  | STRING                        { result = StringNode.new(val[0], "String") }
+    NUMBER                        { result = NumberNode.new(val[0]) }
+  | STRING                        { result = StringNode.new(val[0]) }
   | TRUE                          { result = TrueNode.new }
   | FALSE                         { result = FalseNode.new }
   | NIL                           { result = NilNode.new }
@@ -252,24 +252,22 @@ rule
 
   # The +def+ keyword is used for defining methods. 
   Def:
-    DEF IDENTIFIER Block                                                    { result = DefNode.new(val[1], [], val[2]) }
-
-  | DEF IDENTIFIER "=" Expression                                           { result = DefNode.new(val[1], [], val[3]) }
-  | DEF IDENTIFIER "(" ParamList ")" "=" Expression                         { result = DefNode.new(val[1], val[3], val[6]) }
+    DEF IDENTIFIER Block                                           { result = DefNode.new(val[1], [], val[2]) }
+  | DEF IDENTIFIER "=" Expression                                  { result = DefNode.new(val[1], [], val[3]) }
+  | DEF IDENTIFIER "(" ParamList ")" "=" Expression                { result = DefNode.new(val[1], val[3], val[6]) }
   | DEF IDENTIFIER
-      "(" ParamList ")" Block                                               { result = DefNode.new(val[1], val[3], val[5]) }
-
-  | PRIVATE DEF IDENTIFIER "=" Expression                                   { result = DefNode.new(val[2], [], val[4], nil, true) }
-  | PRIVATE DEF IDENTIFIER "(" ParamList ")" "=" Expression                 { result = DefNode.new(val[2], val[4], val[7], nil, true) }
-  | PRIVATE DEF IDENTIFIER
-      "(" ParamList ")" Block                                               { result = DefNode.new(val[2], val[4], val[6], nil, true) }
+      "(" ParamList ")" Block                                      { result = DefNode.new(val[1], val[3], val[5]) }
+  | IDENTIFIER IDENTIFIER Block                                    { result = DefNode.new(val[1], [], val[2], val[0]) }
+  | IDENTIFIER IDENTIFIER
+      "(" ParamList ")" Block                                      { result = DefNode.new(val[1], val[3], val[5], val[0]) }
   ;
-
 
   ParamList:
     /* nothing */                 { result = [] }
-  | IDENTIFIER                    { result = val }
-  | ParamList "," IDENTIFIER      { result = val[0] << val[2] }
+  | IDENTIFIER                    { result = [[val[0], "Dynamic"]] }
+  | ParamList "," IDENTIFIER      { result = val[0] << [val[2], "Dynamic"] }
+  | IDENTIFIER ':' IDENTIFIER     { result = [[val[0], val[2]]] }
+  | ParamList "," IDENTIFIER ':' IDENTIFIER     { result = val[0] << [val[2], val[4]] }
   ;
 
   # Class definition is similar to method definition.

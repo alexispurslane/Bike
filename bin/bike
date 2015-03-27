@@ -41,8 +41,14 @@ def formt (value)
     ("[".light_white +
     formatted_content +
     "]".light_white)
-  else
-    "#{value.ruby_value.inspect}".light_white   # 3. Print
+  else 
+    if value.ruby_value.is_a?(String) && value.ruby_value.start_with?("def") && value.type == "Function"
+      rbval = value.ruby_value
+      "#{rbval} :: #{value.type}(#{value.arg_type}) => #{value.type_ret}".light_white   # 3. Print
+    else
+      rbval = value.ruby_value.inspect
+      "#{rbval} :: #{value.type}".light_white   # 3. Print
+    end
   end
 end
 # If a file is given we eval it.

@@ -12,18 +12,20 @@ class BikeMethod
   # The context that the method (or function) was created in. <b>THIS IS NOT BEING USED FOR CLOSURES OR ANYTHING YET. IT DOES NOT WORK</b>
   attr_reader :context
 
-  attr_reader :params
-
+  attr_reader :params, :type, :arg_type, :type_ret
   # This method just sets the corresponding arguments onto properties of the same name and returns the new object. The only special thing it does is doctor up a +ruby_value+ based on these properties.
   def initialize(params, body,
                  context="Object",
-                 vararg=nil, private=false, name="")
-    @params, @body, @context = params, body, context
+                 vararg=nil, private=false, name="", type_ret="Dynamic")
+    puts params.inspect
+    @params, @body, @context = params.map { |e| e[0] }, body, context
     @vararg = vararg
     @private = private
     @name = name
-
-    @ruby_value = "#{@private ? "private " : ""} def #{@name}(#{@params.join(', ')}) { ... }"
+    @type = "Function"
+    @type_ret = type_ret
+    @arg_type = params.map { |e| e[1] }
+    @ruby_value = "#{@private ? "private " : ""}def #{@name}(#{@params.join(', ')}) { ... }"
   end
 
 
@@ -58,6 +60,11 @@ class BikeMethod
 
       context.current_class.runtime_methods[@name] = self
       @params.each_with_index do |param, index|
+        if @arg_type[index] != "Dynamic"
+          unless @arg_type[index] == arguments[index].type
+            raise "Wrong type in argument #{param} with unexpected type: #{arguments[index].type}"
+          end
+        end
         context.locals[param] = arguments[index]
       end
 

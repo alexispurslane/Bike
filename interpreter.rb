@@ -47,13 +47,13 @@ end
 # node bring itself to life inside the runtime.
 class NumberNode
   def eval(context)
-    Constants["Number"].new_with_value(value)
+    Constants["Number"].new_with_value(value, "Num")
   end
 end
 
 class StringNode
   def eval(context)
-    Constants["String"].new_with_value(value)
+    Constants["String"].new_with_value(value, "String")
   end
 end
 
@@ -64,7 +64,7 @@ class ArrayListNode
       e = e.eval(context)
       new_value << e
     end
-    Constants["Array"].new_with_value(new_value)
+    Constants["Array"].new_with_value(new_value, new_value.map(&:type))
   end
 end
 

@@ -3,10 +3,10 @@ Constants = {}
 Constants["Class"] = BikeClass.new("Class") # Defining the `Class` class.
 Constants["Class"].runtime_class = Constants["Class"] # Setting `Class.class = Class`.
 Constants["Object"] = BikeClass.new # Defining the `Object` class
-Constants["Number"] = BikeClass.new("Object") # Defining the `Number` class
-Constants["Array"] = BikeClass.new("Object") # Defining the `Array` class
-Constants["String"] = BikeClass.new("Array")
-Constants["Symbol"] = BikeClass.new("Object")
+Constants["Number"] = BikeClass.new("Object", "Num") # Defining the `Number` class
+Constants["Array"] = BikeClass.new("Object", "Array") # Defining the `Array` class
+Constants["String"] = BikeClass.new("Array", "String")
+Constants["Symbol"] = BikeClass.new("Object", "Symbol")
 
 root_self = Constants["Object"].new
 RootContext = Context.new(root_self)
@@ -15,9 +15,9 @@ Constants["TrueClass"] = BikeClass.new
 Constants["FalseClass"] = BikeClass.new
 Constants["NilClass"] = BikeClass.new
 
-Constants["true"] = Constants["TrueClass"].new_with_value(true)
-Constants["false"] = Constants["FalseClass"].new_with_value(false)
-Constants["nil"] = Constants["NilClass"].new_with_value(nil)
+Constants["true"] = Constants["TrueClass"].new_with_value(true, "Bool")
+Constants["false"] = Constants["FalseClass"].new_with_value(false, "Bool")
+Constants["nil"] = Constants["NilClass"].new_with_value(nil, "Nil")
 
 Constants["Class"].def :new do |receiver,arguments|
   new_receiver = receiver.new
