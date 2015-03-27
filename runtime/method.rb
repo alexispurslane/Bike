@@ -16,11 +16,8 @@ class BikeMethod
   # This method just sets the corresponding arguments onto properties of the same name and returns the new object. The only special thing it does is doctor up a +ruby_value+ based on these properties.
   def initialize(params, body,
                  context="Object",
-                 vararg=nil, private=false, name="", type_ret="Dynamic")
-    puts params.inspect
+                 name="", type_ret="Dynamic")
     @params, @body, @context = params.map { |e| e[0] }, body, context
-    @vararg = vararg
-    @private = private
     @name = name
     @type = "Function"
     @type_ret = type_ret
@@ -80,6 +77,11 @@ class BikeMethod
       Constants["self"] = context.current_class
       res = @body.eval(context)
       context.locals.keys.each { |e| $is_set[e] = false  }
+      if @type_ret == "Dynamic" || @type_ret == res.type
+        res
+      else
+        raise "this function (#{@name}) should return a type of '#{@type_ret}', but instread returned a type of '#{res.type}'"
+      end
 
       res
     else

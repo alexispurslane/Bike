@@ -44,7 +44,7 @@ def formt (value)
   else 
     if value.ruby_value.is_a?(String) && value.ruby_value.start_with?("def") && value.type == "Function"
       rbval = value.ruby_value
-      "#{rbval} :: #{value.type}(#{value.arg_type}) => #{value.type_ret}".light_white   # 3. Print
+      "#{rbval} :: #{value.type}(#{value.arg_type}): #{value.type_ret}".light_white   # 3. Print
     else
       rbval = value.ruby_value.inspect
       "#{rbval} :: #{value.type}".light_white   # 3. Print
