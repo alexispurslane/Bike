@@ -22,6 +22,8 @@ class BikeMethod
     @type = "Function"
     @type_ret = type_ret
     @arg_type = params.map { |e| e[1] }
+    @arg_defaults = params.map { |e| e[2] }
+    @p_inf = params
     @ruby_value = "#{@private ? "private " : ""}def #{@name}(#{@params.join(', ')}) { ... }"
   end
 
@@ -46,7 +48,7 @@ class BikeMethod
   def call_method (receiver, arguments)
     context = Context.new(receiver)
 
-    if arguments.length >= @params.length
+    if arguments.length >= @params.length || !@arg_defaults.include?(nil)
       @context.current_class.runtime_methods.each do |k, v|
         context.current_class.runtime_methods[k] = v
       end
@@ -62,7 +64,12 @@ class BikeMethod
             raise "Wrong type in argument #{param} with unexpected type: #{arguments[index].type}"
           end
         end
-        context.locals[param] = arguments[index]
+        if arguments[index] != nil
+          arg = arguments[index]
+        else
+          arg = @arg_defaults[index].eval(context)
+        end
+        context.locals[param] = arg
       end
 
       left_overs = arguments
@@ -84,7 +91,7 @@ class BikeMethod
       end
 
       res
-    else
+    elsif @arg_defaults.include? nil && arguments.length < @params.length
       @context.locals.each do |k, v|
         context.locals[k] = v
       end
@@ -94,7 +101,7 @@ class BikeMethod
         context.locals[@params[index]] = arg 
       end
       
-      BikeMethod.new(@params.drop(arguments.length), @body, context, @name)
+      BikeMethod.new(@p_inf.drop(arguments.length), @body, context, @name)
     end
   end
 end

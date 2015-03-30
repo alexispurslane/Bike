@@ -267,10 +267,14 @@ rule
 
   ParamList:
     /* nothing */                 { result = [] }
-  | IDENTIFIER                    { result = [[val[0], "Dynamic"]] }
-  | ParamList "," IDENTIFIER      { result = val[0] << [val[2], "Dynamic"] }
-  | IDENTIFIER ':' IDENTIFIER     { result = [[val[0], val[2]]] }
-  | ParamList "," IDENTIFIER ':' IDENTIFIER     { result = val[0] << [val[2], val[4]] }
+  | IDENTIFIER                    { result = [[val[0], "Dynamic", nil]] }
+  | ParamList "," IDENTIFIER      { result = val[0] << [val[2], "Dynamic", nil] }
+  | IDENTIFIER ':' IDENTIFIER     { result = [[val[0], val[2], nil]] }
+  | ParamList "," IDENTIFIER ':' IDENTIFIER                   { result = val[0] << [val[2], val[4], nil] }
+  | IDENTIFIER "=" Expression                                 { result = [[val[0], "Dynamic", val[2]]] }
+  | ParamList "," IDENTIFIER "=" Expression                   { result = val[0] << [val[2], "Dynamic", val[4]] }
+  | IDENTIFIER ':' IDENTIFIER "=" Expression                  { result = [[val[0], val[2], val[4]]] }
+  | ParamList "," IDENTIFIER ':' IDENTIFIER "=" Expression    { result = val[0] << [val[2], val[4], val[6]] }
   ;
 
   # Class definition is similar to method definition.
