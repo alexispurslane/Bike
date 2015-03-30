@@ -2,7 +2,7 @@
 class BikeObject
   $watches = []
   attr_accessor :runtime_class, :ruby_value, :watches, :runtime_methods, :type
-  def initialize(runtime_class, ruby_value="Object", type="Dynamic")
+  def initialize(runtime_class, ruby_value="Object", type=runtime_class.name)
     @runtime_class = runtime_class
     @runtime_methods = @runtime_class.runtime_methods
     @ruby_value = ruby_value

@@ -78,6 +78,8 @@ class SetLocalAryNode < Struct.new(:head, :tail, :array); end
 # the name of its parameters (params) and the body to evaluate when the method is called, which
 # is a tree of node, the root one being a Nodes instance.
 class DefNode < Struct.new(:name, :params, :body, :type_ret); end
+class OrNode < Struct.new(:first, :second); end
+class AndThen < Struct.new(:first, :second); end
 class LambdaNode < Struct.new(:params, :body, :vararg); end
 
 # Class definitions are stored into the following node. Once again, the name of the class and

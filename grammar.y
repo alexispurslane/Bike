@@ -19,6 +19,8 @@ token WITH
 token MIXIN
 token PACKAGE
 token EXTENDS
+token ORELSE
+token ANDTHEN
 
 token DEF
 token INIT
@@ -47,8 +49,8 @@ prechigh
   left  '+' '-' '%'
   left  '>' '>=' '<' '<='
   left  'is' 'isnt'
-  left  'and'
-  left  'or'
+  left  'and' 'andthen'
+  left  'or' 'orelse'
   right '='
   left  ','
   left  '|>'
@@ -142,6 +144,7 @@ rule
   | FALSE                         { result = FalseNode.new }
   | NIL                           { result = NilNode.new }
   ;
+
   # Method calls can take three forms:
   #
   # * Without a receiver (+self+ is assumed): +method(arguments)+.

@@ -6,10 +6,10 @@ class BikeClass < BikeObject
   attr_reader :runtime_superclass
   # +ruby_value+ is a dummy value <tt>"<class>"</tt>
   attr_reader :ruby_value
-  attr_reader :superclass_name
+  attr_reader :superclass_name, :name
 
   # The initialization is basicly getting the superclass from constants, copying all of the methods from all of the mixins into the +runtime_methods+ property and then returning.
-  def initialize(superclass="Object", type="Dynamic", mixins=[])
+  def initialize(superclass="Object", type="Dynamic", mixins=[], name="Object")
     @runtime_methods = {}
     @runtime_class = Constants["Class"]
     @runtime_superclass = Constants[superclass]
@@ -17,6 +17,7 @@ class BikeClass < BikeObject
     @type_base = type
 
     @ruby_value = type
+    @name = name
   end
 
   # Lookup a method and return it. Looks through all of the +runtime_methods+ all the way up the superclass chain.

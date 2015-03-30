@@ -4,7 +4,7 @@ class Animal {
   def wild = true
   def health = 100
   def attack_points = 25
-  def init (sound1: String, dangerous1: Bool, wild1: Bool, health1: Num, attack_points1: Num): Dynamic {
+  def init (sound1, dangerous1, wild1, health1, attack_points1) {
     self.sound = -> sound1
     self.dangerous = -> dangerous1
     self.wild = -> wild1

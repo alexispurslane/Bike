@@ -204,7 +204,32 @@ class ApplyNode
   end
 end
 
-# Defining a method, using the +def+ keyword, is done by adding a method to the current class.
+class OrNode
+  def eval(context)
+    cond = first.eval(context).ruby_value
+    if cond
+      second.eval(context).ruby_value
+    else
+      cond
+    end
+  end
+end
+
+class AndNode
+  def eval(context)
+    cond = first.eval(context)
+    if cond.ruby_value
+      sec = second.eval(context)
+      if sec.ruby_value
+        sec
+      else
+        cond
+      end
+    else
+      cond
+    end
+  end
+end# Defining a method, using the +def+ keyword, is done by adding a method to the current class.
 class DefNode
   def eval(context)
     method = BikeMethod.new(params, body, context, name)
@@ -233,7 +258,7 @@ class ClassNode
     bike_class = Constants[classname] # Check if class is already defined
 
     unless bike_class # Class doesn't exist yet
-      bike_class = BikeClass.new(superclass, classname, [])
+      bike_class = BikeClass.new(superclass, classname, [], classname)
       Constants[classname] = bike_class # Define the class in the runtime
     end
 
