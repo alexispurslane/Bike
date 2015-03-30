@@ -22,7 +22,7 @@ Constants["nil"] = Constants["NilClass"].new_with_value(nil, "Nil")
 Constants["Class"].def :new do |receiver,arguments|
   new_receiver = receiver.new
   if new_receiver.runtime_class.runtime_methods["init"]
-    new_receiver.call("init", arguments)
+    new_receiver.call("init", arguments, new_receiver)
   end
   new_receiver
 end

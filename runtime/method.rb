@@ -94,7 +94,7 @@ class BikeMethod
         context.locals[@params[index]] = arg 
       end
       
-      BikeMethod.new(@params.drop(arguments.length), @body, context, nil, false, @name)
+      BikeMethod.new(@params.drop(arguments.length), @body, context, @name)
     end
   end
 end

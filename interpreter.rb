@@ -64,7 +64,7 @@ class ArrayListNode
       e = e.eval(context)
       new_value << e
     end
-    Constants["Array"].new_with_value(new_value, new_value.map(&:type))
+    Constants["Array"].new_with_value(new_value)
   end
 end
 
@@ -182,7 +182,7 @@ class CallNode
     $is_set = {}
     res = value.call(method, evaluated_arguments, context)
     $is_set = saved_is_set
-    
+   
     res
   end
 end
@@ -194,7 +194,7 @@ class ApplyNode
       if !value
         raise "Receiver cannot be resolved by getting current context!"
       end
-      
+     
       evaluated_arguments = arguments.map { |arg| arg.eval(context) }
       value.apply(context, method, evaluated_arguments)
     else
@@ -214,7 +214,7 @@ end
 
 class LambdaNode
   def eval(context)
-    BikeMethod.new(params, body, context, vararg, false, "rec_func")
+    BikeMethod.new(params, body, context, "recurse")
   end
 end
 
@@ -233,7 +233,7 @@ class ClassNode
     bike_class = Constants[classname] # Check if class is already defined
 
     unless bike_class # Class doesn't exist yet
-      bike_class = BikeClass.new(superclass, [])
+      bike_class = BikeClass.new(superclass, classname, [])
       Constants[classname] = bike_class # Define the class in the runtime
     end
 

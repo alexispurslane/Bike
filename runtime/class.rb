@@ -16,7 +16,7 @@ class BikeClass < BikeObject
     @superclass_name = superclass
     @type_base = type
 
-    @ruby_value = "UninitClass"
+    @ruby_value = type
   end
 
   # Lookup a method and return it. Looks through all of the +runtime_methods+ all the way up the superclass chain.
