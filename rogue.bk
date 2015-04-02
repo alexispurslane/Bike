@@ -1,0 +1,31 @@
+import Wheels into w
+let l = w.List
+let u = w.Util
+
+def genMap (size = 5, playerX = 0, playerY = 0) {
+  command("clear") or command("cls")
+  let list = l.map({ (x) -> l.range(0, size + 1) }, l.range(1, size + 1))
+  let map = l.map({ (y) ->
+    l.map({ (x) ->
+      if x is playerX and l.index_of(y, list) is playerY {
+        "@"
+      } else { "." }
+    }, y)
+  }, list)
+  display(map)
+  turn(playerX, playerY)
+}
+
+def display (map) {
+  l.map({ (x) -> l.map({ (x) -> print(x) }, x); println("") }, map)
+}
+def turn (x, y) {
+  let c = get_char()
+  
+  if c is "k" { genMap(5, x, y - 1)
+  } elsif c is "j" { genMap(5, x, y + 1)
+  } elsif c is "l" { genMap(5, x + 1, y)
+  } elsif c is "h" { genMap(5, x - 1, y)
+  } elsif c is "q" { "Bye!"
+  } else { println("what??"); genMap(5, x, y) }
+}

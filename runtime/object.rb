@@ -10,7 +10,6 @@ class BikeObject
   end
   # Calls a runtime method.
   def call(method, arguments=[], context)
-    puts context
     watches_for_method = $watches.keep_if { |v| v[:prop] == method }
     watches_for_method.each do |v|
       v[:meth].call(self, [Constants["Array"].new_with_value(arguments.first.ruby_value)])

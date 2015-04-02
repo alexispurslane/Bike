@@ -35,13 +35,6 @@ Constants["Object"].def :observe_property do |receiver, arguments|
   Constants["nil"]
 end
 
-Constants["Object"].def :thread do |receiver, arguments|
-  t = Thread.new { Thread.current[:output] = arguments.first.call(receiver, arguments) }
-  t.abort_on_exception = true
-  t.join
-  t[:output]
-end
-
 Constants["Object"].def :farity do |receiver, arguments|
   arg = arguments.first
   if arg.is_a?(BikeMethod)
@@ -53,13 +46,47 @@ end
 
 Constants["Object"].def :println do |receiver, arguments|
   check_all_arguments(arguments)
-  puts arguments[0].ruby_value
+  if arguments[0].ruby_value == "\\n" || arguments[0].ruby_value == "\\r"
+    puts "\n"
+  else
+    puts arguments[0].ruby_value
+  end
   arguments[0] || Constants["nil"] # We always want to return objects from our runtime
+end
+Constants["Object"].def :command do |receiver, arguments|
+  if system(arguments.first.ruby_value)
+    Constants["true"]
+  else
+    Constants["false"]
+  end
+end
+Constants["Object"].def :wait do |receiver, arguments|
+  sleep(arguments.first.ruby_value)
+  Constants["true"]
+end
+Constants["Object"].def :get_char do |receiver, arguments|
+  begin
+    system("stty raw -echo")
+    str = STDIN.getc
+  ensure
+    system("stty -raw echo")
+  end
+  Constants["String"].new_with_value(if str == "\r" then
+                                       "\\r"
+                                     elsif str == "\n" then
+                                       "\\n"
+                                     else
+                                       str
+                                     end)
 end
 
 Constants["Object"].def :print do |receiver, arguments|
   check_all_arguments(arguments)
-  print arguments.first.ruby_value
+  if arguments[0].ruby_value == "\\n" || arguments[0].ruby_value == "\\r"
+    print "\n"
+  else
+    print arguments[0].ruby_value
+  end
   arguments[0] || Constants["nil"] # We always want to return objects from our runtime
 end
 def check_all_arguments (args)

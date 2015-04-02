@@ -35,19 +35,21 @@ line     = ""
 history  = ""
 level_in = 0
 
-def formt (value)
-  if value.ruby_value.is_a?(Array)
-    formatted_content = value.ruby_value.map { |i| formt(i) }.join(", ").light_white
-    ("[".light_white +
+def formt (value, is_in_array = false)
+  if is_in_array
+    formt(value).gsub(/ \:\:.*$/, '')
+  elsif value.ruby_value.is_a?(Array)
+    formatted_content = value.ruby_value.map { |i| formt(i, true) }.join(", ").light_white
+    ("[" +
     formatted_content +
-    "]".light_white)
+    "]")
   else 
     if value.ruby_value.is_a?(String) && value.ruby_value.start_with?("def") && value.type == "Function"
       rbval = value.ruby_value
-      "#{rbval} :: #{value.type}(#{value.arg_type}): #{value.type_ret}".light_white   # 3. Print
+      "#{rbval} :: #{value.type}(#{value.arg_type}): #{value.type_ret}"   # 3. Print
     else
       rbval = value.ruby_value.inspect
-      "#{rbval} :: #{value.type}".light_white   # 3. Print
+      "#{rbval} :: #{value.type}"   # 3. Print
     end
   end
 end

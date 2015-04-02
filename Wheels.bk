@@ -1,3 +1,12 @@
+def get_line (acc = "") {
+  let c = get_char()
+  print(c)
+  if c is "\r" {
+    acc
+  } else { 
+    get_line(acc + c)
+ }
+}
 package {
   package Math {
     def E       = 2.71828182845904523536028747135266249775724709369995957496696763
@@ -114,6 +123,12 @@ package {
 
     def intercalate (xs, xss) {
       concat(intersperse(xs, xss))
+    }
+
+    def range (s = 1, e = 100, acc = []) {
+      if s is e { acc } else {
+        range(s + 1, e, acc + (s))
+      }
     }
     
     def transpose (list) {
