@@ -21,7 +21,7 @@ def display (map) {
 }
 def turn (x, y) {
   let c = get_char()
-  
+
   if c is "k" { genMap(5, x, y - 1)
   } elsif c is "j" { genMap(5, x, y + 1)
   } elsif c is "l" { genMap(5, x + 1, y)

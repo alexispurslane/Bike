@@ -43,7 +43,7 @@ token NEWLINE
 # which order to parse expressions containing operators.
 # This table is based on the [C and C++ Operator Precedence Table](http://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B#Operator_precedence).
 prechigh
-  left  '.' '@' 'set'
+  left  '.' 'set'
   right 'not'
   left  '*' '/'
   left  '+' '-' '%'
@@ -77,7 +77,7 @@ rule
     /* nothing */                      { result = Nodes.new([]) }
   | Expressions                        { result = val[0] }
   ;
-  
+
   # Next, we define what a list of expressions is. Simply put, its series of expressions separated by a
   # terminator (a new line or +;+ as defined later). But once again, we need to explicitly
   # define how to handle trailing and orphans line breaks (the last two lines).
@@ -124,7 +124,7 @@ rule
   | '(' NEWLINE Expression NEWLINE ')'    { result = val[2] }
   ;
 
-  # Notice how we implement support for parentheses using the previous rule. 
+  # Notice how we implement support for parentheses using the previous rule.
   # +'(' Expression ')'+ will force the parsing of +Expression+ in its
   # entirety first. Parentheses will then be discarded leaving only the fully parsed expression.
   #
@@ -225,11 +225,11 @@ rule
   | Expression '*'  Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
   | Expression '/'  Expression             { result = CallNode.new(val[0], val[1], [val[2]]) }
   ;
-  
+
   GetLocal:
     IDENTIFIER                    { result = GetLocalNode.new(val[0]) }
   ;
-  
+
   SetLocal:
     LET IDENTIFIER "=" Expression             { result = SetLocalNode.new(val[1], val[3]) }
   | LET "{" ParamList "}" "=" Expression      { result = SetLocalDescNode.new(val[2], val[5]) }
@@ -241,7 +241,7 @@ rule
   # that complexity for us and wrapped all blocks in +INDENT ... DEDENT+. A block
   # is simply an increment in indentation followed by some code and closing with an equivalent
   # decrement in indentation.
-  # 
+  #
   # If youd like to use curly brackets or +end+ to delimit blocks instead, youd
   # simply need to modify this one rule.
   # Youll also need to remove the indentation logic from the lexer.
@@ -253,7 +253,7 @@ rule
   | "{" NEWLINE Expressions NEWLINE "}"   { result = val[2] }
   ;
 
-  # The +def+ keyword is used for defining methods. 
+  # The +def+ keyword is used for defining methods.
   Def:
     DEF IDENTIFIER Block                                           { result = DefNode.new(val[1], [], val[2]) }
   | DEF IDENTIFIER "=" Expression                                  { result = DefNode.new(val[1], [], val[3]) }
@@ -340,7 +340,7 @@ end
     puts @tokens.inspect if show_tokens
     do_parse # Kickoff the parsing process
   end
-  
+
   def next_token
     @tokens.shift
   end

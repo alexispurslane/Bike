@@ -4,14 +4,14 @@ class BikeClass < BikeObject
   attr_reader :runtime_methods
   # +runtime_superclass+ holds the BikeClass for the superclass of this object. +Object+ is the great-grandsuperclass of everything.
   attr_reader :runtime_superclass
-  # +ruby_value+ is a dummy value <tt>"<class>"</tt>
+  # +ruby_value+ is a dummy value <tt>'<class>'</tt>
   attr_reader :ruby_value
   attr_reader :superclass_name, :name
 
   # The initialization is basicly getting the superclass from constants, copying all of the methods from all of the mixins into the +runtime_methods+ property and then returning.
-  def initialize(superclass="Object", type="Dynamic", mixins=[], name="Object")
+  def initialize(superclass = 'Object', type = 'Dynamic', _ = [], name = 'Object')
     @runtime_methods = {}
-    @runtime_class = Constants["Class"]
+    @runtime_class = Constants['Class']
     @runtime_superclass = Constants[superclass]
     @superclass_name = superclass
     @type_base = type
@@ -47,7 +47,7 @@ class BikeClass < BikeObject
 
   # Create an instance of this Bike class that holds a Ruby value. Like a String,
   # Number or true.
-  def new_with_value(value, type=nil)
+  def new_with_value(value, type = nil)
     BikeObject.new(self, value, type || @type_base)
   end
 end

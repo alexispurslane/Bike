@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby -I.
-require_relative "../interpreter"
-require "readline"
+require_relative '../interpreter'
+require 'readline'
 require 'colorize'
 require 'terminfo'
 

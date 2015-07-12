@@ -6,7 +6,7 @@ class Context
   attr_reader :current_self
   # +current_class+ is a way to access the BikeClass behind the self.
   attr_reader :current_class
-  def initialize(current_self, current_class=current_self.runtime_class)
+  def initialize(current_self, current_class = current_self.runtime_class)
     @locals = {}
     @current_self = current_self
     @current_class = current_class

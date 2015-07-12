@@ -1,276 +1,289 @@
-require_relative "../lib/util.rb"
-Constants = {}
-Constants["Class"] = BikeClass.new("Class") # Defining the `Class` class.
-Constants["Class"].runtime_class = Constants["Class"] # Setting `Class.class = Class`.
-Constants["Object"] = BikeClass.new # Defining the `Object` class
-Constants["Number"] = BikeClass.new("Object", "Num") # Defining the `Number` class
-Constants["Array"] = BikeClass.new("Object", "Array") # Defining the `Array` class
-Constants["String"] = BikeClass.new("Array", "String")
-Constants["Symbol"] = BikeClass.new("Object", "Symbol")
+require_relative '../lib/util.rb'
+CONSTANTS = {}
+CONSTANTS['Class'] = BikeClass.new('Class')
+CONSTANTS['Class'].runtime_class = CONSTANTS['Class']
+CONSTANTS['Object'] = BikeClass.new
+CONSTANTS['Number'] = BikeClass.new('Object', 'Num')
+CONSTANTS['Array'] = BikeClass.new('Object', 'Array')
+CONSTANTS['String'] = BikeClass.new('Array', 'String')
+CONSTANTS['Symbol'] = BikeClass.new('Object', 'Symbol')
 
-root_self = Constants["Object"].new
+root_self = CONSTANTS['Object'].new
 RootContext = Context.new(root_self)
 
-Constants["TrueClass"] = BikeClass.new
-Constants["FalseClass"] = BikeClass.new
-Constants["NilClass"] = BikeClass.new
+CONSTANTS['TrueClass'] = BikeClass.new
+CONSTANTS['FalseClass'] = BikeClass.new
+CONSTANTS['NilClass'] = BikeClass.new
 
-Constants["true"] = Constants["TrueClass"].new_with_value(true, "Bool")
-Constants["false"] = Constants["FalseClass"].new_with_value(false, "Bool")
-Constants["nil"] = Constants["NilClass"].new_with_value(nil, "Nil")
+CONSTANTS['true'] = CONSTANTS['TrueClass'].new_with_value(true, 'Bool')
+CONSTANTS['false'] = CONSTANTS['FalseClass'].new_with_value(false, 'Bool')
+CONSTANTS['nil'] = CONSTANTS['NilClass'].new_with_value(nil, 'Nil')
 
-Constants["Class"].def :new do |receiver,arguments|
+CONSTANTS['Class'].def :new do |receiver, arguments|
   new_receiver = receiver.new
-  if new_receiver.runtime_class.runtime_methods["init"]
-    new_receiver.call("init", arguments, new_receiver)
+  if new_receiver.runtime_class.runtime_methods['init']
+    new_receiver.call('init', arguments, new_receiver)
   end
   new_receiver
 end
 
-Constants["Object"].def :'<|>' do |_, arguments|
+CONSTANTS['Object'].def :'<|>' do |_, _|
 end
 
-Constants["Object"].def :observe_property do |receiver, arguments|
+CONSTANTS['Object'].def :observe_property do |receiver, arguments|
   receiver.observe arguments[1].ruby_value, arguments.first
-  Constants["nil"]
+  CONSTANTS['nil']
 end
 
-Constants["Object"].def :farity do |receiver, arguments|
+CONSTANTS['Object'].def :farity do |_, arguments|
   arg = arguments.first
   if arg.is_a?(BikeMethod)
-    Constants["Number"].new_with_value(arg.params.length)
-  else arg.is_a?(BikeObject) && arg.runtime_class.is_a?(BikeMethod)
-    Constants["Number"].new_with_value(arg.runtime_class.params.length)
+    CONSTANTS['Number'].new_with_value(arg.params.length)
+  elsif arg.is_a?(BikeObject) && arg.runtime_class.is_a?(BikeMethod)
+    CONSTANTS['Number'].new_with_value(arg.runtime_class.params.length)
   end
 end
 
-Constants["Object"].def :println do |receiver, arguments|
+CONSTANTS['Object'].def :println do |_, arguments|
   check_all_arguments(arguments)
-  if arguments[0].ruby_value == "\\n" || arguments[0].ruby_value == "\\r"
-    puts "\n"
+  if arguments[0].ruby_value == '\\n' || arguments[0].ruby_value == '\\r'
+    puts '\n'
   else
     puts arguments[0].ruby_value
   end
-  arguments[0] || Constants["nil"] # We always want to return objects from our runtime
+  arguments[0] || CONSTANTS['nil'] # We always want to return something
 end
-Constants["Object"].def :command do |receiver, arguments|
+CONSTANTS['Object'].def :command do |_, arguments|
   if system(arguments.first.ruby_value)
-    Constants["true"]
+    CONSTANTS['true']
   else
-    Constants["false"]
+    CONSTANTS['false']
   end
 end
-Constants["Object"].def :wait do |receiver, arguments|
+CONSTANTS['Object'].def :wait do |_, arguments|
   sleep(arguments.first.ruby_value)
-  Constants["true"]
+  CONSTANTS['true']
 end
-Constants["Object"].def :get_char do |receiver, arguments|
+CONSTANTS['Object'].def :get_char do |_, _|
   begin
-    system("stty raw -echo")
+    system('stty raw -echo')
     str = STDIN.getc
   ensure
-    system("stty -raw echo")
+    system('stty -raw echo')
   end
-  Constants["String"].new_with_value(if str == "\r" then
-                                       "\\r"
-                                     elsif str == "\n" then
-                                       "\\n"
+  CONSTANTS['String'].new_with_value(if str == '\r'
+                                       '\\r'
+                                     elsif str == '\n'
+                                       '\\n'
                                      else
                                        str
                                      end)
 end
 
-Constants["Object"].def :print do |receiver, arguments|
+CONSTANTS['Object'].def :print do |_, arguments|
   check_all_arguments(arguments)
-  if arguments[0].ruby_value == "\\n" || arguments[0].ruby_value == "\\r"
-    print "\n"
+  if arguments[0].ruby_value == '\\n' || arguments[0].ruby_value == '\\r'
+    print '\n'
   else
     print arguments[0].ruby_value
   end
-  arguments[0] || Constants["nil"] # We always want to return objects from our runtime
+  arguments[0] || CONSTANTS['nil']
 end
-def check_all_arguments (args)
+
+def check_all_arguments(args)
   args.each_index do |i|
     arg = args[i]
-    unless arg
-      raise "Nil argument at number #{i}!"
-    end
+    fail 'Nil argument at number #{i}!' unless arg
   end
 end
 
-Constants["Object"].def :call do |receiver, arguments|
+CONSTANTS['Object'].def :call do |receiver, _|
   receiver
 end
-Constants["Number"].def :+ do|receiver,arguments|
+CONSTANTS['Number'].def :+ do|receiver, arguments|
   check_all_arguments(arguments)
   result = receiver.ruby_value + arguments.first.ruby_value
-  Constants["Number"].new_with_value(result)
+  CONSTANTS['Number'].new_with_value(result)
 end
-Constants["Number"].def :% do |receiver, arguments|
-  Constants["Number"].new_with_value(receiver.ruby_value % arguments.first.ruby_value)
+CONSTANTS['Number'].def :% do |receiver, arguments|
+  CONSTANTS['Number'].new_with_value(receiver.ruby_value %
+                                     arguments.first.ruby_value)
 end
-Constants["Number"].def :- do|receiver,arguments|
+CONSTANTS['Number'].def :- do|receiver, arguments|
   check_all_arguments(arguments)
   result = receiver.ruby_value - arguments.first.ruby_value
-  Constants["Number"].new_with_value(result)
+  CONSTANTS['Number'].new_with_value(result)
 end
-Constants["Number"].def :< do|receiver,arguments|
+CONSTANTS['Number'].def :< do|receiver, arguments|
   check_all_arguments(arguments)
   result = receiver.ruby_value < arguments.first.ruby_value
-  Constants["Number"].new_with_value(result)
+  CONSTANTS['Number'].new_with_value(result)
 end
-Constants["Number"].def :> do|receiver,arguments|
+CONSTANTS['Number'].def :> do|receiver, arguments|
   check_all_arguments(arguments)
   result = receiver.ruby_value > arguments.first.ruby_value
-  Constants["Number"].new_with_value(result)
+  CONSTANTS['Number'].new_with_value(result)
 end
-Constants["Number"].def :<= do|receiver,arguments|
+CONSTANTS['Number'].def :<= do|receiver, arguments|
   check_all_arguments(arguments)
   result = receiver.ruby_value <= arguments.first.ruby_value
-  Constants["Number"].new_with_value(result)
+  CONSTANTS['Number'].new_with_value(result)
 end
-Constants["Number"].def :>= do|receiver,arguments|
+CONSTANTS['Number'].def :>= do|receiver, arguments|
   check_all_arguments(arguments)
   result = receiver.ruby_value >= arguments.first.ruby_value
-  Constants["Number"].new_with_value(result)
+  CONSTANTS['Number'].new_with_value(result)
 end
-Constants["Number"].def :* do|receiver,arguments|
+CONSTANTS['Number'].def :* do|receiver, arguments|
   check_all_arguments(arguments)
   result = receiver.ruby_value * arguments.first.ruby_value
-  Constants["Number"].new_with_value(result)
+  CONSTANTS['Number'].new_with_value(result)
 end
-Constants["Number"].def :/ do|receiver,arguments|
+CONSTANTS['Number'].def :/ do|receiver, arguments|
   check_all_arguments(arguments)
   result = receiver.ruby_value / arguments.first.ruby_value
-  Constants["Number"].new_with_value(result)
+  CONSTANTS['Number'].new_with_value(result)
 end
 
 def define_is(type)
-  Constants[type].def :is do|receiver, arguments|
+  CONSTANTS[type].def :is do|receiver, arguments|
     check_all_arguments(arguments)
     result = receiver.ruby_value == arguments.first.ruby_value
     if result
-      Constants["true"]
+      CONSTANTS['true']
     else
-      Constants["false"]
+      CONSTANTS['false']
     end
   end
 end
 
 def define_isnt(type)
-  Constants[type].def :isnt do|receiver, arguments|
+  CONSTANTS[type].def :isnt do|receiver, arguments|
     check_all_arguments(arguments)
     result = receiver.ruby_value != arguments.first.ruby_value
     if result
-      Constants["true"]
+      CONSTANTS['true']
     else
-      Constants["false"]
+      CONSTANTS['false']
     end
   end
 end
 
 def define_and(type)
-  Constants[type].def :and do|receiver, arguments|
+  CONSTANTS[type].def :and do|receiver, arguments|
     check_all_arguments(arguments)
     result = receiver.ruby_value && arguments.first.ruby_value
     if result
-      Constants["true"]
+      CONSTANTS['true']
     else
-      Constants["false"]
+      CONSTANTS['false']
     end
   end
 end
 
 def define_or(type)
-  Constants[type].def :or do|receiver, arguments|
+  CONSTANTS[type].def :or do|receiver, arguments|
     check_all_arguments(arguments)
     result = receiver.ruby_value || arguments.first.ruby_value
     if result
-      Constants["true"]
+      CONSTANTS['true']
     else
-      Constants["false"]
+      CONSTANTS['false']
     end
   end
 end
 
-["Object", "TrueClass", "FalseClass", "Array", "String", "Number", "Class"].each do |k|
+%w(Object TrueClass FalseClass Array String Number Class).each do |k|
   define_is(k)
   define_isnt(k)
   define_and(k)
   define_or(k)
 end
-Constants["Object"].def :not do|receiver, arguments|
+CONSTANTS['Object'].def :not do|receiver, _|
   if !receiver.ruby_value
-    Constants["true"]
+    CONSTANTS['true']
   else
-    Constants["false"]
+    CONSTANTS['false']
   end
 end
 
-
-
-Constants["Array"].def :'@' do |receiver, arguments|
-  (receiver.ruby_value[arguments[0].ruby_value]) || Constants["nil"]
+CONSTANTS['Array'].def :'@' do |receiver, arguments|
+  (receiver.ruby_value[arguments[0].ruby_value]) || CONSTANTS['nil']
 end
 
-Constants["Array"].def :uniq do |receiver, arguments|
+CONSTANTS['Array'].def :uniq do |receiver, _|
   uniq_ary = receiver.ruby_value.map(&:ruby_value).uniq
-  Constants["Array"].new_with_value(uniq_ary.map { |e| Constants["Object"].new_with_value(e)  })
+  CONSTANTS['Array'].new_with_value(uniq_ary.map do |e|
+    CONSTANTS['Object'].new_with_value(e)
+  end)
 end
 
-Constants["Array"].def :set do |receiver, arguments|
+CONSTANTS['Array'].def :set do |receiver, arguments|
   clone = receiver.ruby_value.clone
   clone[arguments[0].ruby_value] = arguments[1]
-  Constants["Array"].new_with_value(clone)
+  CONSTANTS['Array'].new_with_value(clone)
 end
-Constants["Array"].def :length do |receiver, arguments|
-  Constants["Number"].new_with_value(receiver.ruby_value.count) || Constants["nil"]
+CONSTANTS['Array'].def :length do |receiver, _|
+  CONSTANTS['Number'].new_with_value(receiver.ruby_value.count) ||
+    CONSTANTS['nil']
 end
-Constants["Array"].def :+ do |receiver, arguments|
+CONSTANTS['Array'].def :+ do |receiver, arguments|
   if  arguments.first.ruby_value.is_a?(Array)
-    Constants["Array"].new_with_value(receiver.ruby_value + arguments.first.ruby_value)
+    CONSTANTS['Array'].new_with_value(receiver.ruby_value +
+      arguments.first.ruby_value)
   else
-    Constants["Array"].new_with_value(receiver.ruby_value + [arguments.first])
+    CONSTANTS['Array'].new_with_value(receiver.ruby_value + [arguments.first])
   end
 end
-Constants["Array"].def :* do |receiver, arguments|
-  Constants["Array"].new_with_value(receiver.ruby_value * arguments.first.ruby_value)
+CONSTANTS['Array'].def :* do |receiver, arguments|
+  CONSTANTS['Array'].new_with_value(receiver.ruby_value *
+    arguments.first.ruby_value)
 end
-Constants["Array"].def :- do |receiver, arguments|
+CONSTANTS['Array'].def :- do |receiver, arguments|
   a = receiver.ruby_value.clone
   rem = arguments.first
-  a.delete_at(a.map(&:ruby_value).index(rem.ruby_value) || a.length) # Mutation, but what are ya gonna do?
+  a.delete_at(a.map(&:ruby_value).index(rem.ruby_value) || a.length)
 
-  Constants["Array"].new_with_value(a)
+  CONSTANTS['Array'].new_with_value(a)
 end
-Constants["Array"].def :/ do |receiver, arguments|
+CONSTANTS['Array'].def :/ do |receiver, arguments|
   na = []
-  (receiver.ruby_value.length * arguments.first.ruby_value).times do |e|
-    na << Constants["Array"].new_with_value(receiver.ruby_value.slice!(0, arguments.first.ruby_value))
+  (receiver.ruby_value.length * arguments.first.ruby_value).times do ||
+    na << CONSTANTS['Array'].new_with_value(
+      receiver.ruby_value.slice!(0,
+                                 arguments
+                                   .first
+                                   .ruby_value))
   end
   na = na.delete_if { |e| e.ruby_value == [] }
-  Constants["Array"].new_with_value na
+  CONSTANTS['Array'].new_with_value na
 end
 
-Constants["String"].def :'@' do |receiver, arguments|
-  Constants["String"].new_with_value(receiver.ruby_value[arguments[0].ruby_value-1]) || Constants["nil"]
+CONSTANTS['String'].def :'@' do |receiver, arguments|
+  CONSTANTS['String'].new_with_value(receiver.ruby_value[arguments[0]
+    .ruby_value - 1]) || CONSTANTS['nil']
 end
-Constants["String"].def :+ do |receiver, arguments|
-  Constants["String"].new_with_value(receiver.ruby_value + arguments.first.ruby_value)
+CONSTANTS['String'].def :+ do |receiver, arguments|
+  CONSTANTS['String'].new_with_value(receiver.ruby_value +
+                                     arguments.first.ruby_value)
 end
-Constants["String"].def :* do |receiver, arguments|
-  Constants["String"].new_with_value(receiver.ruby_value * arguments.first.ruby_value)
+CONSTANTS['String'].def :* do |receiver, arguments|
+  CONSTANTS['String'].new_with_value(receiver.ruby_value *
+                                     arguments.first.ruby_value)
 end
-Constants["String"].def :- do |receiver, arguments|
-  Constants["String"].new_with_value(receiver.ruby_value.gsub(arguments.first.ruby_value, ''))
+CONSTANTS['String'].def :- do |receiver, arguments|
+  CONSTANTS['String'].new_with_value(
+    receiver.ruby_value.gsub(arguments.first.ruby_value, ''))
 end
-Constants["String"].def :/ do |receiver, arguments|
+CONSTANTS['String'].def :/ do |receiver, arguments|
   ns = []
-  (receiver.ruby_value.length * arguments.first.ruby_value).times do |e|
-    ns << Constants["Array"].new_with_value(receiver.ruby_value.slice!(0, arguments.first.ruby_value))
+  (receiver.ruby_value.length * arguments.first.ruby_value).times do ||
+    ns << CONSTANTS['Array'].new_with_value(
+      receiver.ruby_value.slice!(0,
+                                 arguments
+                                   .first
+                                   .ruby_value))
   end
-  ns = ns.delete_if { |e| e.ruby_value == "" }
-  Constants["String"].new_with_value ns
+  ns = ns.delete_if { |e| e.ruby_value == '' }
+  CONSTANTS['String'].new_with_value ns
 end
-
-

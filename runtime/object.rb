@@ -2,7 +2,7 @@
 class BikeObject
   $watches = []
   attr_accessor :runtime_class, :ruby_value, :watches, :runtime_methods, :type
-  def initialize(runtime_class, ruby_value="Object", type=runtime_class.name)
+  def initialize(runtime_class, ruby_value = 'Object', type = runtime_class.name)
     @runtime_class = runtime_class
     @runtime_methods = @runtime_class.runtime_methods
     @ruby_value = ruby_value
@@ -12,9 +12,9 @@ class BikeObject
   def call(method, arguments=[], context)
     watches_for_method = $watches.keep_if { |v| v[:prop] == method }
     watches_for_method.each do |v|
-      v[:meth].call(self, [Constants["Array"].new_with_value(arguments.first.ruby_value)])
+      v[:meth].call(self, [Constants['Array'].new_with_value(arguments.first.ruby_value)])
     end
-    
+
     (@runtime_class.lookup(method) || context.locals[method]).call(self, arguments)
   end
   # Calls a method that has been stored as a variable (like calling a lambda that was passed into a function.) In Bike this is done using the +$+ operator.
@@ -23,6 +23,6 @@ class BikeObject
   end
 
   def observe (prop, method)
-    $watches << { :prop => prop + "=", :meth => method }
+    $watches << { :prop => prop + '=', :meth => method }
   end
 end
