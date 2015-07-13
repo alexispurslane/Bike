@@ -26,7 +26,7 @@ class BikeMethod
     @arg_type = params.map { |e| e[1] }
     @arg_defaults = params.map { |e| e[2] }
     @p_inf = params
-    @ruby_value = '#{@private ? \'private \' : \'\'}def #{@name}(#{@params.join(\', \')}) { ... }'
+    @ruby_value = "#{@private ? 'private ' : ''}def #{@name}(#{@params.join(', ')}) { ... }"
   end
 
   # The +call+ method takes the reciever (normally the global instance of Object, unless the function is called using dot-notation) and creates a new context based on the reciever. It also takes a ruby array of all the arguments that were passed in, and maps them to the parameters, deleting them as they go. If there is a vararg, it gets assigned to any arguments that were left over.
@@ -85,11 +85,10 @@ class BikeMethod
 
       Constants['self'] = context.current_class
       res = @body.eval(context)
-      context.locals.keys.each { |e| $is_set[e] = false  }
       if @type_ret == 'Dynamic' || @type_ret == res.type
         res
       else
-        fail 'this function (#{@name}) should return a type of \'#{@type_ret}\', but instread returned a type of \'#{res.type}\''
+        fail "This function (#{@name}) should return a type of \'#{@type_ret}\', but instread returned a type of \'#{res.type}\'"
       end
 
       res

@@ -1,9 +1,6 @@
 require_relative 'parser'
 require_relative 'runtime'
 
-$is_set = {}
-$saved_is_set = {}
-
 # First, we create an simple wrapper class to encapsulate the interpretation process.
 # All this does is parse the code and call eval on the node at the top of the AST.
 class Interpreter
@@ -103,9 +100,9 @@ end
 # Sets a variable local to the scope.
 class SetLocalNode
   def eval(context)
-    if !$is_set[name]
+    if !context.set[name]
       context.locals[name] = value.eval(context)
-      $is_set[name] = true
+      context.set[name] = true
       context.locals[name]
     else
       fail 'Attemt to re-assign variable using normal variable.'
@@ -117,9 +114,9 @@ end
 class SetLocalDescNode
   def eval(context)
     name.each do |name|
-      if !$is_set[name]
+      if !context.set[name]
         context.locals[name] = value.eval(context).call(name, [])
-        $is_set[name] = true
+        context.set[name] = true
       else
         fail 'Attemt to re-assign variable using normal variable.'
       end
@@ -155,47 +152,31 @@ end
 # first and then evaluate the +arguments+ before calling the method.
 class CallNode
   def eval(context)
-    if receiver
-      value = receiver.eval(context)
-    else
-      value = context.current_self # Default to self if no receiver.
-    end
-    unless value
-      fail 'Receiver #{receiver.name} cannot be resolved by either getting current context, or through dot notation!'
-    end
+    value = context.current_self # Default to self if no receiver.
+    value = receiver.eval(context) if receiver
 
-    if !is_splat
+    fail 'Receiver #{receiver.name} cannot be resolved!' unless value
+
+    if is_splat
+      fail 'Cannot find splat arg identifier.' unless arguments.eval(context)
+      evaluated_arguments = arguments.eval(context).ruby_value if arguments.eval(context)
+    else
       evaluated_arguments = arguments.map { |arg| arg.eval(context) }
-    else
-      evaluated_arguments = arguments.eval(context)
-      if !evaluated_arguments
-        fail 'Cannot find splatted argument identifier.'
-      else
-        evaluated_arguments = evaluated_arguments.ruby_value.clone
-      end
     end
 
-    saved_is_set = $is_set
-    $is_set = {}
-    res = value.call(method, evaluated_arguments, context)
-    $is_set = saved_is_set
-
-    res
+    value.call(method, evaluated_arguments, context)
   end
 end
 
 # Used for all applying of functions
 class ApplyNode
   def eval(context)
-    if !is_expr
-      value = context.current_self
-      fail 'Receiver cannot be resolved by getting current context!' unless value
-
-      evaluated_arguments = arguments.map { |arg| arg.eval(context) }
-      value.apply(context, method, evaluated_arguments)
-    else
-      evaluated_arguments = arguments.map { |arg| arg.eval(context) }
+    evaluated_arguments = arguments.map { |arg| arg.eval(context) }
+    if is_expr
       method.eval(context).call(context.current_self, evaluated_arguments)
+    else
+      value = context.current_self
+      value.apply(context, method, evaluated_arguments)
     end
   end
 end
@@ -223,8 +204,6 @@ class AndNode
       else
         cond
       end
-    else
-      cond
     end
   end
 end
@@ -237,6 +216,7 @@ class DefNode
   end
 end
 
+# Lambda: anonymous function
 class LambdaNode
   def eval(context)
     BikeMethod.new(params, body, context, 'recurse')
@@ -256,20 +236,19 @@ class ClassNode
     random_name = 'UnknownClass' + (0...8).map { (65 + rand(26)).chr }.join
     classname = name || random_name
 
-    bike_class = Constants[classname] # Check if class is already defined
-
-    unless bike_class # Class doesn't exist yet
-      bike_class = BikeClass.new(superclass, classname, [], classname)
-      Constants[classname] = bike_class # Define the class in the runtime
+    unless Constants[classname] # Class doesn't exist yet
+      Constants[classname] = BikeClass.new(superclass, classname, [], classname)
     end
 
-    class_context = Context.new(bike_class, bike_class)
+    class_context = Context.new(Constants[classname], Constants[classname])
+
     context.locals.each do |name, value|
       class_context.locals[name] = value
     end
+
     body.eval(class_context)
 
-    bike_class
+    Constants[classname]
   end
 end
 
@@ -298,7 +277,11 @@ class PackageNode
     bike_class = BikeClass.new
     class_context = Context.new(bike_class, bike_class)
     class_context.locals['self'] = bike_class
-    context.current_class.runtime_methods.each { |k, v| class_context.current_class.runtime_methods[k] = v }
+
+    context.current_class.runtime_methods.each do |k, v|
+      class_context.current_class.runtime_methods[k] = v
+    end
+
     context.locals.each do |name, value|
       class_context.locals[name] = value
     end

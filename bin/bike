@@ -4,8 +4,6 @@ require 'readline'
 require 'colorize'
 require 'terminfo'
 
-width = TermInfo.screen_size[1]
-
 interpreter = Interpreter.new
 lexer       = false
 parser      = false
@@ -22,29 +20,30 @@ LIST = [
   '...',     ':parser', 'hash',    ':debug'
 ].sort
 
-comp = proc { |s| LIST.grep( /^#{Regexp.escape(s)}/ ) }
+comp = proc { |s| LIST.grep(/^#{Regexp.escape(s)}/) }
 
-Readline.completion_append_character = " "
+Readline.completion_append_character = ' '
 Readline.completion_proc = comp
 n        = 1
-PROMPT_1 = "[#{n}] >> ";
-PROMPT_2 = "  ...| ";
+PROMPT_1 = "[#{n}] >> "
+PROMPT_2 = '  ...| '
 continue = false
-code     = ""
-line     = ""
-history  = ""
+code     = ''
+line     = ''
+history  = ''
 level_in = 0
 
-def formt (value, is_in_array = false)
+def formt(value, is_in_array = false)
   if is_in_array
     formt(value).gsub(/ \:\:.*$/, '')
   elsif value.ruby_value.is_a?(Array)
-    formatted_content = value.ruby_value.map { |i| formt(i, true) }.join(", ").light_white
-    ("[" +
+    formatted_content = value.ruby_value.map { |i| formt(i, true) }.join(', ').light_white
+    ('[' +
     formatted_content +
-    "]")
-  else 
-    if value.ruby_value.is_a?(String) && value.ruby_value.start_with?("def") && value.type == "Function"
+    ']')
+  else
+    if value.ruby_value.is_a?(String) &&
+       value.ruby_value.start_with?('def') && value.type == 'Function'
       rbval = value.ruby_value
       "#{rbval} :: #{value.type}(#{value.arg_type}): #{value.type_ret}"   # 3. Print
     else
@@ -54,82 +53,82 @@ def formt (value, is_in_array = false)
   end
 end
 # If a file is given we eval it.
-if file = ARGV.first
-  interpreter.eval File.read(file)
+if ARGV.first
+  interpreter.eval File.read(ARGV.first)
 
   # Start the REPL, read-eval-print-loop, or interactive interpreter
 else
-  puts "Importing STDLIB (Wheels.bk)..."
-  interpreter.eval "import Wheels"
+  puts 'Importing STDLIB (Wheels.bk)...'
+  interpreter.eval 'import Wheels'
   puts ''
-  puts "Bike Programming Language REPL\n" +
-       "(Type :help for help, and :exit to exit)\n" +
+  puts "Bike Programming Language REPL\n" \
+       "(Type :help for help, and :exit to exit)\n" \
        "(See LICENSE.md for licensing information)"
   puts "By Christopher Dumas in 2014".green
   loop do
-    if !continue
+    unless continue
       level_in = 0
-      line = Readline::readline(PROMPT_1.blue)    # 1. Read
+      line = Readline.readline(PROMPT_1.blue)    # 1. Read
       code = line
 
       continue = !code.valid_code?
       while continue
-        line = Readline::readline(PROMPT_2.red)    # 1. Read
+        line = Readline.readline(PROMPT_2.red)    # 1. Read
         code += "\n#{line}"
         history += "\n#{line}"
 
         continue = !code.valid_code?
-        line = code if !continue
+        line = code unless continue
       end
     end
     Readline::HISTORY.push(line)
     n += 1
     line = line.strip
     case line
-    when ":exit"
-      puts "Bye!".blue
+    when ':exit'
+      puts 'Bye!'.blue
       exit
-    when ":help"
+    when ':help'
       puts <<-eos
       :help        - This help
       :exit        - To exit from the REPL
       :lexer       - To have your input lexed only, but not interpreted
-      :lexer       - To have your input parsed only, but not interpreted
+      :parser       - To have your input parsed only, but not interpreted
       :history     - List history
       :clear       - Clear Screen
       :debug       - Sets Debug mode (For language contributors only)
       eos
-    when ":history"
-      puts "HISTORY".yellow
-      puts "-------".yellow
+    when ':history'
+      puts 'HISTORY'.yellow
+      puts '-------'.yellow
       Readline::HISTORY.to_a.each { |e| puts e }
-    when ":clear"
-      system "clear" or system "cls"
-    when ":debug"
+    when ':clear'
+      system('clear') || system('cls')
+    when ':debug'
       debug = !debug
       if debug
-        puts "Entering Debug mode. To go back to normal mode, type :debug again.".red
+        puts 'Entering Debug mode. To go back to normal mode, type :debug again.'.red
       else
-        puts "Leaving Debug mode now.".green
+        puts 'Leaving Debug mode now.'.green
       end
-    when ":save"
+    when ':save'
       File.open('repl_save.bk', 'w') do |file|
         file.write(history)
       end
-      puts "Successfully saved code to 'repl_save.bk'".green
-    when ":lexer"
+      puts 'Successfully saved code to \'repl_save.bk\''.green
+    when ':lexer'
       lexer = !lexer
       if lexer
-        puts "Entering Lexer mode. To go back to normal mode, type :lexer again.".red
+        puts 'Entering Lexer mode. To go back to normal mode, type :lexer again.'.red
       else
-        puts "Leaving Lexer mode now.".green
+        puts 'Leaving Lexer mode now.'.green
       end
-    when ":parser"
+    when ':parser'
       parser = !parser
       if parser
-        puts "Entering Parser mode. To go back to normal mode, type :parser again.".red
+        puts 'Entering Parser mode. To go back to normal mode, type :parser again.'.red
       else
-        puts "Leaving Parser mode now.".green
+        puts 'Leaving Parser mode now.'.green
       end
     else
       if lexer
@@ -139,16 +138,16 @@ else
         value = Parser.new.parse(line)
         puts "#{value.inspect}"     # 3. Print
       else
-        history += "\n#{line}"
+        history += '\n#{line}'
         begin
           value = interpreter.eval(line) # 4. Eval
         rescue => e
-          puts "[ERROR]: ".red.gsub("\n", '') + e.message.yellow.gsub(/\(.*\)/, '').gsub("\n", '')
+          puts "[ERROR]: ".red.gsub('\n', '') + e.message.yellow.gsub(/\(.*\)/, '').gsub('\n', '')
           puts e.backtrace.join("\n") if debug
           value = interpreter.eval('nil')
         end
 
-        puts "<= " + formt(value)
+        puts '<= ' + formt(value)
       end
     end                                      # 4. Loop
   end
