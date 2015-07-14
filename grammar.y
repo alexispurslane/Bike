@@ -12,6 +12,7 @@ token OF
 token IMPORT
 token INTO
 token CLASS
+token DATA
 token PRIVATE
 token HASH
 token ROCKET
@@ -19,8 +20,6 @@ token WITH
 token MIXIN
 token PACKAGE
 token EXTENDS
-token ORELSE
-token ANDTHEN
 
 token DEF
 token INIT
@@ -108,6 +107,7 @@ rule
   | Apply
   | Operator
   | GetLocal
+  | Data
   | SetLocal
   | Lambda
   | Def
@@ -283,6 +283,16 @@ rule
     CLASS IDENTIFIER Block                                          { result = ClassNode.new(val[1], "Object", val[2], nil) }
   | CLASS IDENTIFIER EXTENDS IDENTIFIER Block                       { result = ClassNode.new(val[1], val[3], val[4], nil) }
   ;
+
+  Data:
+    DATA IDENTIFIER "=" IDList                                                      { result = DataNode.new(val[1], val[3]) }
+  ;
+
+  IDList:
+    IDENTIFIER                   { result = val }
+  | IDList "|" IDENTIFIER        { result = val[0] << val[2] }
+  ;
+
   Hash:
     "{" NEWLINE KeyVal "}"                { result = HashNode.new(val[2]) }
   | "{" KeyVal "}"                        { result = HashNode.new(val[1]) }

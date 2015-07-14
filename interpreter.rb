@@ -211,7 +211,7 @@ end
 # Node for defining a named function
 class DefNode
   def eval(context)
-    method = BikeMethod.new(params, body, context, name)
+    method = BikeMethod.new(params, body, context, name, type_ret)
     context.current_class.runtime_methods[name] = method
   end
 end
@@ -249,6 +249,30 @@ class ClassNode
     body.eval(class_context)
 
     Constants[classname]
+  end
+end
+
+# An enumeration + an algebraic datatype
+class DataNode
+  def eval(context)
+    bike_class = BikeClass.new('Object', name, [], name)
+
+    class_context = Context.new(bike_class, bike_class)
+    class_context.locals['self'] = bike_class
+
+    string_clone = Constants['String'].clone
+    string_clone.name = name + 'Type'
+    Constants[name + 'Type'] = string_clone
+    types.each do |e|
+      bike_class.def e.to_sym do |_, _|
+        Constants['String'].new_with_value(Digest::SHA1.hexdigest("#{name}.#{e}"))
+      end
+    end
+    bike_class.def :is_algebraic do |_, _|
+      true
+    end
+
+    Constants[name] = bike_class.call('new', [])
   end
 end
 

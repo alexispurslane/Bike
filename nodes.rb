@@ -5,7 +5,7 @@
 # Here we define nodes as Ruby classes that inherit from a Struct. This is a
 # simple way, in Ruby, to create a class that holds some attributes (values).
 # It is almost equivalent to:
-# 
+#
 #     class Nodes
 #       def initialize(nodes)
 #         @nodes = nodes
@@ -28,7 +28,7 @@ class Nodes < Struct.new(:nodes)
   end
 end
 
-# Literals are static values that have a Ruby representation. For example, a string, a number, 
+# Literals are static values that have a Ruby representation. For example, a string, a number,
 # true, false, nil, etc. We define a node for each one of those and store their Ruby
 # representation inside their value attribute.
 class LiteralNode < Struct.new(:value, :type); end
@@ -85,6 +85,7 @@ class LambdaNode < Struct.new(:params, :body, :vararg); end
 # Class definitions are stored into the following node. Once again, the name of the class and
 # its body, a tree of nodes.
 class ClassNode < Struct.new(:name, :superclass, :body, :mixins); end
+class DataNode < Struct.new(:name, :types); end
 class SetClassNode < Struct.new(:bike_class, :method, :lambda); end
 class HashNode < Struct.new(:key_values); end
 class PackageNode < Struct.new(:body); end
@@ -92,10 +93,10 @@ class PackageNode < Struct.new(:body); end
 # if control structures are stored in a node of their own. The condition and body will also
 # be nodes that need to be evaluated at some point.
 # Look at this node if you want to implement other control structures like while, for, loop, etc.
-class IfNode  < Struct.new(:condition, :body, :else_body, :elseifs); end
-class ElseIfNode  < Struct.new(:condition, :body); end
-class ForNode  < Struct.new(:key, :value, :iterator, :body); end
+class IfNode < Struct.new(:condition, :body, :else_body, :elseifs); end
+class ElseIfNode < Struct.new(:condition, :body); end
+class ForNode < Struct.new(:key, :value, :iterator, :body); end
 
-class UnlessNode  < Struct.new(:condition, :body); end
+class UnlessNode < Struct.new(:condition, :body); end
 
-class WhileNode  < Struct.new(:condition, :body); end
+class WhileNode < Struct.new(:condition, :body); end

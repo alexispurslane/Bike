@@ -24,7 +24,12 @@ Documentation is sparse currently, since I am not a great technical writer, but 
 
 ## [Version History](https://github.com/christopherdumas/Bike/releases)
 ### beta 9: (I haven't named this yet)
-More bugs fixed, and (almost) total Rubocop compliance. A gigantic refactor *was* in order.
+More bugs fixed, and (almost) total Rubocop compliance. A gigantic refactor *was* in order. Plus, some new features:
+  * Algebraic Datatypes
+  * Type Aliases
+Also some minor bugs were fixed:
+  * Type information should be saved during currying
+  * Function return type was being ignored
 ### beta 8: Rackoon
 Fixed a lot of OOP features, added optional typing and arguments, and added other little fixes.
 ### beta 7: Pipe

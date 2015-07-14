@@ -63,7 +63,7 @@ class BikeMethod
       @params.each_with_index do |param, index|
         if @arg_type[index] != 'Dynamic'
           unless @arg_type[index] == arguments[index].type
-            fail 'Wrong type in argument #{param} with unexpected type: #{arguments[index].type}'
+            fail "Wrong type in argument #{param} with unexpected type: #{arguments[index].type}"
           end
         end
         if !arguments[index].nil?
@@ -88,7 +88,7 @@ class BikeMethod
       if @type_ret == 'Dynamic' || @type_ret == res.type
         res
       else
-        fail "This function (#{@name}) should return a type of \'#{@type_ret}\', but instread returned a type of \'#{res.type}\'"
+        fail "This function (#{@name}) should return a type of \'#{@type_ret}\', but instead returned a type of \'#{res.type}\'"
       end
 
       res
@@ -102,7 +102,7 @@ class BikeMethod
         context.locals[@params[index]] = arg
       end
 
-      BikeMethod.new(@p_inf.drop(arguments.length), @body, context, @name)
+      BikeMethod.new(@p_inf.drop(arguments.length), @body, context, @name, @type_ret)
     end
   end
 end
