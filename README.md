@@ -23,7 +23,7 @@ OOP is carried out in a way that stays true to functional programming, and stays
 Documentation is sparse currently, since I am not a great technical writer, but reading the code in `grammar.y` might be helpful. Documentation is a big target, that I do want to hit, probably around beta 10. (Is there ever going to be a 1.0? Maybe not!)
 
 ## [Version History](https://github.com/christopherdumas/Bike/releases)
-### beta 9: (I haven't named this yet)
+### beta 9: Raptor
 More bugs fixed, and (almost) total Rubocop compliance. A gigantic refactor *was* in order. Plus, some new features:
   * Algebraic Datatypes
   * Better Debuging and error information
@@ -31,6 +31,7 @@ More bugs fixed, and (almost) total Rubocop compliance. A gigantic refactor *was
 Also some minor bugs were fixed:
   * Type information should be saved during currying
   * Function return type was being ignored
+
 ### beta 8: Rackoon
 Fixed a lot of OOP features, added optional typing and arguments, and added other little fixes.
 ### beta 7: Pipe
