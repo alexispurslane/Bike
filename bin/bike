@@ -45,7 +45,7 @@ def formt(value, is_in_array = false)
     if value.ruby_value.is_a?(String) &&
        value.ruby_value.start_with?('def') && value.type == 'Function' # A Function
       rbval = value.ruby_value
-      "#{rbval} :: #{value.type}(#{value.arg_type}): #{value.type_ret}"   # 3. Print
+      "#{rbval} :: #{value.type}(#{value.arg_type.join(', ')}): #{value.type_ret}"   # 3. Print
     elsif value.name
       "#{value.name} :: #{value.ruby_value}"
     else

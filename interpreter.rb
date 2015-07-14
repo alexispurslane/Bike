@@ -36,7 +36,7 @@ end
 # node bring itself to life inside the runtime.
 class NumberNode
   def eval(_)
-    Constants['Number'].new_with_value(value, 'Num')
+    Constants['Number'].new_with_value(value, 'Number')
   end
 end
 

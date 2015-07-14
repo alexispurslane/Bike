@@ -26,7 +26,8 @@ Documentation is sparse currently, since I am not a great technical writer, but 
 ### beta 9: (I haven't named this yet)
 More bugs fixed, and (almost) total Rubocop compliance. A gigantic refactor *was* in order. Plus, some new features:
   * Algebraic Datatypes
-  * Type Aliases
+  * Better Debuging and error information
+  * Better repl formatting
 Also some minor bugs were fixed:
   * Type information should be saved during currying
   * Function return type was being ignored

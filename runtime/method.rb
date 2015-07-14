@@ -23,6 +23,7 @@ class BikeMethod
     @name = name
     @type = 'Function'
     @type_ret = type_ret
+    @type_ret = 'Dynamic' unless @type_ret
     @arg_type = params.map { |e| e[1] }
     @arg_defaults = params.map { |e| e[2] }
     @p_inf = params
@@ -88,7 +89,7 @@ class BikeMethod
       if @type_ret == 'Dynamic' || @type_ret == res.type
         res
       else
-        fail "This function (#{@name}) should return a type of \'#{@type_ret}\', but instead returned a type of \'#{res.type}\'"
+        fail "This function (#{@name}) should return a type of #{@type_ret}, but instead returned a type of #{res.type}"
       end
 
       res
