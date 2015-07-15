@@ -1,145 +1,225 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta charset="UTF-8">
     <title>The Bike Programming language by christopherdumas</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>The Bike Programming language</h1>
-        <p>A bike is the most efficient man-powered vehicle...</p>
+    <section class="page-header">
+      <h1 class="project-name">The Bike Programming language</h1>
+      <h2 class="project-tagline">A bike is the most efficient man-powered vehicle...</h2>
+      <a href="https://github.com/christopherdumas/Bike" class="btn">View on GitHub</a>
+      <a href="https://github.com/christopherdumas/Bike/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/christopherdumas/Bike/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-        <p class="view"><a href="https://github.com/christopherdumas/Bike">View the Project on GitHub <small>christopherdumas/Bike</small></a></p>
+    <section class="main-content">
+      <h1>
+<a id="bike-language" class="anchor" href="#bike-language" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bike Language</h1>
 
+<h2>
+<a id="whats-it-all-about" class="anchor" href="#whats-it-all-about" aria-hidden="true"><span class="octicon octicon-link"></span></a>What's it all about?</h2>
 
-        <ul>
-          <li><a href="https://github.com/christopherdumas/Bike/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/christopherdumas/Bike/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/christopherdumas/Bike">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <p><img src="bike-icon-hi.png" alt="Bike icon image (a black vector bycicle)"></p>
+<p>Bike is a programming language born out of my need to have a practical, yet purely functional programming language,
+with a syntax that not only matches the elegance of Python, but the terseness of Swift, and the FP
+bevity of Haskell.</p>
+
+<p>I think that Bike does all of this. It has a fairly substantial standard library, far bigger that that of JavaScript,
+but still smaller that of Haskell.</p>
+
+<p>OOP is carried out in a way that stays true to functional programming, and stays out of your way when your just trying to get things done. Objects and Classes are pure, and immutable, createing a good way to encapsulate code, without the normal OOP problems.</p>
 
 <h1>
-<a id="the-bike-programming-language" class="anchor" href="#the-bike-programming-language" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Bike programming language</h1>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install</h1>
 
-<p>Christopher Dumas</p>
+<pre><code>git clone https://github.com/christopherdumas/Bike.git
+cd Bike/
+# You might need to install ruby.
+./configure # Install all the needed GEMs
+./bin/bike # Get started!
+</code></pre>
 
-<p>For language implementation documentation (not comprehensive in any way, just as an aid as you read the code) <a href="https://rawgit.com/christopherdumas/Bike/master/doc/_index.html">go here</a></p>
+<h1>
+<a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation</h1>
 
-<p>The Bike programming language is a programming language that combines Haskell's currying, function composition, anonymous functions, and array comprehension, with Scala's packages, classes, and traits, Python's <code>is</code> and <code>isnt</code> style operators, Scheme's everything is an expression idea, Haskell's permanent immutability, Swift's Lambdas,  Ruby's everything-is-an-object philosophy, and Go's no paren control structures, with Coffeescript's infix <code>if</code> and <code>unless</code>. It also has optional no-paren function calls, and immutable arrays are also present. This is mixed in with mixins and Java's ananymous Classes, as well as JavaScript's Objects (called hashes) and ES6's destructuring assignment. It is immutable in everything by default, but in a way that makes it fairly painless to use. </p>
+<p>Documentation is sparse currently, since I am not a great technical writer, but reading the code in <code>grammar.y</code> might be helpful. Documentation is a big target, that I do want to hit, probably around beta 10. (Is there ever going to be a 1.0? Maybe not!)</p>
 
-<p>Bike's motto is:</p>
+<h2>
+<a id="version-history" class="anchor" href="#version-history" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://github.com/christopherdumas/Bike/releases">Version History</a>
+</h2>
 
-<blockquote>
-<p>Not a lot of syntax, but a lot more sugar.</p>
-</blockquote>
+<h3>
+<a id="beta-9-raptor" class="anchor" href="#beta-9-raptor" aria-hidden="true"><span class="octicon octicon-link"></span></a>beta 9: Raptor</h3>
+
+<p>More bugs fixed, and (almost) total Rubocop compliance. A gigantic refactor <em>was</em> in order. Plus, some new features:</p>
+
+<ul>
+<li>Algebraic Datatypes</li>
+<li>Better Debuging and error information</li>
+<li>Better repl formatting
+Also some minor bugs were fixed:</li>
+<li>Type information should be saved during currying</li>
+<li>Function return type was being ignored</li>
+</ul>
+
+<h3>
+<a id="beta-8-rackoon" class="anchor" href="#beta-8-rackoon" aria-hidden="true"><span class="octicon octicon-link"></span></a>beta 8: Rackoon</h3>
+
+<p>Fixed a lot of OOP features, added optional typing and arguments, and added other little fixes.</p>
+
+<h3>
+<a id="beta-7-pipe" class="anchor" href="#beta-7-pipe" aria-hidden="true"><span class="octicon octicon-link"></span></a>beta 7: Pipe</h3>
+
+<p>This release adds a modest amount of new list functions, utility functions, fixes, and a website. Also, it adds a function application operator, that works like this: <code>Exp |&gt; Func</code>, so that you could do something like:
+ <code>1 |&gt; add1 |&gt; add1 |&gt; add1 |&gt; add1</code></p>
+
+<h3>
+<a id="beta-6-elephant" class="anchor" href="#beta-6-elephant" aria-hidden="true"><span class="octicon octicon-link"></span></a>beta 6: Elephant</h3>
+
+<p>Removed a ton of features that were unnecessary, such as:</p>
+
+<ul>
+<li>Spread and rest parameters</li>
+<li>Anonymous functions</li>
+<li>Weird Lambda syntax (replaced by <code>{ (&lt;arg ...&gt;) -&gt; &lt;body&gt; }</code>)</li>
+<li>Mixins</li>
+<li>Weird @/set array syntax (replaced by more normal array access syntax, but no setting.)</li>
+<li>Mutations on classes, arrays, hashes, or packages, and mutable variable declarations</li>
+<li>Added array destructuring</li>
+</ul>
+
+<p>Now working on:</p>
+
+<ul>
+<li>Argument destructuring</li>
+<li>Bigger Wheels list package</li>
+<li>optional typing? - I like the dynamic ruby-ishness of Bike currently, but optional typing could be useful for documentation and preventing errors</li>
+</ul>
+
+<p>The reason for this? (1) I came back to Bike after almost a year, and realized that it had a ton of bloat. Also, most of the code was written while I had a low grade fever. Bad idea. (2) I found a sketch of a programming language in an old notebook, and decided that it was nice, and something I would want to program in, so I am working to make Bike like it.</p>
+
+<h3>
+<a id="beta-5-hottrix-really-bad-name-i-know" class="anchor" href="#beta-5-hottrix-really-bad-name-i-know" aria-hidden="true"><span class="octicon octicon-link"></span></a>beta 5: Hottrix (really bad name, I know)</h3>
+
+<p>This release basically had every single heisenbug that could possibly happen to a language designer. I fixed them all, and updated documentation and syntax as well. On the way, I added some well-needed little tricks.</p>
+
+<h3>
+<a id="beta-4-watcher" class="anchor" href="#beta-4-watcher" aria-hidden="true"><span class="octicon octicon-link"></span></a>beta 4: Watcher</h3>
+
+<p>This release adds:</p>
+
+<ul>
+<li>Closures</li>
+<li>Real computed Properties and getters (plus setters!)</li>
+<li>private and public modifiers</li>
+<li><code>for-of</code></li>
+<li><code>elseif</code></li>
+<li>Sets</li>
+<li>Observers</li>
+</ul>
+
+<h3>
+<a id="beta-3-hydra" class="anchor" href="#beta-3-hydra" aria-hidden="true"><span class="octicon octicon-link"></span></a>beta 3: Hydra</h3>
+
+<p>This release adds these features to the Beta 2 release:</p>
+
+<ul>
+<li> Arrow functions</li>
+<li> Destructuring assignment (for Hashes and Anonymous Classes)</li>
+<li> String Concatenation</li>
+<li> Anonymous Classes</li>
+<li> Hashes (Anonymous Classes with syntactic sugar)</li>
+<li> Rest Arguments</li>
+<li> Documented Source, with RDoc</li>
+<li> Splat Arguments</li>
+<li> Types (internal difference. No one will notice.)</li>
+</ul>
+
+<h3>
+<a id="beta-2-drabbit" class="anchor" href="#beta-2-drabbit" aria-hidden="true"><span class="octicon octicon-link"></span></a>beta 2: Drabbit</h3>
+
+<p>This release was the first actually implemented part of Bike. For the first time, I could actually run something.
+This release had:</p>
+
+<ul>
+<li>anonymous functions (but no closures yet)</li>
+<li>functions</li>
+<li>variables</li>
+<li>classes</li>
+<li>inheritance</li>
+<li>a few library functions</li>
+<li>extendable Number, Object, Class, and String types</li>
+<li>packages</li>
+<li>imports (RequireJS style)</li>
+<li>getters</li>
+<li>computed properties</li>
+<li>mixins</li>
+</ul>
+
+<p>Also a color REPL with history, tab completion, a lexer mode, and a history list mode.</p>
 
 <h2>
 <a id="roadmap" class="anchor" href="#roadmap" aria-hidden="true"><span class="octicon octicon-link"></span></a>Roadmap</h2>
 
-<p>In the TODO.md file is our roadmap to 1.0. It will be updated every major version release. Our versioning system is like this: The whole number (the 1 in 1.0) is incremented each major, or breaking version. The decimal point is incremented by five, and normally for big, but not breaking changes, like adding new operators or shorthand syntax. The Beta version (indicated by <code>+b&lt;number&gt;</code>) is incremented every time a bug is fixed, or a change is being contemplated but I have not fully committed to it.</p>
+<h3>
+<a id="beta-10" class="anchor" href="#beta-10" aria-hidden="true"><span class="octicon octicon-link"></span></a>beta 10</h3>
 
-<h2>
-<a id="development" class="anchor" href="#development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development</h2>
+<ul>
+<li>[x] Typealias</li>
+<li>[x] Better Algebraic Datatype support in the type system</li>
+<li>[ ] Improved Algebraic Datatypes</li>
+<li>[ ] Class and function metadata</li>
+<li>[ ] Documentation/Tutorial</li>
+<li>[ ] Getting Started</li>
+<li>[ ] Report error Line number</li>
+</ul>
 
 <h3>
-<a id="setting-up-your-development-environment" class="anchor" href="#setting-up-your-development-environment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setting up your development environment</h3>
+<a id="10" class="anchor" href="#10" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.0</h3>
 
-<pre><code>$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" # get homebrew
-$ sudo mkdir /usr/local/Cellar
-$ sudo chown -R `whoami` /usr/local
-$ brew install ruby gem
-$ sudo gem install racc
-$ sudo gem install hanna-nouveau
-$ sudo gem install colorize
-$ sudo gem install ruby-terminfo
-$ sudo gem install irbtools
-$ sudo gem install terminal-notifier
-$ git clone git@github.com:christopherdumas/Bike.git bike
-$ cd bike/
-$ racc grammar.y -o parser.rb
-$ # have fun!!!!
-</code></pre>
-
-<h2>
-<a id="contribution" class="anchor" href="#contribution" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contribution</h2>
+<ul>
+<li>[ ] Another major refactor</li>
+<li>[ ] Code documentation (Yardoc?)</li>
+<li>[ ] Improve Wheels</li>
+</ul>
 
 <h3>
-<a id="issues" class="anchor" href="#issues" aria-hidden="true"><span class="octicon octicon-link"></span></a>Issues</h3>
+<a id="11" class="anchor" href="#11" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1</h3>
 
-<p>Please keep issues short and to the point. Please no flaming, or arguments over preferences over syntax. If you make any changes to the syntax, check them with the author first, over email. Also, avoid adding syntax that uses obscure symbols. Also, please no OOP vs. Functional debates. Bike is supposed to make OOP and FP live together. Any debates about them should be about how to make them work together.</p>
-
-<h3>
-<a id="emails-to-author" class="anchor" href="#emails-to-author" aria-hidden="true"><span class="octicon octicon-link"></span></a>Emails to author</h3>
-
-<p>Please keep emails to a minimum, only when concerning major changes/bugs.</p>
-
-<h3>
-<a id="code-style" class="anchor" href="#code-style" aria-hidden="true"><span class="octicon octicon-link"></span></a>Code Style</h3>
-
-<p>Please use CamelCase for classes and grammar rules, snake_case for variables, and CAPS_SNAKE_CASE for symbols related to keywords or literals. Please unit test any changes made to the Interpreter class or Lexer class. Also, only comment where things are non-obvous</p>
+<ul>
+<li>[ ] Atom, Emacs, Vim and Sublime Text syntax highlighting</li>
+<li>[ ] Observers</li>
+<li>[ ] Ratios</li>
+<li>[ ] Fractions</li>
+</ul>
 
 <h3>
-<a id="commits" class="anchor" href="#commits" aria-hidden="true"><span class="octicon octicon-link"></span></a>Commits</h3>
+<a id="12-and-beyond" class="anchor" href="#12-and-beyond" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.2 and Beyond!</h3>
 
-<p>Please use descriptive commits, but under 80 characters. Always use emoji.</p>
+<ul>
+<li>[ ] Publicize!</li>
+<li>[ ] Write a big project of some sort in Bike, to make it look more real to people</li>
+<li>[ ] Macros?</li>
+<li>[ ] Metaprogramming?</li>
+<li>[ ] Dynamic method/variable/class names?</li>
+<li>[ ] Book</li>
+<li>[ ] Screencasts</li>
+</ul>
 
-<table>
-<thead>
-<tr>
-<th>Type of Commit</th>
-<th>emoji</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Bug fix</td>
-<td>
-<img class="emoji" title=":bug:" alt=":bug:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f41b.png" height="20" width="20" align="absmiddle"> <img class="emoji" title=":collision:" alt=":collision:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4a5.png" height="20" width="20" align="absmiddle">
-</td>
-</tr>
-<tr>
-<td>Major change</td>
-<td><img class="emoji" title=":sparkles:" alt=":sparkles:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/2728.png" height="20" width="20" align="absmiddle"></td>
-</tr>
-<tr>
-<td>code refactor</td>
-<td><img class="emoji" title=":angel:" alt=":angel:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f47c.png" height="20" width="20" align="absmiddle"></td>
-</tr>
-<tr>
-<td>documentation</td>
-<td><img class="emoji" title=":notebook:" alt=":notebook:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d3.png" height="20" width="20" align="absmiddle"></td>
-</tr>
-<tr>
-<td>Partial fix/temporary hack</td>
-<td>
-<img class="emoji" title=":lipstick:" alt=":lipstick:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f484.png" height="20" width="20" align="absmiddle"> <img class="emoji" title=":pig:" alt=":pig:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f437.png" height="20" width="20" align="absmiddle">
-</td>
-</tr>
-<tr>
-<td>Backwards compatability</td>
-<td><img class="emoji" title=":trollface:" alt=":trollface:" src="https://assets-cdn.github.com/images/icons/emoji/trollface.png" height="20" width="20" align="absmiddle"></td>
-</tr>
-</tbody>
-</table>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/christopherdumas">christopherdumas</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/christopherdumas/Bike">The Bike Programming language</a> is maintained by <a href="https://github.com/christopherdumas">christopherdumas</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
+
+    </section>
+
+  
   </body>
 </html>
+
