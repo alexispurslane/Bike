@@ -96,3 +96,29 @@ This release had:
 * mixins
 
 Also a color REPL with history, tab completion, a lexer mode, and a history list mode.
+
+## Roadmap
+### beta 10
+- [x] Typealias
+- [ ] Improved Algebraic Datatypes (Better integration with type system too!)
+- [ ] Class and function metadata
+- [ ] Documentation/Tutorial
+- [ ] Getting Started
+- [ ] Report error Line number
+### 1.0
+- [ ] Another major refactor
+- [ ] Code documentation (Yardoc?)
+- [ ] Improve Wheels
+### 1.1
+- [ ] Atom, Emacs, Vim and Sublime Text syntax highlighting
+- [ ] Observers
+- [ ] Ratios
+- [ ] Fractions
+### 1.2 and Beyond!
+- [ ] Publicize!
+- [ ] Write a big project of some sort in Bike, to make it look more real to people
+- [ ] Macros?
+- [ ] Metaprogramming?
+- [ ] Dynamic method/variable/class names?
+- [ ] Book
+- [ ] Screencasts

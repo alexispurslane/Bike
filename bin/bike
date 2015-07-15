@@ -32,6 +32,7 @@ code     = ''
 line     = ''
 history  = ''
 level_in = 0
+line_n   = 0
 
 def formt(value, is_in_array = false)
   if is_in_array
@@ -43,7 +44,7 @@ def formt(value, is_in_array = false)
     ']')
   else
     if value.ruby_value.is_a?(String) &&
-       value.ruby_value.start_with?('def') && value.type == 'Function' # A Function
+      value.ruby_value.start_with?('def') && value.type == 'Function' # A Function
       rbval = value.ruby_value
       "#{rbval} :: #{value.type}(#{value.arg_type.join(', ')}): #{value.type_ret}"   # 3. Print
     elsif value.name
@@ -56,16 +57,19 @@ def formt(value, is_in_array = false)
 end
 # If a file is given we eval it.
 if ARGV.first
-  interpreter.eval File.read(ARGV.first)
-
-  # Start the REPL, read-eval-print-loop, or interactive interpreter
+  begin
+    interpreter.eval File.read(ARGV.first)
+  rescue => e
+    puts "LINE #{line_n}: ERROR: ".red.gsub('\n', '') + e.message.yellow.gsub(/\(.*\)/, '').gsub('\n', '')
+    puts e.backtrace.join("\n") if debug
+  end
 else
-  puts 'Importing STDLIB (Wheels.bk)...'
+  puts 'Importing Wheels...'
   interpreter.eval 'import Wheels'
   puts ''
   puts "Bike Programming Language REPL\n" \
-       "(Type :help for help, and :exit to exit)\n" \
-       "(See LICENSE.md for licensing information)"
+  "(Type :help for help, and :exit to exit)\n" \
+  "(See LICENSE.md for licensing information)"
   puts "By Christopher Dumas in 2014".green
   loop do
     unless continue
@@ -97,7 +101,7 @@ else
       :lexer       - To have your input lexed only, but not interpreted
       :parser       - To have your input parsed only, but not interpreted
       :history     - List history
-      :clear       - Clear Screen
+      :clear       - Clear Screen (also CTRL-L)
       :debug       - Sets Debug mode (For language contributors only)
       eos
     when ':history'
@@ -141,10 +145,11 @@ else
         puts "#{value.inspect}"     # 3. Print
       else
         history += '\n#{line}'
+        line_n += 1
         begin
           value = interpreter.eval(line) # 4. Eval
         rescue => e
-          puts "[ERROR]: ".red.gsub('\n', '') + e.message.yellow.gsub(/\(.*\)/, '').gsub('\n', '')
+          puts "LINE #{line_n}: ERROR: ".red.gsub('\n', '') + e.message.yellow.gsub(/\(.*\)/, '').gsub('\n', '')
           puts e.backtrace.join("\n") if debug
           value = interpreter.eval('nil')
         end

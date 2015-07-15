@@ -93,7 +93,7 @@ end
 # Imports the named file into a variable, or into a variable with the file name.
 class ImportNode
   def eval(context)
-    context.locals[into || file.downcase.sub('.bk', '')] = Interpreter.new.eval File.read(file)
+    context.locals[into || file.sub('.bk', '')] = Interpreter.new.eval File.read(file)
   end
 end
 
@@ -155,7 +155,7 @@ class CallNode
     value = context.current_self # Default to self if no receiver.
     value = receiver.eval(context) if receiver
 
-    fail 'Receiver #{receiver.name} cannot be resolved!' unless value
+    fail "Receiver #{receiver.name} cannot be resolved!" unless value
 
     if is_splat
       fail 'Cannot find splat arg identifier.' unless arguments.eval(context)
@@ -276,6 +276,15 @@ class DataNode
   end
 end
 
+# Alias a type
+class TypeAliasNode
+  def eval(_)
+    clone = Constants[type].clone
+    clone.name = talias
+    Constants[talias] = clone
+  end
+end
+
 # A hash is an anonymous class with syntactic sugar.
 class HashNode
   def eval(_)
@@ -320,8 +329,8 @@ end
 class IfNode
   def eval(context)
     if elseifs
-      conditions = [condition] + elseifs.map(&:condition)
-      bodys = [body] + elseifs.map(&:body)
+      conditions = [condition] + elseifs.map(&:condition) + [TrueNode.new]
+      bodys = [body] + elseifs.map(&:body) + [else_body]
     else
       conditions = [condition, TrueNode.new]
       bodys = [body, else_body]

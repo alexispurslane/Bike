@@ -286,6 +286,7 @@ rule
 
   Data:
     DATA IDENTIFIER "=" IDList                                                      { result = DataNode.new(val[1], val[3]) }
+  | DATA IDENTIFIER "=" IDENTIFIER                                                  { result = TypeAliasNode.new(val[1], val[3]) }
   ;
 
   IDList:

@@ -1,0 +1,3 @@
+data TrafficLight = Red | Green | Blue
+def foo (l: TrafficLightType) { l }
+foo(TrafficLight.Red)

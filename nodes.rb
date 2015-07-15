@@ -86,6 +86,7 @@ class LambdaNode < Struct.new(:params, :body, :vararg); end
 # its body, a tree of nodes.
 class ClassNode < Struct.new(:name, :superclass, :body, :mixins); end
 class DataNode < Struct.new(:name, :types); end
+class TypeAliasNode < Struct.new(:talias, :type); end
 class SetClassNode < Struct.new(:bike_class, :method, :lambda); end
 class HashNode < Struct.new(:key_values); end
 class PackageNode < Struct.new(:body); end
