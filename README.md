@@ -100,7 +100,8 @@ Also a color REPL with history, tab completion, a lexer mode, and a history list
 ## Roadmap
 ### beta 10
 - [x] Typealias
-- [ ] Improved Algebraic Datatypes (Better integration with type system too!)
+- [x] Better Algebraic Datatype support in the type system
+- [ ] Improved Algebraic Datatypes
 - [ ] Class and function metadata
 - [ ] Documentation/Tutorial
 - [ ] Getting Started
