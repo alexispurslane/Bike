@@ -10,7 +10,7 @@ but still smaller that of Haskell.
 
 OOP is carried out in a way that stays true to functional programming, and stays out of your way when your just trying to get things done. Objects and Classes are pure, and immutable, createing a good way to encapsulate code, without the normal OOP problems.
 
-# Install
+## Install
 
     git clone https://github.com/christopherdumas/Bike.git
     cd Bike/
@@ -18,7 +18,7 @@ OOP is carried out in a way that stays true to functional programming, and stays
     ./configure # Install all the needed GEMs
     ./bin/bike # Get started!
 
-# Documentation
+## Documentation
 
 Documentation currently resides in the github wiki [page](https://github.com/christopherdumas/Bike/wiki).
 
