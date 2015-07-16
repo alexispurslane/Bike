@@ -261,7 +261,7 @@ end
 
 Constants['String'].def :'@' do |receiver, arguments|
   Constants['String'].new_with_value(receiver.ruby_value[arguments[0]
-    .ruby_value - 1]) || Constants['nil']
+    .ruby_value]) || Constants['nil']
 end
 Constants['String'].def :+ do |receiver, arguments|
   Constants['String'].new_with_value(receiver.ruby_value +
