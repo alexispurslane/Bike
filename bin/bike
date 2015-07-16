@@ -93,18 +93,23 @@ else
       exit
     when ':help'
       puts <<-eos
-      :help        - This help
-      :exit        - To exit from the REPL
-      :lexer       - To have your input lexed only, but not interpreted
-      :parser       - To have your input parsed only, but not interpreted
-      :history     - List history
-      :clear       - Clear Screen (also CTRL-L)
-      :debug       - Sets Debug mode (For language contributors only)
+      :help            - This help
+      :exit            - To exit from the REPL
+      :lexer           - To have your input lexed only, but not interpreted
+      :parser          - To have your input parsed only, but not interpreted
+      :history         - List history
+      :clear           - Clear Screen (also CTRL-L)
+      :debug           - Sets Debug mode (For language contributors only)
+      :save_history    - Saves history to repl file.
       eos
     when ':history'
       puts 'HISTORY'.yellow
       puts '-------'.yellow
       Readline::HISTORY.to_a.each { |e| puts e }
+    when ':save_history'
+      File.open("history_bike_repl.bk", "w") do |file|
+        file.write(code)
+      end
     when ':clear'
       system('clear') || system('cls')
     when ':debug'
