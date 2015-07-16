@@ -22,6 +22,37 @@ OOP is carried out in a way that stays true to functional programming, and stays
 
 Documentation currently resides in the github wiki [page](https://github.com/christopherdumas/Bike/wiki).
 
+## Roadmap
+### beta 10
+- [x] Typealias
+- [x] Better Algebraic Datatype support in the type system
+- [x] Improved Algebraic Datatypes
+- [ ] ~~Class and function metadata~~ I decided that this probably wasn't a great idea.
+- [x] Getting Started/Tutorials
+- [ ] Report error Line number
+
+### 1.0
+- [ ] Another major refactor
+- [ ] Code documentation (Yardoc?)
+- [ ] Improve Wheels
+- [ ] Referance and Documentation
+
+### 1.1
+- [ ] Atom, Emacs, Vim and Sublime Text syntax highlighting
+- [ ] Observers
+- [ ] Ratios
+- [ ] Fractions
+
+### 1.2 and Beyond!
+- [ ] Publicize!
+- [ ] Write a big project of some sort in Bike, to make it look more real to people
+- [ ] Macros?
+- [ ] Metaprogramming?
+- [ ] Dynamic method/variable/class names?
+- [ ] Book
+- [ ] Screencasts
+
+
 ## [Version History](https://github.com/christopherdumas/Bike/releases)
 ### beta 9: Raptor
 More bugs fixed, and (almost) total Rubocop compliance. A gigantic refactor *was* in order. Plus, some new features:
@@ -96,33 +127,3 @@ This release had:
 * mixins
 
 Also a color REPL with history, tab completion, a lexer mode, and a history list mode.
-
-## Roadmap
-### beta 10
-- [x] Typealias
-- [x] Better Algebraic Datatype support in the type system
-- [x] Improved Algebraic Datatypes
-- [ ] ~~Class and function metadata~~ I decided that this probably wasn't a great idea.
-- [x] Getting Started/Tutorials
-- [ ] Report error Line number
-
-### 1.0
-- [ ] Another major refactor
-- [ ] Code documentation (Yardoc?)
-- [ ] Improve Wheels
-- [ ] Referance and Documentation
-
-### 1.1
-- [ ] Atom, Emacs, Vim and Sublime Text syntax highlighting
-- [ ] Observers
-- [ ] Ratios
-- [ ] Fractions
-
-### 1.2 and Beyond!
-- [ ] Publicize!
-- [ ] Write a big project of some sort in Bike, to make it look more real to people
-- [ ] Macros?
-- [ ] Metaprogramming?
-- [ ] Dynamic method/variable/class names?
-- [ ] Book
-- [ ] Screencasts
