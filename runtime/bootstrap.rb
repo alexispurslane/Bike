@@ -211,6 +211,12 @@ Constants['Array'].def :'@' do |receiver, arguments|
   (receiver.ruby_value[arguments[0].ruby_value]) || Constants['nil']
 end
 
+Constants['Array'].def :length do |reciever, _|
+  Constants['Number'].new_with_value(reciever.ruby_value.length)
+end
+Constants['String'].def :length do |reciever, _|
+  Constants['Number'].new_with_value(reciever.ruby_value.length)
+end
 Constants['Array'].def :uniq do |receiver, _|
   uniq_ary = receiver.ruby_value.map(&:ruby_value).uniq
   Constants['Array'].new_with_value(uniq_ary.map do |e|
