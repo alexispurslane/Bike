@@ -103,14 +103,14 @@ Also a color REPL with history, tab completion, a lexer mode, and a history list
 - [x] Better Algebraic Datatype support in the type system
 - [x] Improved Algebraic Datatypes
 - [ ] ~~Class and function metadata~~ I decided that this probably wasn't a great idea.
-- [ ] Getting Started
-- [ ] Documentation/Tutorial
+- [x] Getting Started/Tutorials
 - [ ] Report error Line number
 
 ### 1.0
 - [ ] Another major refactor
 - [ ] Code documentation (Yardoc?)
 - [ ] Improve Wheels
+- [ ] Referance and Documentation
 
 ### 1.1
 - [ ] Atom, Emacs, Vim and Sublime Text syntax highlighting
