@@ -14,7 +14,7 @@ class BikeClass < BikeObject
     @runtime_class = Constants['Class']
     @runtime_superclass = Constants[superclass]
     @superclass_name = superclass
-    @type_base = type
+    @type = type
 
     @ruby_value = type
     @name = name
@@ -42,7 +42,7 @@ class BikeClass < BikeObject
 
   # Create a new instance of this class
   def new
-    BikeObject.new(self)
+    BikeObject.new(self, 'Object', @type, @name)
   end
 
   # Create an instance of this Bike class that holds a Ruby value. Like a Str,

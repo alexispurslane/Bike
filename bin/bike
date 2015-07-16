@@ -51,7 +51,7 @@ def formt(value, is_in_array = false)
       "#{value.name} :: #{value.ruby_value}"
     else
       rbval = value.ruby_value.inspect # A normal variable or literal
-      "#{rbval} :: #{value.type}"   # 3. Print
+      "#{rbval} :: #{value.name || value.type}"   # 3. Print
     end
   end
 end

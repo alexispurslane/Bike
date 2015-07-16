@@ -63,8 +63,8 @@ class BikeMethod
       context.current_class.runtime_methods[@name] = self
       @params.each_with_index do |param, index|
         if @arg_type[index] != 'Dynamic'
-          unless Constants[@arg_type[index]].ruby_value == arguments[index].type
-            fail "Wrong type in argument #{param} with unexpected type: #{arguments[index].type}"
+          unless Constants[@arg_type[index]].type == arguments[index].type
+            fail "Wrong type in argument #{param} with unexpected type: #{arguments[index].type}. Expected type #{Constants[@arg_type[index]].type}."
           end
         end
         if !arguments[index].nil?
