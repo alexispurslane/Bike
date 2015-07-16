@@ -48,6 +48,6 @@ class BikeClass < BikeObject
   # Create an instance of this Bike class that holds a Ruby value. Like a Str,
   # Number or true.
   def new_with_value(value, type = nil)
-    BikeObject.new(self, value, type || @type_base)
+    BikeObject.new(self, value, type || @type)
   end
 end
