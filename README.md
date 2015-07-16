@@ -101,7 +101,7 @@ Also a color REPL with history, tab completion, a lexer mode, and a history list
 ### beta 10
 - [x] Typealias
 - [x] Better Algebraic Datatype support in the type system
-- [ ] Improved Algebraic Datatypes
+- [x] Improved Algebraic Datatypes
 - [ ] Class and function metadata
 - [ ] Documentation/Tutorial
 - [ ] Getting Started
