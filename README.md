@@ -102,9 +102,9 @@ Also a color REPL with history, tab completion, a lexer mode, and a history list
 - [x] Typealias
 - [x] Better Algebraic Datatype support in the type system
 - [x] Improved Algebraic Datatypes
-- [ ] Class and function metadata
-- [ ] Documentation/Tutorial
+- [ ] ~~Class and function metadata~~ I decided that this probably wasn't a great idea.
 - [ ] Getting Started
+- [ ] Documentation/Tutorial
 - [ ] Report error Line number
 
 ### 1.0

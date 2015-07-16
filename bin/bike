@@ -2,7 +2,6 @@
 require_relative '../interpreter'
 require 'readline'
 require 'colorize'
-require 'terminfo'
 
 interpreter = Interpreter.new
 lexer       = false
@@ -24,9 +23,8 @@ comp = proc { |s| LIST.grep(/^#{Regexp.escape(s)}/) }
 
 Readline.completion_append_character = ' '
 Readline.completion_proc = comp
-n        = 1
-PROMPT_1 = "[#{n}] >> "
-PROMPT_2 = '  ...| '
+prompt_1 = "[1] >> "
+prompt_2 = '  ...| '
 continue = false
 code     = ''
 line     = ''
@@ -74,12 +72,12 @@ else
   loop do
     unless continue
       level_in = 0
-      line = Readline.readline(PROMPT_1.blue)    # 1. Read
+      line = Readline.readline(prompt_1.blue)    # 1. Read
       code = line
 
       continue = !code.valid_code?
       while continue
-        line = Readline.readline(PROMPT_2.red)    # 1. Read
+        line = Readline.readline(prompt_2.red)    # 1. Read
         code += "\n#{line}"
         history += "\n#{line}"
 
@@ -88,7 +86,6 @@ else
       end
     end
     Readline::HISTORY.push(line)
-    n += 1
     line = line.strip
     case line
     when ':exit'
@@ -144,8 +141,9 @@ else
         value = Parser.new.parse(line)
         puts "#{value.inspect}"     # 3. Print
       else
-        history += '\n#{line}'
+        history += "\n#{line}"
         line_n += 1
+        prompt_1 = "[#{line_n}] >> "
         begin
           value = interpreter.eval(line) # 4. Eval
         rescue => e
