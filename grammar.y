@@ -257,6 +257,8 @@ rule
   Def:
     DEF IDENTIFIER Block                                           { result = DefNode.new(val[1], [], val[2]) }
   | DEF IDENTIFIER "=" Expression                                  { result = DefNode.new(val[1], [], val[3]) }
+  | DEF IDENTIFIER ':' IDENTIFIER Block                                           { result = DefNode.new(val[1], [], val[4], val[3]) }
+  | DEF IDENTIFIER ':' IDENTIFIER "=" Expression                                  { result = DefNode.new(val[1], [], val[5], val[3]) }
   | DEF IDENTIFIER "(" ParamList ")" "=" Expression                { result = DefNode.new(val[1], val[3], val[6]) }
   | DEF IDENTIFIER
       "(" ParamList ")" Block                                      { result = DefNode.new(val[1], val[3], val[5]) }
