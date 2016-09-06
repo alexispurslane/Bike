@@ -10,10 +10,17 @@ class BikeObject
   end
   # Calls a runtime method.
   def call(method, arguments=[], context)
-    (@runtime_class.lookup(method) || context.locals[method]).call(self, arguments)
+    value = (@runtime_class.lookup(method) || context.locals[method])
+    if value.nil?
+      fail 'Undefined method or function. Maybe function was defined after?'
+    else
+      value.call(self, arguments)
+    end
   end
   # Calls a method that has been stored as a variable (like calling a lambda that was passed into a function.) In Bike this is done using the +$+ operator.
   def apply(context, method, arguments=[])
-    (@runtime_class.lookup(method) || context.locals[method]).call(self, arguments[0].ruby_value)
+    value = (@runtime_class.lookup(method) || context.locals[method])
+    fail 'Undefined stored lambda. Check your argument values.' unless value
+    value.call(self, arguments[0].ruby_value)
   end
 end

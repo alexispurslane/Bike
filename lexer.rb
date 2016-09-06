@@ -15,6 +15,13 @@ class Lexer
         i += comment.size
       elsif comment = chunk[/\A#.*$/]
         i += comment.size
+      elsif identifier = chunk[/\A([a-zA-Z_](\w|&|=)*)/, 1]
+        if KEYWORDS.include?(identifier)
+          tokens << [identifier.upcase.to_sym, identifier]
+        else
+          tokens << [:IDENTIFIER, identifier]
+        end
+        i += identifier.size
       elsif operator = chunk[/\A(%|@|=@|isnt|or|and|not|is|<=|>=|->|=>|\\|\$|\:|\|\>|\<\|\>)/, 1]
         if operator == "->"
           tokens << [:ARROW, "arrow"]
@@ -30,13 +37,6 @@ class Lexer
           tokens << [operator, operator]
         end
         i += operator.size
-      elsif identifier = chunk[/\A([a-zA-Z](\w|&|=)*)/, 1]
-        if KEYWORDS.include?(identifier)
-          tokens << [identifier.upcase.to_sym, identifier]
-        else
-          tokens << [:IDENTIFIER, identifier]
-        end
-        i += identifier.size
       elsif number = chunk[/\A([-+]?[0-9]+\.?[0-9]*)/, 1]
         tokens << [:NUMBER, to_fi(number)]
         i += number.size
@@ -46,14 +46,9 @@ class Lexer
        elsif string = chunk[/\A'(.*?)'/, 1]
         tokens << [:STRING, string]
         i += string.size + 2
-
-      ######
-      # All indentation magic code was removed and only this elsif was added.
       elsif chunk.match(/\A\n+/)
         tokens << [:NEWLINE, "\n"]
         i += 1
-      ######
-
       elsif chunk.match(/\A\s+/)
         i += 1
       else

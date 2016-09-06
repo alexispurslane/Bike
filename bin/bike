@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby -I.
 require_relative '../interpreter'
 require 'readline'
+require 'util.rb'
 require 'colorize'
 
 interpreter = Interpreter.new
@@ -58,7 +59,8 @@ if ARGV.first
   begin
     interpreter.eval File.read(ARGV.first)
   rescue => e
-    puts "LINE #{line_n}: ERROR: ".red.gsub('\n', '') + e.message.yellow.gsub(/\(.*\)/, '').gsub('\n', '')
+    line = if e.is_a?(BikeError) then e.line else line_n end
+    puts "LINE #{line}: ERROR: ".red.gsub('\n', '') + e.message.yellow.gsub(/\(.*\)/, '').gsub('\n', '')
     puts e.backtrace.join("\n") if debug
   end
 else

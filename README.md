@@ -27,15 +27,16 @@ Documentation currently resides in the github wiki [page](https://github.com/chr
 - [x] Typealias
 - [x] Better Algebraic Datatype support in the type system
 - [x] Improved Algebraic Datatypes
-- [ ] ~~Class and function metadata~~ I decided that this probably wasn't a great idea.
 - [x] Getting Started/Tutorials
-- [ ] Report error Line number
+- [x] Improved error handling
+- [ ] Report error line number
+- [ ] Class and function metadata
 
 ### 1.0
-- [ ] Another major refactor
-- [ ] Code documentation (Yardoc?)
+- [ ] Better string libraries (replace, grep, etc.)
 - [ ] Improve Wheels
 - [ ] Referance and Documentation
+- [ ] Simplify syntax and streamline module syntax
 
 ### 1.1
 - [ ] Atom, Emacs, Vim and Sublime Text syntax highlighting

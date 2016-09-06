@@ -1,6 +1,14 @@
 require_relative 'parser'
 require_relative 'runtime'
 
+class BikeError < StandardError
+  attr_reader :line
+  def initialize(msg="My default message", line=0)
+    @line = line
+    super(msg)
+  end
+end
+
 # First, we create an simple wrapper class to encapsulate the interpretation process.
 # All this does is parse the code and call eval on the node at the top of the AST.
 class Interpreter
@@ -105,7 +113,7 @@ class SetLocalNode
       context.set[name] = true
       context.locals[name]
     else
-      fail 'Attemt to re-assign variable using normal variable.'
+      raise BikeError.new('Attemt to re-assign variable using normal variable.', line)
     end
   end
 end
@@ -118,7 +126,7 @@ class SetLocalDescNode
         context.locals[name] = value.eval(context).call(name, [])
         context.set[name] = true
       else
-        fail 'Attemt to re-assign variable using normal variable.'
+        raise BikeError.new('Attemt to re-assign variable using normal variable.', line)
       end
     end
     Constants['nil']
@@ -155,10 +163,10 @@ class CallNode
     value = context.current_self # Default to self if no receiver.
     value = receiver.eval(context) if receiver
 
-    fail "Receiver #{receiver.name} cannot be resolved!" unless value
+    raise BikeError.new("Variable or expression '#{receiver.name}' is undefined!", line) unless value
 
     if is_splat
-      fail 'Cannot find splat arg identifier.' unless arguments.eval(context)
+      raise BikeError.new('Cannot find splat arg identifier.', line) unless arguments.eval(context)
       evaluated_arguments = arguments.eval(context).ruby_value if arguments.eval(context)
     else
       evaluated_arguments = arguments.map { |arg| arg.eval(context) }
@@ -173,7 +181,9 @@ class ApplyNode
   def eval(context)
     evaluated_arguments = arguments.map { |arg| arg.eval(context) }
     if is_expr
-      method.eval(context).call(context.current_self, evaluated_arguments)
+      value = method.eval(context)
+      raise BikeError.new("Nil function or method '#{method.name}' in application.", line) unless value
+      value.call(context.current_self, evaluated_arguments)
     else
       value = context.current_self
       value.apply(context, method, evaluated_arguments)

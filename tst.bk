@@ -1,13 +1,19 @@
-if 1 < 2 {
-  println("Good!")
+println("Good!")
+
+1 |> not_a_function
+
+not_a_class.bar()
+
+class MissingFunction {
+  def foo = 1
 }
-if 0 is 1 {
-  println("This should not be!")
-} else {
-  println("Yes!")
-}
-println("Yay!") if 1 is 1.0
-unless 1 is 0 {
-  println("Good!")
-}
-println("Bad!") unless 0 is 0
+
+let n = MissingFunction.new()
+n.bar()
+
+let f = { (a, b) -> a + b }
+f(1, 2, 3, 4)
+
+def too_few(a) = a
+
+too_few(1, 2, 3, 4, 5)

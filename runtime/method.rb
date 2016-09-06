@@ -9,7 +9,7 @@ class BikeMethod
   # The actual value that any internal bike object carries. In this case, it is <tt>'def (#{@params.join(', ')}#{@vararg ? ' ...#{@vararg}' : ''}) { ... }'</tt> just to make it so that there is something to see on the repl.
   attr_reader :ruby_value
 
-  # The context that the method (or function) was created in. <b>THIS IS NOT BEING USED FOR CLOSURES OR ANYTHING YET. IT DOES NOT WORK</b>
+  # The context that the method (or function) was created in.
   attr_reader :context
 
   attr_reader :params, :type, :arg_type, :type_ret
